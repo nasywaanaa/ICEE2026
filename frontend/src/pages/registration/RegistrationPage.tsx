@@ -79,7 +79,8 @@ const RegistrationPage: React.FC = () => {
       if (twibbonProof) fd.append('twibbonProof', twibbonProof)
       if (paymentProof) fd.append('paymentProof', paymentProof)
 
-      const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || ''
+      const RAW_BASE = (import.meta as any).env?.VITE_API_BASE_URL || ''
+      const API_BASE = RAW_BASE && !/^https?:\/\//i.test(RAW_BASE) ? `https://${RAW_BASE}` : RAW_BASE
       const endpoint = `${API_BASE.replace(/\/$/, '')}/api/registrations/submit`
       const res = await fetch(endpoint, {
         method: 'POST',
