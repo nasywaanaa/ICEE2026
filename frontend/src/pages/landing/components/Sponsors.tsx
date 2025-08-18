@@ -22,6 +22,17 @@ const Sponsors: React.FC = () => {
 
   return (
     <section className="sponsors" id="sponsors">
+      {/* Background decorative line */}
+      <div className="background-lines">
+        <div className="black-line line-6">
+          <img 
+            src="/src/assets/background/hero/black-line-6.svg" 
+            alt="ICEE 2026 Background Line 6"
+            className="line-svg"
+          />
+        </div>
+      </div>
+      
       <div className="container">
         <div className="sponsors-header">
           <h2 className="sponsors-title">

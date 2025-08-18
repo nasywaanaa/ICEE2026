@@ -1,9 +1,46 @@
 .competition {
-  padding: 2rem 0;
-  padding-top: 2rem;
+  padding: 12rem 0 6rem 0;
   background-color: #E9E9E9;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
+}
+
+.background-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.black-line {
+  position: absolute;
+  /* opacity: 0.08;
+  transition: opacity 0.3s ease; */
+  mix-blend-mode: multiply;
+}
+
+/* .black-line:hover {
+  opacity: 0.15;
+} */
+
+.line-3 {
+  top: -14%;
+  left: -2%;
+  width: 102%;
+  height: 101%;
+  transform: rotate(6deg);
+}
+
+.line-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: optimizeQuality;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 /* Ensure no pseudo-elements on main competition section */
@@ -15,6 +52,14 @@
 .competition-header {
   text-align: center;
   margin-bottom: 0rem; /* Reduced from 4rem to bring carousel closer */
+  background-color: #E9E9E9;
+  padding: 1rem 2rem;
+  border-radius: 0;
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .competition-title {
@@ -46,11 +91,14 @@
 .competition-carousel {
   position: relative;
   width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 0px; 
+  padding: 0 3rem;
+  z-index: 2;
 }
 
 .carousel-container {
@@ -203,54 +251,39 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 60px;
-  height: 60px;
-  min-width: 60px; /* Ensure perfect circle */
-  min-height: 60px; /* Ensure perfect circle */
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: white;
-  border: 2px solid rgba(27, 101, 250, 0.1);
+  background: #fff;
+  border: none;
+  box-shadow: 0 10px 24px rgba(0,0,0,.15);
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 15;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* backdrop-filter: blur(10px); */
-  padding: 0; 
+  transition: all 0.3s ease;
+  z-index: 20;
 }
 
 .nav-arrow {
   width: 24px;
   height: 24px;
-  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(214deg) brightness(97%) contrast(97%);
-  transition: filter 0.3s ease;
+  color: #1B65FA;
+  stroke-width: 2;
 }
 
 .carousel-nav:hover {
-  background: linear-gradient(135deg, #1B65FA, #00D46B);
-  color: white;
-  border-color: transparent;
+  background: #f8f9fa;
   transform: translateY(-50%) scale(1.05);
-  box-shadow: 0 12px 35px rgba(27, 101, 250, 0.3);
-}
-
-.carousel-nav:hover .nav-arrow {
-  filter: brightness(0) saturate(100%) invert(100%); /* White arrows on hover */
-}
-
-.carousel-nav:active {
-  transform: translateY(-50%) scale(0.95);
-  transition: all 0.1s ease;
+  box-shadow: 0 15px 30px rgba(0,0,0,.2);
 }
 
 .carousel-nav.prev {
-  left: 0px; /* Increased distance from card */
+  left: 0;
 }
 
 .carousel-nav.next {
-  right: 0px; /* Increased distance from card */
+  right: 0;
 }
 
 .carousel-dots {
@@ -384,18 +417,16 @@
   }
   
   .carousel-nav {
-    width: 50px;
-    height: 50px;
-    min-width: 50px; /* Ensure perfect circle on mobile */
-    min-height: 50px; /* Ensure perfect circle on mobile */
+    width: 48px;
+    height: 48px;
   }
   
   .carousel-nav.prev {
-    left: 30px !important; /* Increased distance from card on mobile */
+    left: 1rem;
   }
   
   .carousel-nav.next {
-    right: 30px !important; /* Increased distance from card on mobile */
+    right: 1rem;
   }
   
   .nav-arrow {

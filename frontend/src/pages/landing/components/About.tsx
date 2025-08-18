@@ -4,6 +4,24 @@ import './About.css';
 const About: React.FC = () => {
   return (
     <section id="about" className="about">
+      {/* Background decorative lines */}
+      <div className="background-lines">
+        <div className="blue-line line-1">
+          <img 
+            src="/src/assets/background/hero/blue-line-1.svg" 
+            alt="ICEE 2026 Background Line 1"
+            className="line-svg"
+          />
+        </div>
+        <div className="blue-line line-2">
+          <img 
+            src="/src/assets/background/hero/blue-line-2.svg" 
+            alt="ICEE 2026 Background Line 2"
+            className="line-svg"
+          />
+        </div>
+      </div>
+
       <div className="container">
         <div className="about-content">
           <div className="what-is-icee">

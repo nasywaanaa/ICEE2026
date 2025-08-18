@@ -73,6 +73,17 @@ const Competition: React.FC = () => {
 
   return (
     <section className="competition" id="competition">
+      {/* Background decorative line */}
+      <div className="background-lines">
+        <div className="black-line line-3">
+          <img 
+            src="/src/assets/background/hero/black-line-3.svg" 
+            alt="ICEE 2026 Background Line 3"
+            className="line-svg"
+          />
+        </div>
+      </div>
+      
       <div className="container">
         <div className="competition-header">
           <h2 className="competition-title">
@@ -97,7 +108,7 @@ const Competition: React.FC = () => {
               let opacity = 1;
               let zIndex = 1;
               let blur = 0;
-              let pointerEvents = 'auto';
+              let pointerEvents: 'auto' | 'none' = 'auto';
               
               if (position === 0) {
                 translateX = 0;

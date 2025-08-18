@@ -1,8 +1,46 @@
 .past-event {
-  padding: 4rem 0;
+  padding: 12rem 0 6rem 0;
   background-color: #E9E9E9;
   position: relative;
   overflow: hidden;
+}
+
+.background-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.green-line {
+  position: absolute;
+  /* opacity: 0.08;
+  transition: opacity 0.3s ease; */
+  mix-blend-mode: multiply;
+}
+
+/* .green-line:hover {
+  opacity: 0.15;
+} */
+
+.line-5 {
+  top: -1%;
+  right: 52%;
+  width: 100%;
+  height: 100%;
+  transform: rotate(4deg);
+}
+
+.line-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: optimizeQuality;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .past-event-header {

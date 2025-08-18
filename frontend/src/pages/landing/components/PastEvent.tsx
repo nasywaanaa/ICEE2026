@@ -47,6 +47,17 @@ const PastEvent: React.FC = () => {
 
   return (
     <section className="past-event" id="past-event">
+      {/* Background decorative line */}
+      <div className="background-lines">
+        <div className="green-line line-5">
+          <img 
+            src="/src/assets/background/hero/green-line-5.svg" 
+            alt="ICEE 2026 Background Line 5"
+            className="line-svg"
+          />
+        </div>
+      </div>
+      
       <div className="container">
         <div className="past-event-header">
           <h2 className="past-event-title">
