@@ -51,7 +51,7 @@ const Header: React.FC = () => {
     <header className="header">
       <div className="container">
         <div className="logo">
-          <img src="/src/assets/Logo ICEE White.svg" alt="ICEE 2025" className="logo-image" />
+          <img src="/assets/Logo ICEE White.svg" alt="ICEE 2025" className="logo-image" />
         </div>
         <nav className="nav">
           <a 

@@ -245,7 +245,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
       <div className="team-name-section">
         <label className="field-label">Team Name</label>
         <div className="input-with-icon">
-          <img src="/src/assets/registration/info-team/team.svg" alt="Team" className="input-icon" />
+                          <img src="/assets/registration/info-team/team.svg" alt="Team" className="input-icon" />
           <input
             type="text"
             value={data.teamName}
@@ -267,7 +267,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Name</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/name.svg" alt="Name" className="input-icon" />
+              <img src="/assets/registration/info-team/name.svg" alt="Name" className="input-icon" />
               <input
                 type="text"
                 value={data.members[0]?.name || ''}
@@ -285,7 +285,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Phone Number</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/phone.svg" alt="Phone" className="input-icon" />
+              <img src="/assets/registration/info-team/phone.svg" alt="Phone" className="input-icon" />
               <input
                 type="tel"
                 value={data.members[0]?.phone || ''}
@@ -303,7 +303,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Email</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/email.svg" alt="Email" className="input-icon" />
+              <img src="/assets/registration/info-team/email.svg" alt="Email" className="input-icon" />
               <input
                 type="email"
                 value={data.members[0]?.email || ''}
@@ -321,7 +321,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Institution</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/institution.svg" alt="Institution" className="input-icon" />
+              <img src="/assets/registration/info-team/institution.svg" alt="Institution" className="input-icon" />
               <input
                 type="text"
                 value={data.members[0]?.institution || ''}
@@ -345,7 +345,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Name</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/name.svg" alt="Name" className="input-icon" />
+              <img src="/assets/registration/info-team/name.svg" alt="Name" className="input-icon" />
               <input
                 type="text"
                 value={data.members[1]?.name || ''}
@@ -363,7 +363,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Phone Number</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/phone.svg" alt="Phone" className="input-icon" />
+              <img src="/assets/registration/info-team/phone.svg" alt="Phone" className="input-icon" />
               <input
                 type="tel"
                 value={data.members[1]?.phone || ''}
@@ -381,7 +381,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Email</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/email.svg" alt="Email" className="input-icon" />
+              <img src="/assets/registration/info-team/email.svg" alt="Email" className="input-icon" />
               <input
                 type="email"
                 value={data.members[1]?.email || ''}
@@ -399,7 +399,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Institution</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/institution.svg" alt="Institution" className="input-icon" />
+              <img src="/assets/registration/info-team/institution.svg" alt="Institution" className="input-icon" />
               <input
                 type="text"
                 value={data.members[1]?.institution || ''}
@@ -423,7 +423,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Name</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/name.svg" alt="Name" className="input-icon" />
+              <img src="/assets/registration/info-team/name.svg" alt="Name" className="input-icon" />
               <input
                 type="text"
                 value={data.members[2]?.name || ''}
@@ -441,7 +441,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Phone Number</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/phone.svg" alt="Phone" className="input-icon" />
+              <img src="/assets/registration/info-team/phone.svg" alt="Phone" className="input-icon" />
               <input
                 type="tel"
                 value={data.members[2]?.phone || ''}
@@ -459,7 +459,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Email</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/email.svg" alt="Email" className="input-icon" />
+              <img src="/assets/registration/info-team/email.svg" alt="Email" className="input-icon" />
               <input
                 type="email"
                 value={data.members[2]?.email || ''}
@@ -477,7 +477,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           <div className="form-field">
             <label className="field-label">Institution</label>
             <div className="input-with-icon">
-              <img src="/src/assets/registration/info-team/institution.svg" alt="Institution" className="input-icon" />
+              <img src="/assets/registration/info-team/institution.svg" alt="Institution" className="input-icon" />
               <input
                 type="text"
                 value={data.members[2]?.institution || ''}

@@ -29,7 +29,7 @@ const EventCard: React.FC<EventCardProps> = ({ imageUrl, name, handleLearnMoreMo
           <span className="button-text">Learn More</span>
           <div className="button-arrow">
             <img 
-              src="/src/assets/arrow-right.svg" 
+              src="/assets/arrow-right.svg" 
               alt="arrow-right" 
               className="arrow-icon"
             />

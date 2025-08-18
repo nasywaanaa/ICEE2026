@@ -7,7 +7,7 @@ const RegistrationHeader: React.FC = () => {
     <header className="registration-header">
       <div className="registration-header-container">
         <Link to="/" className="registration-logo">
-          <img src="/src/assets/Logo ICEE White.svg" alt="ICEE 2025" className="registration-logo-image" />
+          <img src="/assets/Logo ICEE White.svg" alt="ICEE 2025" className="registration-logo-image" />
         </Link>
         
         <nav className="registration-nav">

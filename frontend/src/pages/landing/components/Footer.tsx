@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
         <div className="footer-bottom">
           <div className="footer-left">
             <img
-              src="/src/assets/Logo ICEE White.svg"
+              src="/assets/Logo ICEE White.svg"
               alt="ICEE 2025"
               className="footer-logo-image"
             />

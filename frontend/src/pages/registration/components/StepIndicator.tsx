@@ -9,9 +9,9 @@ interface Props {
 }
 
 const ICONS: Record<number, string> = {
-  1: "/src/assets/registration/tor.svg",
-  2: "/src/assets/registration/team profile.svg",
-  3: "/src/assets/registration/document.svg",
+      1: "/assets/registration/tor.svg",
+      2: "/assets/registration/team profile.svg",
+      3: "/assets/registration/document.svg",
 };
 
 const StepIndicator: React.FC<Props> = ({ steps, currentStep }) => {

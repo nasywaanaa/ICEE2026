@@ -17,25 +17,25 @@ const Competition: React.FC = () => {
       id: 'ibdc',
       title: 'IBDC',
       description: 'Innovative Bridge Design Competition is a competition where participants will strive to design an efficient and economic bridge while implementing technology-based innovation on its operational planning',
-      image: '/src/assets/bridge-competition.svg'
+      image: '/assets/bridge-competition.svg'
     },
     {
       id: 'cetc',
       title: 'CETC',
       description: 'Civil Engineering Case Competition challenges participants to solve real-world engineering problems with innovative and sustainable solutions',
-      image: '/src/assets/tender.svg'
+              image: '/assets/tender.svg'
     },
     {
       id: 'eic',
       title: 'EIC',
       description: 'Infrastructure Sustainability Challenge focuses on developing eco-friendly and sustainable infrastructure solutions for future cities',
-      image: '/src/assets/innovation.svg'
+              image: '/assets/innovation.svg'
     },
     {
       id: 'gecc',
       title: 'GECC',
       description: 'Tackle real-world geotechnical challenges by designing a disaster-prepared foundation through thorough data interpretation and analysis!',
-      image: '/src/assets/geo.svg'
+              image: '/assets/geo.svg'
     }
   ];
 
@@ -77,7 +77,7 @@ const Competition: React.FC = () => {
       <div className="background-lines">
         <div className="black-line line-3">
           <img 
-            src="/src/assets/background/hero/black-line-3.svg" 
+            src="/assets/background/hero/black-line-3.svg" 
             alt="ICEE 2026 Background Line 3"
             className="line-svg"
           />
@@ -171,7 +171,7 @@ const Competition: React.FC = () => {
                     <div className="card-illustration">
                       {competition.id === 'ibdc' && (
                         <img 
-                          src="/src/assets/bridge-competition.svg" 
+                          src="/assets/bridge-competition.svg" 
                           alt="Bridge Competition" 
                           className="competition-svg"
                           style={{ filter: 'brightness(0) invert(1)' }}
@@ -180,7 +180,7 @@ const Competition: React.FC = () => {
                       
                       {competition.id === 'cetc' && (
                         <img 
-                          src="/src/assets/tender.svg" 
+                          src="/assets/tender.svg" 
                           alt="Civil Engineering Tender Competition" 
                           className="competition-svg"
                           style={{ filter: 'brightness(0) invert(1)' }}
@@ -189,7 +189,7 @@ const Competition: React.FC = () => {
                       
                       {competition.id === 'eic' && (
                         <img 
-                          src="/src/assets/innovation.svg" 
+                          src="/assets/innovation.svg" 
                           alt="Engineering Innovation Competition" 
                           className="competition-svg"
                           style={{ filter: 'brightness(0) invert(1)' }}
@@ -198,7 +198,7 @@ const Competition: React.FC = () => {
                       
                       {competition.id === 'gecc' && (
                         <img 
-                          src="/src/assets/geo.svg" 
+                          src="/assets/geo.svg" 
                           alt="Geotechnical Engineering Case Competition" 
                           className="competition-svg"
                           style={{ filter: 'brightness(0) invert(1)' }}
@@ -221,14 +221,14 @@ const Competition: React.FC = () => {
           {/* Navigation arrows */}
           <button className="carousel-nav prev" onClick={prevSlide}>
             <img 
-              src="/src/assets/arrow-left-carousel.svg" 
+              src="/assets/arrow-left-carousel.svg" 
               alt="Previous" 
               className="nav-arrow"
             />
           </button>
           <button className="carousel-nav next" onClick={nextSlide}>
             <img 
-              src="/src/assets/arrow-right-carousel.svg" 
+              src="/assets/arrow-right-carousel.svg" 
               alt="Next" 
               className="nav-arrow"
             />

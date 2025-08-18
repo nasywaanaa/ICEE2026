@@ -50,7 +50,7 @@ const Events: React.FC = () => {
       <div className="background-lines">
         <div className="blue-line line-7">
           <img 
-            src="/src/assets/background/hero/blue-line-4.svg" 
+            src="/assets/background/hero/blue-line-4.svg" 
             alt="ICEE 2026 Background Line 7"
             className="line-svg"
           />

@@ -51,7 +51,7 @@ const PastEvent: React.FC = () => {
       <div className="background-lines">
         <div className="green-line line-5">
           <img 
-            src="/src/assets/background/hero/green-line-5.svg" 
+            src="/assets/background/hero/green-line-5.svg" 
             alt="ICEE 2026 Background Line 5"
             className="line-svg"
           />
@@ -76,7 +76,7 @@ const PastEvent: React.FC = () => {
         >
           <button className="carousel-nav prev" onClick={prevSlide}>
             <img 
-              src="/src/assets/arrow-left-carousel.svg" 
+              src="/assets/arrow-left-carousel.svg" 
               alt="Previous" 
               className="nav-arrow"
             />
@@ -116,7 +116,7 @@ const PastEvent: React.FC = () => {
           
           <button className="carousel-nav next" onClick={nextSlide}>
             <img 
-              src="/src/assets/arrow-right-carousel.svg" 
+              src="/assets/arrow-right-carousel.svg" 
               alt="Next" 
               className="nav-arrow"
             />
