@@ -269,6 +269,12 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1403px) {
+  .background-lines {
+    display: none;
+  }
+}
+
 @media (max-width: 1024px) {
   .carousel-nav.prev {
     left: 20px;

@@ -443,6 +443,12 @@
   align-self: flex-start;
 }
 
+@media (max-width: 1403px) {
+  .background-lines {
+    display: none;
+  }
+}
+
 @media (max-width: 1024px) {
   .event-card-wrapper {
     width: 350px;

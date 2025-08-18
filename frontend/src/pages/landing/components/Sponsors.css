@@ -159,6 +159,12 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1403px) {
+  .background-lines {
+    display: none;
+  }
+}
+
 @media (max-width: 1024px) {
   .sponsors-title {
     font-size: 3rem;

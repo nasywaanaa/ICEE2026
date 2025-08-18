@@ -11,6 +11,17 @@ interface CompetitionData {
 const Competition: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Add window resize listener
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const competitions: CompetitionData[] = [
     {
@@ -110,21 +121,25 @@ const Competition: React.FC = () => {
               let blur = 0;
               let pointerEvents: 'auto' | 'none' = 'auto';
               
+              // Check if we're on mobile (you can adjust this breakpoint)
+              const isMobile = windowWidth <= 1053;
+              const isSmallMobile = windowWidth <= 768;
+              
               if (position === 0) {
                 translateX = 0;
                 scale = 1;
                 opacity = 1;
                 zIndex = 10;
                 pointerEvents = 'auto';
-              } else if (position === -1) {
-                // Left preview card
+              } else if (position === -1 && !isMobile) {
+                // Left preview card - only show on desktop
                 translateX = -400;
                 scale = 0.8;
                 opacity = 0.6;
                 zIndex = 5;
                 pointerEvents = 'none';
-              } else if (position === 1) {
-                // Right preview card
+              } else if (position === 1 && !isMobile) {
+                // Right preview card - only show on desktop
                 translateX = 400;
                 scale = 0.8;
                 opacity = 0.6;
@@ -137,6 +152,26 @@ const Competition: React.FC = () => {
                 opacity = 0;
                 zIndex = 1;
                 pointerEvents = 'none';
+              }
+              
+              // Calculate card dimensions for responsive positioning
+              let cardWidth, cardHeight;
+              if (windowWidth <= 480) {
+                // Very small mobile screens
+                cardWidth = 260;
+                cardHeight = 320;
+              } else if (isSmallMobile) {
+                // Small mobile screens
+                cardWidth = 280;
+                cardHeight = 350;
+              } else if (isMobile) {
+                // Medium mobile screens
+                cardWidth = 320;
+                cardHeight = 400;
+              } else {
+                // Desktop screens
+                cardWidth = 500;
+                cardHeight = 500;
               }
               
               return (
@@ -152,8 +187,8 @@ const Competition: React.FC = () => {
                     position: 'absolute',
                     left: '50%',
                     top: '50%',
-                    marginLeft: '-250px', // Half of card width
-                    marginTop: '-250px'   // Half of card height (500px / 2)
+                    marginLeft: `-${cardWidth / 2}px`,
+                    marginTop: `-${cardHeight / 2}px`
                   }}
                   onClick={() => {
                     if (position !== 0) {

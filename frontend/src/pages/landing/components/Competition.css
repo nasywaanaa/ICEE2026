@@ -316,45 +316,65 @@
   opacity: 0.8;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1403px) {
+  .background-lines {
+    display: none;
+  }
+}
+
+@media (max-width: 1053px) {
   .competition-carousel {
-    height: 650px;
-    padding-top: 0px; 
+    height: 500px;
+    padding: 0 1rem;
   }
   
   .carousel-container {
-    padding-top: 20px; /* Reduced since logos are inside cards */
+    max-width: 100%;
+    height: 450px;
+    padding-top: 10px;
   }
   
   .competition-card {
-    width: 450px;
-    height: 450px;
+    width: 320px;
+    height: 400px;
   }
   
   .card-illustration {
-    top: 20px; /* Logo inside card */
-    width: 180px;
-    height: 140px;
+    top: 15px;
+    width: 140px;
+    height: 100px;
   }
   
   .competition-svg {
-    max-width: 160px;
-    max-height: 120px;
+    max-width: 120px;
+    max-height: 80px;
   }
   
   .card-content {
-    padding-top: 110px; /* Much closer to logo */
+    padding-top: 80px;
   }
   
   .card-title {
-    font-size: 3.5rem;
+    font-size: 2.2rem;
   }
   
-  /* Hide side cards on tablet */
+  .card-description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .register-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  /* Hide side cards on mobile */
   .competition-card[style*="translateX(-400px)"],
   .competition-card[style*="translateX(400px)"] {
     display: none;
   }
+  
+  /* Mobile card positioning is now handled in JS */
 }
 
 @media (max-width: 768px) {
@@ -364,74 +384,85 @@
   }
   
   .competition-title {
-    font-size: 3rem;
-  }
-  
-  .competition-description {
-    font-size: 1.1rem;
-  }
-  
-  .competition-carousel {
-    height: 550px; /* Increased for logo visibility */
-    padding-top: 0px; /* No padding to bring closer to text */
-  }
-  
-  .carousel-container {
-    padding-top: 20px; /* Reduced since logos are inside cards */
-  }
-  
-  .competition-card {
-    width: 350px;
-    height: 380px;
-  }
-  
-  .card-illustration {
-    top: 20px; /* Balanced top spacing */
-    width: 160px;
-    height: 120px;
-  }
-  
-  .register-btn {
-    margin-bottom: 20px; /* Bottom spacing to match top */
-  }
-  
-  .competition-svg {
-    max-width: 140px;
-    max-height: 100px;
-  }
-  
-  .card-content {
-    padding-top: 100px; /* Much closer to logo */
-  }
-  
-  .card-background {
-    padding: 1.5rem;
-  }
-  
-  .card-title {
     font-size: 2.5rem;
   }
   
-  .card-description {
+  .competition-description {
     font-size: 1rem;
   }
   
+  .competition-carousel {
+    height: 450px; /* Reduced height for mobile */
+    padding: 0 0.5rem; /* Reduced padding */
+  }
+  
+  .carousel-container {
+    height: 400px; /* Reduced container height */
+    padding-top: 10px;
+  }
+  
+  .competition-card {
+    width: 280px; /* Smaller card for mobile */
+    height: 350px; /* Reduced height */
+  }
+  
+  .card-illustration {
+    top: 10px; /* Reduced top spacing */
+    width: 120px;
+    height: 80px;
+  }
+  
+  .competition-svg {
+    max-width: 100px;
+    max-height: 70px;
+  }
+  
+  .card-content {
+    padding-top: 70px; /* Reduced padding */
+  }
+  
+  .card-background {
+    padding: 1rem; /* Reduced padding */
+  }
+  
+  .card-title {
+    font-size: 1.8rem; /* Smaller title */
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-description {
+    font-size: 0.85rem; /* Smaller description */
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  
+  .register-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
   .carousel-nav {
-    width: 48px;
-    height: 48px;
+    width: 40px; /* Smaller navigation buttons */
+    height: 40px;
   }
   
   .carousel-nav.prev {
-    left: 1rem;
+    left: 0.5rem;
   }
   
   .carousel-nav.next {
-    right: 1rem;
+    right: 0.5rem;
   }
   
   .nav-arrow {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Hide side cards on mobile */
+  .competition-card[style*="translateX(-400px)"],
+  .competition-card[style*="translateX(400px)"] {
+    display: none;
   }
 }
 
@@ -442,62 +473,79 @@
   }
   
   .competition-title {
-    font-size: 2.5rem;
-  }
-  
-  .competition-description {
-    font-size: 1rem;
-  }
-  
-  .competition-carousel {
-    height: 500px; 
-    padding-top: 0px; /* No padding to bring closer to text */
-  }
-  
-  .carousel-container {
-    padding-top: 20px; /* Reduced since logos are inside cards */
-  }
-  
-  .competition-card {
-    width: 300px;
-    height: 350px;
-  }
-  
-  .card-illustration {
-    top: 15px; /* Balanced top spacing */
-    width: 140px;
-    height: 100px;
-  }
-  
-  .register-btn {
-    margin-bottom: 15px; /* Bottom spacing to match top */
-  }
-  
-  .competition-svg {
-    max-width: 120px;
-    max-height: 80px;
-  }
-  
-  .card-content {
-    padding-top: 85px; /* Much closer to logo */
-  }
-  
-  .card-background {
-    padding: 1rem;
-  }
-  
-  .card-title {
     font-size: 2rem;
   }
   
-  .card-description {
+  .competition-description {
     font-size: 0.9rem;
-    margin-bottom: 1.5rem;
+  }
+  
+  .competition-carousel {
+    height: 400px; 
+    padding: 0 0.25rem; /* Minimal padding */
+  }
+  
+  .carousel-container {
+    height: 350px; /* Reduced container height */
+    padding-top: 5px;
+  }
+  
+  .competition-card {
+    width: 260px; /* Even smaller for very small screens */
+    height: 320px;
+  }
+  
+  .card-illustration {
+    top: 8px; /* Minimal top spacing */
+    width: 100px;
+    height: 70px;
+  }
+  
+  .competition-svg {
+    max-width: 80px;
+    max-height: 60px;
+  }
+  
+  .card-content {
+    padding-top: 60px; /* Reduced padding */
+  }
+  
+  .card-background {
+    padding: 0.8rem; /* Minimal padding */
+  }
+  
+  .card-title {
+    font-size: 1.5rem; /* Smaller title */
+    margin-bottom: 0.3rem;
+  }
+  
+  .card-description {
+    font-size: 0.8rem; /* Smaller description */
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
   }
   
   .register-btn {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .carousel-nav {
+    width: 36px; /* Even smaller navigation buttons */
+    height: 36px;
+  }
+  
+  .carousel-nav.prev {
+    left: 0.25rem;
+  }
+  
+  .carousel-nav.next {
+    right: 0.25rem;
+  }
+  
+  .nav-arrow {
+    width: 14px;
+    height: 14px;
   }
 }
 

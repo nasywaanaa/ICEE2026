@@ -228,6 +228,12 @@
 }
 
 /* Responsive: kurangi pita saat layar kecil */
+@media (max-width: 1403px) {
+  .hero-ribbons {
+    display: none;
+  }
+}
+
 @media (max-width: 1024px) {
   .ribbon { height: 60px; }
   .ribbon-text { font-size: 18px; }

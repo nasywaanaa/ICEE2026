@@ -114,6 +114,12 @@
   font-weight: 600;
 }
 
+@media (max-width: 1403px) {
+  .background-lines {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   .about {
     padding: 3rem 0;
