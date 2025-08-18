@@ -1,0 +1,128 @@
+.statistics {
+  padding: 5rem 0;
+  background-color: #E9E9E9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.stat-card {
+  background: #2c2c2c;
+  padding: 2rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #1B65FA, #00D46B);
+  border-radius: 20px;
+  padding: 3px;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  z-index: 1;
+}
+
+.stat-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.stat-number {
+  font-family: 'Bakbak One', cursive;
+  font-size: 4rem;
+  font-weight: 400;
+  background: linear-gradient(135deg, #1B65FA, #00D46B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-family: 'Bakbak One', cursive;
+  font-size: 1.5rem;
+  font-weight: 500;
+  font-weight: 600;
+  color: white;
+  position: relative;
+  z-index: 2;
+  line-height: 1.4;
+}
+
+@media (max-width: 968px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .stat-card {
+    padding: 1.5rem 1.5rem;
+  }
+  
+  .stat-number {
+    font-size: 3rem;
+  }
+  
+  .stat-label {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .statistics {
+    padding: 3rem 0;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 400px;
+  }
+  
+  .stat-card {
+    padding: 1.5rem 1.5rem;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .statistics {
+    padding: 2rem 0;
+  }
+  
+  .stat-card {
+    padding: 1rem 1rem;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+  }
+}

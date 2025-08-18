@@ -1,0 +1,124 @@
+.about {
+  padding: 5rem 0;
+  background-color: #E9E9E9;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.what-is-icee {
+  text-align: center;
+}
+
+.our-vision {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.section-title {
+  font-family: 'Bakbak One', cursive;
+  font-size: 4rem;
+  font-weight: 400;
+  color: #272727;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+.icee-gradient {
+  background: linear-gradient(135deg, #1B65FA, #00D46B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vision-gradient {
+  background: linear-gradient(135deg, #1B65FA, #00D46B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-description {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #272727;
+  line-height: 1.6;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.our-vision .section-title {
+  align-self: flex-start;
+  text-align: left;
+}
+
+.our-vision .section-description {
+  margin: 0;
+  text-align: right;
+  max-width: 70%;
+  align-self: flex-end;
+}
+
+.highlight-link {
+  color: #1B65FA;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 3rem 0;
+  }
+  
+  .about-content {
+    gap: 3rem;
+  }
+  
+  .section-title {
+    font-size: 3rem;
+  }
+  
+  .section-description {
+    font-size: 1.2rem;
+  }
+  
+  .our-vision {
+    align-items: center;
+  }
+  
+  .our-vision .section-title {
+    align-self: center;
+    text-align: center;
+  }
+  
+  .our-vision .section-description {
+    max-width: 100%;
+    align-self: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 2rem 0;
+  }
+  
+  .about-content {
+    gap: 2.5rem;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
+  .section-description {
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+}
+

@@ -1,0 +1,176 @@
+/* Team Profile Styles */
+.team-profile-content {
+  max-width: 900px;
+  margin: 100 auto;
+  padding: 0.25rem;
+  font-family: 'Gabarito', sans-serif;
+}
+
+.team-profile-title {
+  font-family: 'Bakbak One', cursive;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2d3748;
+  margin: 0 0 0.75rem 0;
+  text-align: left;
+}
+
+/* Team Name Section */
+.team-name-section {
+  margin-bottom: 1rem;
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #a0aec0;
+  z-index: 2;
+  pointer-events: none;
+  width: 22px;
+  height: 22px;
+}
+
+.team-input,
+.member-input {
+  width: 100%;
+  padding: 1.25rem 1rem 1.25rem 3.5rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-family: 'Gabarito', sans-serif;
+  color: #4a5568;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  min-height: 60px;
+}
+
+.team-input:focus,
+.member-input:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.team-input::placeholder,
+.member-input::placeholder {
+  color: #a0aec0;
+}
+
+.team-input.error,
+.member-input.error {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+  font-family: 'Gabarito', sans-serif;
+}
+
+/* Member Sections */
+.member-section {
+  margin-bottom: 1rem;
+}
+
+.member-title {
+  font-family: 'Bakbak One', cursive;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 0.5rem 0;
+}
+
+.member-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .team-profile-content {
+    padding: 0.25rem;
+    max-width: 100%;
+  }
+  
+  .team-profile-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .member-form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .member-title {
+    font-size: 1.1rem;
+  }
+  
+  .team-input,
+  .member-input {
+    padding: 1rem 0.75rem 1rem 3rem;
+    font-size: 1rem;
+    min-height: 55px;
+  }
+  
+  .input-icon {
+    left: 0.875rem;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-profile-content {
+    padding: 0.125rem;
+  }
+  
+  .team-profile-title {
+    font-size: 1.25rem;
+  }
+  
+  .member-title {
+    font-size: 1rem;
+  }
+  
+  .field-label {
+    font-size: 0.85rem;
+  }
+  
+  .team-input,
+  .member-input {
+    padding: 0.875rem 0.5rem 0.875rem 2.75rem;
+    font-size: 0.9rem;
+    min-height: 50px;
+  }
+  
+  .input-icon {
+    left: 0.75rem;
+    width: 18px;
+    height: 18px;
+  }
+}

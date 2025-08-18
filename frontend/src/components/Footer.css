@@ -1,0 +1,98 @@
+/* Base */
+.footer {
+  background: #1f1f1f;            /* dark bg */
+  color: #fff;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* keep footer content boxed */
+.footer-container {
+  width: min(1200px, 92%);
+  margin-inline: auto;
+}
+
+/* Row 1: centered nav */
+.footer-top {
+  display: flex;
+  justify-content: center;        /* center menu horizontally */
+  gap: 28px;
+  padding: 28px 0 16px;           /* give space above gradient */
+}
+
+.footer-nav-link {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.2px;
+  transition: opacity .2s ease, color .2s ease;
+}
+.footer-nav-link:hover { opacity: 0.85; }
+
+/* Gradient separator UNDER the nav (like the second image) */
+.footer-divider {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, #2b74ff 0%, #02b875 100%);
+}
+
+/* Row 2: bottom band with left and right */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  /* left vs right */
+  gap: 24px;
+  padding: 18px 0 28px;            /* more space below than above */
+}
+
+/* Left: logo + copy stacked */
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;                 /* wrap on small widths */
+}
+
+.footer-logo-image {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.footer-copy {
+  color: #d0d0d0;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Right: social icons inline */
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.social-icon {
+  display: inline-flex;
+  line-height: 0;
+  color: #ffffff;
+  opacity: 0.95;
+  transition: transform .15s ease, opacity .15s ease;
+}
+.social-icon:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-top { gap: 18px; padding: 20px 0 12px; }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .footer-left { justify-content: center; }
+}

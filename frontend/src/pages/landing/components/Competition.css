@@ -1,0 +1,507 @@
+.competition {
+  padding: 2rem 0;
+  padding-top: 2rem;
+  background-color: #E9E9E9;
+  position: relative;
+  overflow: visible;
+}
+
+/* Ensure no pseudo-elements on main competition section */
+.competition::before,
+.competition::after {
+  display: none !important;
+}
+
+.competition-header {
+  text-align: center;
+  margin-bottom: 0rem; /* Reduced from 4rem to bring carousel closer */
+}
+
+.competition-title {
+  font-family: 'Bakbak One', cursive;
+  font-size: 4rem;
+  font-weight: 400;
+  color: #272727;
+  margin-bottom: 1rem; 
+  line-height: 1.2;
+}
+
+.competition-gradient {
+  background: linear-gradient(135deg, #1B65FA, #00D46B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.competition-description {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #272727;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.competition-carousel {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0px; 
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 550px;
+  overflow: visible;
+  padding-top: 20px;
+}
+
+.carousel-container::before,
+.carousel-container::after {
+  display: none !important;
+}
+
+.competition-carousel::before,
+.competition-carousel::after {
+  display: none !important;
+}
+
+.competition-card {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 25px;
+  border: 1px solid white;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  background: transparent;
+}
+
+.card-blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: transparent;
+  backdrop-filter: blur(2px);
+  /* background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20.21%); */
+
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 25px;
+  z-index: 20;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.card-background {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1B65FA, #00D46B);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.card-illustration {
+  position: absolute;
+  top: 30px; /* Increased top spacing for balance */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+}
+
+.competition-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 180px;
+  max-height: 140px;
+  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.4));
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 130px; /* Much closer to logo */
+}
+
+.card-title {
+  font-family: 'Bakbak One', cursive;
+  font-size: 4rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem; /* Reduced margin - closer to description */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.card-description {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: 1rem; /* Reduced margin - closer to button */
+  opacity: 0.95;
+  max-width: 90%;
+}
+
+.register-btn {
+  background: linear-gradient(135deg, #1B65FA, #00D46B);
+  border: 1px solid white;
+  /* border: none; */
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-family: 'Gabarito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(27, 101, 250, 0.3);
+}
+
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(27, 101, 250, 0.4);
+  background: linear-gradient(135deg, #0056e0, #00b359);
+}
+
+.arrow {
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.register-btn:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* Preview card styles removed - now using competition-card for all positions */
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  min-width: 60px; /* Ensure perfect circle */
+  min-height: 60px; /* Ensure perfect circle */
+  border-radius: 50%;
+  background: white;
+  border: 2px solid rgba(27, 101, 250, 0.1);
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* backdrop-filter: blur(10px); */
+  padding: 0; 
+}
+
+.nav-arrow {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(214deg) brightness(97%) contrast(97%);
+  transition: filter 0.3s ease;
+}
+
+.carousel-nav:hover {
+  background: linear-gradient(135deg, #1B65FA, #00D46B);
+  color: white;
+  border-color: transparent;
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 12px 35px rgba(27, 101, 250, 0.3);
+}
+
+.carousel-nav:hover .nav-arrow {
+  filter: brightness(0) saturate(100%) invert(100%); /* White arrows on hover */
+}
+
+.carousel-nav:active {
+  transform: translateY(-50%) scale(0.95);
+  transition: all 0.1s ease;
+}
+
+.carousel-nav.prev {
+  left: 0px; /* Increased distance from card */
+}
+
+.carousel-nav.next {
+  right: 0px; /* Increased distance from card */
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 15;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(39, 39, 39, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: #1B65FA;
+  transform: scale(1.2);
+}
+
+.dot:hover {
+  background: #1B65FA;
+  opacity: 0.8;
+}
+
+@media (max-width: 1024px) {
+  .competition-carousel {
+    height: 650px;
+    padding-top: 0px; 
+  }
+  
+  .carousel-container {
+    padding-top: 20px; /* Reduced since logos are inside cards */
+  }
+  
+  .competition-card {
+    width: 450px;
+    height: 450px;
+  }
+  
+  .card-illustration {
+    top: 20px; /* Logo inside card */
+    width: 180px;
+    height: 140px;
+  }
+  
+  .competition-svg {
+    max-width: 160px;
+    max-height: 120px;
+  }
+  
+  .card-content {
+    padding-top: 110px; /* Much closer to logo */
+  }
+  
+  .card-title {
+    font-size: 3.5rem;
+  }
+  
+  /* Hide side cards on tablet */
+  .competition-card[style*="translateX(-400px)"],
+  .competition-card[style*="translateX(400px)"] {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .competition {
+    padding: 2rem 0; /* Reduced mobile padding */
+    padding-top: 2rem; /* Much smaller top padding on mobile */
+  }
+  
+  .competition-title {
+    font-size: 3rem;
+  }
+  
+  .competition-description {
+    font-size: 1.1rem;
+  }
+  
+  .competition-carousel {
+    height: 550px; /* Increased for logo visibility */
+    padding-top: 0px; /* No padding to bring closer to text */
+  }
+  
+  .carousel-container {
+    padding-top: 20px; /* Reduced since logos are inside cards */
+  }
+  
+  .competition-card {
+    width: 350px;
+    height: 380px;
+  }
+  
+  .card-illustration {
+    top: 20px; /* Balanced top spacing */
+    width: 160px;
+    height: 120px;
+  }
+  
+  .register-btn {
+    margin-bottom: 20px; /* Bottom spacing to match top */
+  }
+  
+  .competition-svg {
+    max-width: 140px;
+    max-height: 100px;
+  }
+  
+  .card-content {
+    padding-top: 100px; /* Much closer to logo */
+  }
+  
+  .card-background {
+    padding: 1.5rem;
+  }
+  
+  .card-title {
+    font-size: 2.5rem;
+  }
+  
+  .card-description {
+    font-size: 1rem;
+  }
+  
+  .carousel-nav {
+    width: 50px;
+    height: 50px;
+    min-width: 50px; /* Ensure perfect circle on mobile */
+    min-height: 50px; /* Ensure perfect circle on mobile */
+  }
+  
+  .carousel-nav.prev {
+    left: 30px !important; /* Increased distance from card on mobile */
+  }
+  
+  .carousel-nav.next {
+    right: 30px !important; /* Increased distance from card on mobile */
+  }
+  
+  .nav-arrow {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .competition {
+    padding: 1.5rem 0; /* Reduced small mobile padding */
+    padding-top: 1.5rem; /* Much smaller top padding on small mobile */
+  }
+  
+  .competition-title {
+    font-size: 2.5rem;
+  }
+  
+  .competition-description {
+    font-size: 1rem;
+  }
+  
+  .competition-carousel {
+    height: 500px; 
+    padding-top: 0px; /* No padding to bring closer to text */
+  }
+  
+  .carousel-container {
+    padding-top: 20px; /* Reduced since logos are inside cards */
+  }
+  
+  .competition-card {
+    width: 300px;
+    height: 350px;
+  }
+  
+  .card-illustration {
+    top: 15px; /* Balanced top spacing */
+    width: 140px;
+    height: 100px;
+  }
+  
+  .register-btn {
+    margin-bottom: 15px; /* Bottom spacing to match top */
+  }
+  
+  .competition-svg {
+    max-width: 120px;
+    max-height: 80px;
+  }
+  
+  .card-content {
+    padding-top: 85px; /* Much closer to logo */
+  }
+  
+  .card-background {
+    padding: 1rem;
+  }
+  
+  .card-title {
+    font-size: 2rem;
+  }
+  
+  .card-description {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .register-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .competition {
+    padding-top: 1.5rem; /* Reduced since no overlapping logos */
+  }
+  
+  .competition-carousel {
+    padding-top: 0px;
+  }
+  
+  .carousel-container {
+    padding-top: 20px; /* Reduced since logos are inside cards */
+  }
+  
+  .card-illustration {
+    top: 12px; /* Balanced top spacing */
+    width: 120px;
+    height: 90px;
+  }
+  
+  .register-btn {
+    margin-bottom: 12px; /* Bottom spacing to match top */
+  }
+  
+  .competition-svg {
+    max-width: 100px;
+    max-height: 70px;
+  }
+  
+  .card-content {
+    padding-top: 75px; /* Much closer to logo */
+  }
+}
+
+

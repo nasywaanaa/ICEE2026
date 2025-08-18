@@ -1,0 +1,81 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  overflow-x: hidden;
+  width: 100%;
+  background-color: #E9E9E9;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+.container-limited {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Main content spacing */
+main {
+  padding-top: 80px; /* Account for fixed header */
+  overflow: visible; /* Ensure child elements can extend beyond bounds */
+}
+
+/* Utility classes */
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 2rem;
+}
+
+.mt-4 {
+  margin-top: 2rem;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+  
+  .container-limited {
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .container-limited {
+    padding: 0 1rem;
+  }
+  
+  main {
+    padding-top: 70px; /* Reduce for smaller header on mobile */
+  }
+}

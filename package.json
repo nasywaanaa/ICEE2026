@@ -1,0 +1,21 @@
+{
+  "name": "icee-2025",
+  "version": "1.0.0",
+  "description": "ICEE 2025 - ITB Civil Engineering Expo - Frontend and Backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "clean": "rm -rf frontend/node_modules backend/node_modules node_modules"
+  },
+  "keywords": ["icee", "civil-engineering", "expo", "itb", "react", "express"],
+  "author": "ICEE Team",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
