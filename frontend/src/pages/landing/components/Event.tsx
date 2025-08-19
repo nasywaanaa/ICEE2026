@@ -45,7 +45,7 @@ const Events: React.FC = () => {
   };
 
   return (
-    <section className="event">
+    <section className="event" id="event">
       {/* Background decorative line */}
       <div className="background-lines">
         <div className="blue-line line-7">
