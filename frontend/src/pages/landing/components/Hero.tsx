@@ -1,9 +1,25 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Hero.css';
 
 const Hero: React.FC = () => {
+  const navigate = useNavigate();
+  
   // teks berulang untuk mengisi pita
   const REPEAT = ('ICEE 2026     ').repeat(12);
+
+  const handleLearnMore = () => {
+    // Scroll to About section
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleRegisterNow = () => {
+    // Navigate to registration page
+    navigate('/registration');
+  };
 
   return (
     <section className="hero" id="home">
@@ -45,8 +61,8 @@ const Hero: React.FC = () => {
               </p>
             </div>
             <div className="hero-actions">
-              <button className="cta-button primary">Learn More</button>
-              <button className="cta-button secondary">Register Now</button>
+              <button className="cta-button primary" onClick={handleLearnMore}>Learn More</button>
+              <button className="cta-button secondary" onClick={handleRegisterNow}>Register Now</button>
             </div>
           </div>
         </div>
