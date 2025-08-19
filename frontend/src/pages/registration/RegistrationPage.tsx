@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import RegistrationHeader from './components/RegistrationHeader'
 import StepIndicator from './components/StepIndicator'
 import TermsOfReference from './components/TermsOfReference'
@@ -8,6 +9,7 @@ import RegistrationSuccess from './components/RegistrationSuccess'
 import './RegistrationPage.css'
 
 const RegistrationPage: React.FC = () => {
+  const [searchParams] = useSearchParams()
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState({
     selectedCompetition: '',
@@ -33,6 +35,17 @@ const RegistrationPage: React.FC = () => {
   const [areDocumentsValid, setAreDocumentsValid] = useState(false)
   const [showSubmitModal, setShowSubmitModal] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+
+  // Handle URL parameters for competition selection
+  useEffect(() => {
+    const competitionFromUrl = searchParams.get('competition')
+    if (competitionFromUrl && !formData.selectedCompetition) {
+      setFormData(prev => ({
+        ...prev,
+        selectedCompetition: competitionFromUrl
+      }))
+    }
+  }, [searchParams, formData.selectedCompetition])
 
   // Validate documents when they change
   React.useEffect(() => {

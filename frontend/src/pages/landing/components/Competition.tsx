@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Competition.css';
 
 interface CompetitionData {
@@ -12,6 +13,7 @@ const Competition: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const navigate = useNavigate();
 
   // Add window resize listener
   useEffect(() => {
@@ -25,30 +27,35 @@ const Competition: React.FC = () => {
 
   const competitions: CompetitionData[] = [
     {
-      id: 'ibdc',
+      id: 'IBDC',
       title: 'IBDC',
-      description: 'Innovative Bridge Design Competition is a competition where participants will strive to design an efficient and economic bridge while implementing technology-based innovation on its operational planning',
+      description: 'Leverage advanced data analytics and cutting-edge SHMS to design a bridge that thinks ahead—detecting potential risks early, optimizing maintenance, and ensuring unmatched safety, durability, and sustainability!',
       image: '/assets/bridge-competition.svg'
     },
     {
-      id: 'cetc',
+      id: 'CETC',
       title: 'CETC',
-      description: 'Civil Engineering Case Competition challenges participants to solve real-world engineering problems with innovative and sustainable solutions',
+      description: 'Prepare a forward-thinking and competitive tender proposal for a vital construction project, featuring breakthrough safety (K3) innovations that protect workers, boost efficiency, and redefine workplace safety standards!',
               image: '/assets/tender.svg'
     },
     {
-      id: 'eic',
-      title: 'EIC',
-      description: 'Infrastructure Sustainability Challenge focuses on developing eco-friendly and sustainable infrastructure solutions for future cities',
+      id: 'ITEC',
+      title: 'ITEC',
+      description: 'Shape an innovation to transform urban mobility—harnessing data-driven innovation and real-time digital insights to create smarter, more connected, and sustainable transportation systems!',
               image: '/assets/innovation.svg'
     },
     {
-      id: 'gecc',
+      id: 'GECC',
       title: 'GECC',
-      description: 'Tackle real-world geotechnical challenges by designing a disaster-prepared foundation through thorough data interpretation and analysis!',
+      description: 'Solve real-world geotechnical challenges by applying data-driven geotechnics in modern monitoring systems—enabling faster decisions, proactive maintenance, and long-term safety!',
               image: '/assets/geo.svg'
     }
   ];
+
+  const handleRegister = (competitionId: string) => {
+    // Navigate to registration page with the selected competition
+    navigate(`/registration?competition=${competitionId}`);
+  };
 
   const nextSlide = () => {
     if (isAnimating) return;
@@ -204,7 +211,7 @@ const Competition: React.FC = () => {
                   
                   <div className="card-background">
                     <div className="card-illustration">
-                      {competition.id === 'ibdc' && (
+                      {competition.id === 'IBDC' && (
                         <img 
                           src="/assets/bridge-competition.svg" 
                           alt="Bridge Competition" 
@@ -213,7 +220,7 @@ const Competition: React.FC = () => {
                         />
                       )}
                       
-                      {competition.id === 'cetc' && (
+                      {competition.id === 'CETC' && (
                         <img 
                           src="/assets/tender.svg" 
                           alt="Civil Engineering Tender Competition" 
@@ -222,7 +229,7 @@ const Competition: React.FC = () => {
                         />
                       )}
                       
-                      {competition.id === 'eic' && (
+                      {competition.id === 'ITEC' && (
                         <img 
                           src="/assets/innovation.svg" 
                           alt="Engineering Innovation Competition" 
@@ -231,7 +238,7 @@ const Competition: React.FC = () => {
                         />
                       )}
                       
-                      {competition.id === 'gecc' && (
+                      {competition.id === 'GECC' && (
                         <img 
                           src="/assets/geo.svg" 
                           alt="Geotechnical Engineering Case Competition" 
@@ -243,7 +250,7 @@ const Competition: React.FC = () => {
                     <div className="card-content">
                       <h3 className="card-title">{competition.title}</h3>
                       <p className="card-description">{competition.description}</p>
-                      <button className="register-btn">
+                      <button className="register-btn" onClick={() => handleRegister(competition.id)}>
                         Register <span className="arrow">→</span>
                       </button>
                     </div>
