@@ -136,11 +136,11 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(
+  /* background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.09) 20.21%,
     rgba(36, 106, 115, 0.8) 87.71%
-  );
+  ); */
   padding: 3rem 2rem 2rem;
   border-radius: 0 0 20px 20px;
 }
