@@ -411,7 +411,18 @@
   max-width: min(1100px, 92vw);
   width: 100%;
   padding: 1rem;
+  min-width: auto;
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  border-radius: 16px;
+  margin: 12px auto;
   background: #ffff; /* samakan tema */
+}
+
+@supports (height: 100dvh) {
+  .modal-content.images-only {
+    max-height: calc(100dvh - 24px);
+  }
 }
 
 /* close button di pojok */
@@ -437,6 +448,11 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+.grid-item {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
 .modal-image {
   width: 100%;
   height: 100%;
@@ -447,10 +463,17 @@
 /* responsif */
 @media (max-width: 1024px) {
   .modal-images-grid { grid-template-columns: repeat(2, 1fr); }
+  .modal-content.images-only { max-width: 94vw; }
 }
 @media (max-width: 640px) {
   .modal-images-grid { grid-template-columns: 1fr; }
-  .modal-content.images-only { padding: 0.75rem; }
+  .modal-content.images-only {
+    padding: 0.75rem;
+    max-width: 96vw;
+    min-width: auto;
+  }
+  .modal-header-title { font-size: clamp(20px, 6vw, 24px); }
+  .grid-item { aspect-ratio: 4 / 3; }
 }
 
 /* ===== Header judul di modal ===== */
@@ -459,6 +482,12 @@
   flex-direction: column;
   align-items: center; /* judul & subtitle juga ikut rata tengah */
   text-align: center;  /* biar teksnya juga ke tengah */
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+  padding-top: 0.25rem;
+  padding-bottom: 0.5rem;
 }
 
 .modal-header-title {
@@ -529,3 +558,10 @@
 .modal-images-grid {
   margin-top: 8px;
 }
+
+@media (max-width: 480px) {
+  .modal-close { top: 8px; right: 8px; }
+  .close-icon { width: 32px; height: 32px; }
+  .modal-content.images-only { max-width: 98vw; margin: 8px auto; }
+}
+
