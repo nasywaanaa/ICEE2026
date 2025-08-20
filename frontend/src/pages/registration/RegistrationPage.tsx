@@ -26,7 +26,8 @@ const RegistrationPage: React.FC = () => {
     documents: {
       studentCard: null,
       enrollmentProof: null,
-      twibbonProof: null,
+      postProof: null,
+      storyProof: null,
       paymentProof: null
     }
   })
@@ -49,8 +50,8 @@ const RegistrationPage: React.FC = () => {
 
   // Validate documents when they change
   React.useEffect(() => {
-    const { studentCard, enrollmentProof, twibbonProof, paymentProof } = formData.documents
-    const allDocumentsUploaded = studentCard && enrollmentProof && twibbonProof && paymentProof
+    const { studentCard, enrollmentProof, postProof, storyProof, paymentProof } = formData.documents
+    const allDocumentsUploaded = studentCard && enrollmentProof && postProof && storyProof && paymentProof
     setAreDocumentsValid(!!allDocumentsUploaded)
   }, [formData.documents])
 
@@ -86,10 +87,11 @@ const RegistrationPage: React.FC = () => {
       fd.append('termsAccepted', String(formData.termsAccepted))
       fd.append('teamProfile', JSON.stringify(formData.teamProfile))
 
-      const { studentCard, enrollmentProof, twibbonProof, paymentProof } = formData.documents
+      const { studentCard, enrollmentProof, postProof, storyProof, paymentProof } = formData.documents
       if (studentCard) fd.append('studentCard', studentCard)
       if (enrollmentProof) fd.append('enrollmentProof', enrollmentProof)
-      if (twibbonProof) fd.append('twibbonProof', twibbonProof)
+      if (postProof) fd.append('postProof', postProof)
+      if (storyProof) fd.append('storyProof', storyProof)
       if (paymentProof) fd.append('paymentProof', paymentProof)
 
       const RAW_BASE = (import.meta as any).env?.VITE_API_BASE_URL || ''

@@ -30,7 +30,8 @@ const uploadSingle = upload.single('file');
 const uploadDocuments = upload.fields([
   { name: 'studentCard', maxCount: 1 },
   { name: 'enrollmentProof', maxCount: 1 },
-  { name: 'twibbonProof', maxCount: 1 },
+  { name: 'postProof', maxCount: 1 },
+  { name: 'storyProof', maxCount: 1 },
   { name: 'paymentProof', maxCount: 1 },
 ]);
 

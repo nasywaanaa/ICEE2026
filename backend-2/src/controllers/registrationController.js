@@ -43,7 +43,7 @@ exports.createRegistrationWithFiles = async (req, res) => {
     }
 
     const docs = {};
-    const fields = ['studentCard', 'enrollmentProof', 'twibbonProof', 'paymentProof'];
+    const fields = ['studentCard', 'enrollmentProof', 'postProof', 'storyProof', 'paymentProof'];
     for (const field of fields) {
       const fileList = req.files?.[field];
       if (fileList && fileList[0]) {

@@ -4,7 +4,8 @@ import './RequiredDocuments.css'
 interface DocumentsData {
   studentCard: File | null
   enrollmentProof: File | null
-  twibbonProof: File | null
+  postProof: File | null
+  storyProof: File | null
   paymentProof: File | null
 }
 
@@ -112,8 +113,15 @@ const RequiredDocuments: React.FC<RequiredDocumentsProps> = ({ data, onChange })
         />
         
         <FileUploadCard
-          title="Proof of Twibbon and Poster"
-          field="twibbonProof"
+          title="Proof of Instagram Post"
+          field="postProof"
+          accept=".pdf"
+          supportedFormats="Only support pdf files"
+        />
+        
+        <FileUploadCard
+          title="Proof of Instagram Story"
+          field="storyProof"
           accept=".pdf"
           supportedFormats="Only support pdf files"
         />

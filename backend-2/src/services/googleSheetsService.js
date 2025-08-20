@@ -32,7 +32,7 @@ async function addRegistration(registrationData) {
     );
   });
 
-  const documentFields = ['studentCard', 'enrollmentProof', 'twibbonProof', 'paymentProof'];
+  const documentFields = ['studentCard', 'enrollmentProof', 'postProof', 'storyProof', 'paymentProof'];
   documentFields.forEach((field) => {
     rowData.push(documents[field]?.driveLink || '');
   });
@@ -69,7 +69,7 @@ async function getAllRegistrations() {
       leaderName, leaderEmail, leaderPhone, leaderInstitution, leaderRole,
       member1Name, member1Email, member1Phone, member1Institution, member1Role,
       member2Name, member2Email, member2Phone, member2Institution, member2Role,
-      studentCardLink, enrollmentProofLink, twibbonProofLink, paymentProofLink,
+      studentCardLink, enrollmentProofLink, postProofLink, storyProofLink, paymentProofLink,
     ] = row;
     return {
       id: index + 1,
@@ -92,7 +92,8 @@ async function getAllRegistrations() {
       documents: {
         studentCard: { driveLink: studentCardLink },
         enrollmentProof: { driveLink: enrollmentProofLink },
-        twibbonProof: { driveLink: twibbonProofLink },
+        postProof: { driveLink: postProofLink },
+        storyProof: { driveLink: storyProofLink },
         paymentProof: { driveLink: paymentProofLink },
       },
       submissionDate,
