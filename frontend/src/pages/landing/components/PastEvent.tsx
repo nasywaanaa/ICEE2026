@@ -69,7 +69,7 @@ export default function PastEvent() {
           </h2>
           <p className="past-event-description">
             In 2025, we have exciting new offerings lined up for you. Get ready for innovative solutions and 
-            exceptional experiences. We can't wait to share what's coming next!
+            exceptional experiences. We can't wait to share what's coming next! test
           </p>
         </div>
 
