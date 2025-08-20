@@ -101,15 +101,15 @@ const RequiredDocuments: React.FC<RequiredDocumentsProps> = ({ data, onChange })
         <FileUploadCard
           title="Student Card"
           field="studentCard"
-          accept=".zip"
-          supportedFormats="Only support zip files"
+          accept=".pdf"
+          supportedFormats="Only support pdf files"
         />
         
         <FileUploadCard
           title="Proof of Enrollment"
           field="enrollmentProof"
-          accept=".zip"
-          supportedFormats="Only support zip files"
+          accept=".pdf"
+          supportedFormats="Only support pdf files"
         />
         
         <FileUploadCard
