@@ -53,11 +53,12 @@
   text-align: center;
   margin-bottom: 0rem; /* Reduced from 4rem to bring carousel closer */
   background-color: #E9E9E9;
-  padding: 1rem 2rem;
+  padding: 0rem 0rem;
   border-radius: 0;
   position: relative;
   z-index: 2;
-  max-width: 800px;
+  max-width: 850px;
+  /* max-height: 800px; */
   margin-left: auto;
   margin-right: auto;
 }
@@ -84,8 +85,8 @@
   font-weight: 400;
   color: #272727;
   line-height: 1.6;
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 1200px;
+  margin: 2rem auto;
 }
 
 .competition-carousel {

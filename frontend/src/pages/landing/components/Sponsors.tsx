@@ -39,7 +39,7 @@ const Sponsors: React.FC = () => {
             Our <span className="sponsors-gradient">Sponsors & Media Partners</span>
           </h2>
           <p className="sponsors-description">
-            ICEE 2025 owes its success to the tremendous support of our amazing sponsors & media partners.
+            ICEE 6 owes its success to the tremendous support of our amazing sponsors & media partners.
             They will be leading workshops, talking about job opportunities, giving away prizes, and offering much
             more throughout the event.
           </p>

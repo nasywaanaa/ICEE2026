@@ -108,8 +108,7 @@ const Competition: React.FC = () => {
             Our <span className="competition-gradient">Competition</span>
           </h2>
           <p className="competition-description">
-            In 2025, we have exciting new offerings lined up for you. Get ready for innovative solutions and 
-            exceptional experiences. We can't wait to share what's coming next!
+          Step into 2026 and uncover the advancement of civil engineering through our thrilling competitions listed below! Prepare yourselves to be inspired by game-changing solutions, creative breakthroughs, and unforgettable experiences. Let’s dive into the next chapter of innovation!
           </p>
         </div>
 

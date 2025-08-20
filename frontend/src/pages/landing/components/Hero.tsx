@@ -57,7 +57,7 @@ const Hero: React.FC = () => {
             </h1>
             <div className="hero-description">
               <p>
-                ICEE ITB 2025 carries the theme <span className="theme-highlight">"Integrating Strategies for Long-Term Infrastructure Resilience"</span> to address major challenges in modern infrastructure development. Climate change and frequent natural disasters underscore the need for infrastructure that is not only durable but also adaptable to extreme conditions. Rapid population growth urbanization further emphasize the importance of reliable and sustainable infrastructure.
+              Step into 2026 and uncover the advancement of civil engineering through our thrilling competitions listed below! Prepare yourselves to be inspired by game-changing solutions, creative breakthroughs, and unforgettable experiences. Let’s dive into the next chapter of innovation! <span className="theme-highlight">"Integrating Strategies for Long-Term Infrastructure Resilience"</span> to address major challenges in modern infrastructure development. Climate change and frequent natural disasters underscore the need for infrastructure that is not only durable but also adaptable to extreme conditions. Rapid population growth urbanization further emphasize the importance of reliable and sustainable infrastructure.
               </p>
             </div>
             <div className="hero-actions">

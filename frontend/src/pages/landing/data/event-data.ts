@@ -3,7 +3,7 @@ export const eventData = [
     id: 3,
     name: "Seminar",
     description:
-      "By gathering experts and speaker from well-known and prestigious company, ICEE Seminar 2025 aims to focus on exploring the latest advancement and challenges in building resilient infrastructure. With the main topic \"Integrating Strategies for Long Term Infrastructure Resilience\", this seminar will take you to look closer about resilience and it's implementation on Infrastructure in Civil Engineering aspect.\nSo, stay tune for more information!",
+      "By gathering an esteemed panel of subject-matter experts and influential industry leaders, the ICEE Seminar ITB 2026 serves as a platform for exchanging forward-looking perspectives on the future of infrastructure. Through a curated program of in-depth presentations and dynamic, solutions-driven discussions, participants will engage with emerging trends, address complex challenges, and refine both their technical proficiency and strategic acumen in the civil engineering arena. Beyond the formal proceedings, the seminar cultivates a collaborative environment that encourages knowledge exchange, fosters lasting professional relationships, and contributes to the long-term advancement of the industry.",
     image: "/assets/conference.svg",
     documentationImage: [
       "/events/seminar/1.webp",
@@ -14,9 +14,9 @@ export const eventData = [
   },
   {
     id: 1,
-    name: "Workshop",
+    name: "Connect-H",
     description:
-      "As a mitigation for infrastructure failure, design automation needs to be accomplished to obtain a comprehensive analysis. In order to realize infrastructure resilience as part of a long-term infrastructure integration strategy, ICEE Workshop provides software training and offering an ashtonishing experience in using sophisticated software for designing, scheduling, and monitoring process of construction projects. By joining ICEE Workshop, feel the experience of exploring the details of human thinking and work.",
+      "Connect-H is a collaborative workshop with Hilti that offers exclusive training to explore and experience the latest anchor technology. Guided by experienced instructors, participants will have the opportunity to learn about Hilti’s anchor applications and get hands-on experience with a range of Hilti tools. This workshop aims to help participants compare conventional methods with the latest innovations designed to advance Indonesia’s construction industry. Join this workshop and experience the convenience, speed, and precision that can drive the success of your projects.",
     image: "/assets/conference.svg",
     documentationImage: [
       "/events/workshop/1.webp",
@@ -29,7 +29,7 @@ export const eventData = [
     id: 2,
     name: "Expo",
     description:
-      "For Integrating Strategies in Long-Term Infrastructure Resilience, ICEE showcases companies that embodied the mission and strategies in inventing Resilience Infrastructure. This exhibition dedicated to acquire knowledge that broadens the resilience of infrastructure to withstand the excessive loads it receives. Furthermore, this exhibition advanced a deeper understanding of happening issues and pushed the limit of experimentation to create innovation in terms of infrastructure resilience.\nSo any hesitation to join this exhibition?",
+      "As one of the highlights of ICEE, the Expo showcases companies that embody the spirit of innovation and advancement in engineering and infrastructure. This exhibition is dedicated to provide knowledge that broadens perspectives, sparks collaboration, and enhances the capacity of infrastructure and engineering solutions to meet future challenges. Furthermore, the exhibition fosters a deeper understanding of current issues and pushes the boundaries of experimentation to create breakthroughs across various fields. So, any hesitation to join this exhibition?",
     image: "/assets/conference.svg",
     documentationImage: [
       "/events/expo/1.webp",
@@ -56,7 +56,7 @@ export const eventData = [
     id: 5,
     name: "ICEETalks",
     description:
-      "ICEETalks is an exclusive and enganging talkshow destine to educating and exploring the world of civil engineering. It features experts who share their insights and knowledge on innovation, technologies, and sustainability in Integrating Strategies for Long-Term Resilience. \"ICEETalks\" provides valuable knowledge and fosters a deeper understanding of civil engineering's impact on society and the environment.",
+      "By gathering an esteemed panel of subject-matter experts and influential industry leaders, the ICEE Seminar ITB 2026 serves as a platform for exchanging forward-looking perspectives on the future of infrastructure. Through a curated program of in-depth presentations and dynamic, solutions-driven discussions, participants will engage with emerging trends, address complex challenges, and refine both their technical proficiency and strategic acumen in the civil engineering arena. Beyond the formal proceedings, the seminar cultivates a collaborative environment that encourages knowledge exchange, fosters lasting professional relationships, and contributes to the long-term advancement of the industry.",
     image: "/assets/conference.svg",
     documentationImage: [
       "/events/iceetalks/1.webp",
