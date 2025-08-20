@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { eventData } from "../data/event-data";
 import "./Event.css";
 
@@ -19,12 +19,23 @@ const Events: React.FC = () => {
     e.stopPropagation();
     setSelectedEvent(event);
     setIsModalOpen(true);
+    // Prevent body scrolling when modal is open
+    document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedEvent(null);
+    // Restore body scrolling when modal is closed
+    document.body.style.overflow = 'unset';
   };
+
+  // Cleanup effect to restore body scroll when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % eventData.length);
@@ -101,7 +112,6 @@ const Events: React.FC = () => {
                     <button 
                       className="event-card-button"
                       onClick={(e) => handleLearnMoreModal(event, e)}
-                      disabled
                     >
                       <span className="button-text">Learn More</span>
                       <div className="button-arrow">
@@ -132,63 +142,67 @@ const Events: React.FC = () => {
 
       {isModalOpen && selectedEvent && (
         <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal}>
-              <svg className="close-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <div className="modal-content modal-content-extra-wide" onClick={(e) => e.stopPropagation()}>
+            {/* <button 
+              className="circle-button" 
+              onClick={closeModal} 
+              aria-label="Back"
+            >
+              <svg className="button-icon" viewBox="0 0 24 24" fill="none">
+                <path 
+                  d="M19 12H5M5 12L12 19M5 12L12 5" 
+                  stroke="white" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                />
               </svg>
-            </button>
+            </button> */}
+
             
             <div className="modal-body">
               {/* LEFT: text + actions */}
               <div className="modal-info">
+                
                 <h3 className="modal-title">
-                  <span className="modal-title-blue">ICEE&nbsp;</span>
-                  <span className="modal-title-green">National Conference</span>
+                  <span className="modal-title-blue">ICEE {selectedEvent.name}</span>            
                 </h3>
 
                 <p className="modal-description">
-                  ICEE National Student Conference 2024 is a civil engineering issue discussion forum that
-                  involving many field of study on its discussion, so that the issue can be seen from wider
-                  point of view. The output from this conference is a conclusion of the issue's solution
-                  in form of memorandum that agreed by all participants.
+                  {selectedEvent.description}
                 </p>
 
                 <div className="modal-actions">
-                  <button className="modal-button back-button" onClick={closeModal} aria-label="Back">
+                  {/* <button 
+                    className="circle-button" 
+                    onClick={closeModal} 
+                    aria-label="Back"
+                  >
                     <svg className="button-icon" viewBox="0 0 24 24" fill="none">
-                      <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path 
+                        d="M19 12H5M5 12L12 19M5 12L12 5" 
+                        stroke="white" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      />
                     </svg>
-                  </button>
-
-                  <button className="modal-button register-button">
-                    <span>Register</span>
-                    <span className="register-dot" aria-hidden>
-                      <svg viewBox="0 0 24 24">
-                        <path d="M5 12H19M19 12L12 5M19 12L12 19" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </span>
-                  </button>
+                  </button> */}
                 </div>
               </div>
 
               {/* RIGHT: stacked images */}
-              <div className="modal-images">
-                <div className="image-stack">
-                  <div className="stacked-image">
-                    <img className="modal-image" src="/images/conf-1.jpg" alt="Conference 1"/>
-                  </div>
-                  <div className="stacked-image">
-                    <img className="modal-image" src="/images/conf-2.jpg" alt="Conference 2"/>
-                  </div>
-                  <div className="stacked-image">
-                    <img className="modal-image" src="/images/conf-3.jpg" alt="Conference 3"/>
+              {selectedEvent.documentationImage?.length > 0 && (
+                <div className="modal-images">
+                  <div className="image-stack">
+                    {selectedEvent.documentationImage.slice(0, 3).map((image, index) => (
+                      <div key={index} className="stacked-image">
+                        <img className="modal-image" src={image} alt={`${selectedEvent.name} ${index + 1}`} />
+                      </div>
+                    ))}
                   </div>
                 </div>
-
-                {/* dotted rail purely decorative like the screenshot */}
-                <div className="image-rail-dots" aria-hidden />
-              </div>
+              )}
             </div>
 
           </div>

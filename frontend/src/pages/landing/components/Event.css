@@ -17,14 +17,7 @@
 
 .blue-line {
   position: absolute;
-  /* opacity: 0.08;
-  transition: opacity 0.3s ease;
-  mix-blend-mode: multiply; */
 }
-
-/* .blue-line:hover {
-  opacity: 0.15;
-} */
 
 .line-7 {
   top: -40%;
@@ -227,11 +220,11 @@
 }
 
 .carousel-nav.prev {
-  left: 30px !important; /* Increased distance from card on mobile */
+  left: 30px !important;
 }
 
 .carousel-nav.next {
-  right: 30px !important; /* Increased distance from card on mobile */
+  right: 30px !important;
 }
 
 .nav-arrow {
@@ -241,6 +234,31 @@
   stroke-width: 2;
 }
 
+.circle-button {
+  background-color: #1E90FF;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.circle-button:hover {
+  background-color: #0066ff;
+  transform: scale(1.05);
+}
+
+.button-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* FIXED MODAL STYLES - NOW PROPERLY SCROLLABLE ON MOBILE */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -252,18 +270,32 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 2rem;
+  padding: 20px;
+  /* FIXED: Allow scrolling on overlay */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-content {
-  background: #E9E9E9;
-  border-radius: 20px;
-  max-width: 1000px;
-  width: 100%;
-  max-height: 90vh;
+  background: #ffffff;
+  border-radius: 24px;
+  width: min(95vw, 1400px);
+  /* FIXED: Remove fixed height and contain overflow */
+  min-height: 400px;
+  max-height: none;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 24px 60px rgba(0,0,0,.25);
+  box-shadow: 0 32px 80px rgba(0,0,0,.3);
+  border: 1px solid rgba(0,0,0,.05);
+  display: flex;
+  flex-direction: column;
+  max-width: 1400px;
+  min-width: 800px;
+  padding: 40px 50px;
+  /* FIXED: Add margin for mobile scrolling */
+  margin: auto;
+  /* FIXED: Ensure content doesn't overflow */
+  box-sizing: border-box;
 }
 
 .modal-close {
@@ -294,17 +326,27 @@
 }
 
 .modal-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 24px;
-  padding: 28px 28px 28px 32px;
-  align-items: center;
+  display: flex;
+  gap: 40px;
+  padding: 0;
+  min-height: auto;
+  position: relative;
+  align-items: flex-start;
+  flex: 1;
+  /* FIXED: Contain content within modal */
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .modal-info {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 24px;
+  flex: 2;
+  min-width: 0;
+  padding-right: 30px;
+  min-width: 700px;
 }
 
 .modal-title {
@@ -312,29 +354,37 @@
   line-height: 1.1;
   font-weight: 800;
   font-family: 'Bakbak One', cursive;
-  font-size: clamp(26px, 3vw, 36px);
+  font-size: clamp(32px, 4vw, 52px);
+  margin-bottom: 16px;
 }
 
 .modal-title-blue {
-  color: #1B65FA;
-}
-
-.modal-title-green {
-  color: #00D46B;
+  background: linear-gradient(135deg, #1B65FA, #00D46B);
+  font-size: 3.2rem;
+  text-align: left;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .modal-description {
+  text-align: left;
+  line-height: 1.7;
+  font-size: 18px;
   font-family: 'Gabarito', sans-serif;
-  color: #2c2c2c;
-  font-size: 15.5px;
-  line-height: 1.6;
+  color: #333;
   margin: 0;
+  width: 100%;
+  max-width: none;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .modal-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  margin-top: 24px;
 }
 
 .modal-button {
@@ -362,62 +412,51 @@
   background: #1557d6;
 }
 
-.register-button {
-  height: 44px;
-  padding: 0 16px 0 14px;
-  border-radius: 999px;
-  background: #00D46B;
-  color: #fff;
-  font-weight: 700;
-  font-family: 'Gabarito', sans-serif;
-  box-shadow: 0 10px 20px rgba(0, 212, 107, 0.25);
-}
-
-.register-button:hover {
-  transform: translateY(-1px);
-  background: #00be61;
-}
-
 .button-icon {
   width: 20px;
   height: 20px;
-}
-
-.register-dot {
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: rgba(0, 0, 0, 0.15);
-}
-
-.register-dot svg {
-  width: 18px;
-  height: 18px;
-  color: #fff;
 }
 
 .modal-images {
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 0;
+  flex-shrink: 0;
+  width: 400px;
+  flex: 0 0 400px;
+  /* FIXED: Contain images within modal bounds */
+  overflow: hidden;
+  max-height: 100%;
 }
 
 .image-stack {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  align-items: center;
+  width: 100%;
+  /* FIXED: Allow scrolling for stacked images if needed */
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: 8px; /* Add space for scrollbar */
 }
 
 .stacked-image {
-  width: 260px;
-  height: 150px;
+  width: 100%;
+  max-width: 380px;
+  height: 180px;
   border-radius: 12px;
   overflow: hidden;
   background: #f2f2f2;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.stacked-image:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
 }
 
 .modal-image {
@@ -426,130 +465,279 @@
   object-fit: cover;
 }
 
-.image-rail-dots {
-  position: absolute;
-  right: -14px;
-  top: 6px;
-  bottom: 6px;
-  width: 8px;
-  border-radius: 999px;
-  background-image: radial-gradient(#d9d9d9 2px, transparent 2px);
-  background-size: 8px 14px;
-  background-repeat: repeat-y;
-}
+/* UPDATED RESPONSIVE BREAKPOINTS - FIXED SCROLLING ISSUES */
 
-.exclusive-badge {
-  background: linear-gradient(135deg, #1B65FA, #00D46B);
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  align-self: flex-start;
-}
-
-@media (max-width: 1403px) {
-  .background-lines {
-    display: none;
-  }
-}
-
-@media (max-width: 1024px) {
-  .event-card-wrapper {
-    width: 350px;
-    height: 400px;
-  }
-  
-  .event-card-name {
-    font-size: 1.75rem;
+/* Extra large screens */
+@media (min-width: 1800px) {
+  .modal-content {
+    width: min(90vw, 2000px);
+    min-width: 1200px;
+    padding: 50px 80px;
   }
   
   .modal-body {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 22px;
+    gap: 80px;
+  }
+  
+  .modal-info {
+    min-width: 800px;
+  }
+  
+  .modal-images {
+    width: 450px;
+    flex: 0 0 450px;
+  }
+  
+  .stacked-image {
+    height: 200px;
+    max-width: 420px;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1600px) and (max-width: 1799px) {
+  .modal-content {
+    width: min(92vw, 1800px);
+    min-width: 1000px;
+    padding: 50px 70px;
+  }
+  
+  .modal-body {
+    gap: 70px;
+  }
+  
+  .modal-info {
+    min-width: 700px;
+  }
+  
+  .modal-images {
+    width: 400px;
+    flex: 0 0 400px;
+  }
+}
+
+/* Medium-large screens */
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .modal-content {
+    width: min(95vw, 1600px);
+    min-width: 900px;
+  }
+  
+  .modal-info {
+    min-width: 600px;
+  }
+  
+  .modal-images {
+    width: 350px;
+    flex: 0 0 350px;
+  }
+  
+  .stacked-image {
+    height: 160px;
+  }
+}
+
+/* Medium screens */
+@media (min-width: 1025px) and (max-width: 1199px) {
+  .modal-content {
+    width: min(98vw, 1400px);
+    min-width: 800px;
+    padding: 40px 50px;
+  }
+  
+  .modal-info {
+    min-width: 500px;
+  }
+  
+  .modal-images {
+    width: 320px;
+    flex: 0 0 320px;
+  }
+  
+  .stacked-image {
+    height: 140px;
+  }
+}
+
+/* FIXED: Tablet landscape - Now properly scrollable */
+@media (max-width: 1024px) {
+  .modal-overlay {
+    /* FIXED: Allow proper scrolling alignment */
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .modal-content { 
+    width: min(98vw, 1000px);
+    min-width: auto;
+    padding: 32px 30px;
+    /* FIXED: Remove max-height constraint */
+    max-height: none;
+    /* FIXED: Add top margin for better mobile experience */
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    gap: 32px;
+  }
+  
+  .modal-info {
+    min-width: auto;
+    padding-right: 0;
   }
   
   .modal-images {
     order: 2;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    flex: none;
   }
   
   .image-stack {
     flex-direction: row;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 10px;
   }
   
   .stacked-image {
-    width: 160px;
-    height: 110px;
-  }
-  
-  .image-rail-dots {
-    display: none;
+    width: 220px;
+    height: 150px;
+    flex-shrink: 0;
   }
 }
 
-@media (max-width: 640px) {
-  .modal-title {
-    font-size: 24px;
+/* FIXED: Mobile landscape - Better scrolling */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 16px;
+    align-items: flex-start;
+  }
+
+  .modal-content {
+    padding: 24px 20px;
+    /* FIXED: Remove height constraints */
+    max-height: none;
+    width: min(98vw, 750px);
+    margin-top: 16px;
+    margin-bottom: 16px;
   }
   
-  .modal-description {
-    font-size: 14px;
+  .modal-body {
+    gap: 24px;
   }
   
   .stacked-image {
-    width: 130px;
-    height: 92px;
+    width: 180px;
+    height: 120px;
+  }
+}
+
+/* FIXED: Mobile portrait - Fully responsive scrolling */
+@media (max-width: 640px) {
+  .modal-overlay {
+    padding: 12px;
+    align-items: flex-start;
+  }
+
+  .modal-content {
+    padding: 20px 16px;
+    /* FIXED: Remove all height constraints for mobile */
+    max-height: none;
+    min-height: auto;
+    width: min(98vw, 600px);
+    /* FIXED: Adjust margins for small screens */
+    margin-top: 12px;
+    margin-bottom: 12px;
+    /* FIXED: Ensure minimum width doesn't cause horizontal scroll */
+    min-width: auto;
+  }
+  
+  .modal-title {
+    font-size: 26px;
+    line-height: 1.2;
+  }
+  
+  .modal-title-blue {
+    /* FIXED: Responsive font size for mobile */
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  }
+  
+  .modal-description {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .modal-info {
+    /* FIXED: Remove min-width constraint on mobile */
+    min-width: auto;
+  }
+  
+  .stacked-image {
+    width: 150px;
+    height: 100px;
+  }
+  
+  .image-stack {
+    gap: 12px;
   }
   
   .back-button {
     width: 40px;
     height: 40px;
   }
+}
+
+/* FIXED: Very small screens */
+@media (max-width: 480px) {
+  .modal-overlay {
+    padding: 8px;
+  }
+
+  .modal-content {
+    padding: 16px 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: min(98vw, 100%);
+  }
+
+  .modal-body {
+    gap: 20px;
+  }
+
+  .modal-title-blue {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .modal-description {
+    font-size: 15px;
+  }
+
+  .image-stack {
+    justify-content: flex-start;
+    width: 100%;
+  }
   
-  .register-button {
-    height: 42px;
+  .stacked-image {
+    width: 130px;
+    height: 85px;
   }
 }
 
-@media (max-width: 768px) {
-  .event-title {
-    font-size: 3rem;
+/* FIXED: Very short screens - Allow scrolling */
+@media (max-height: 600px) {
+  .modal-overlay {
+    align-items: flex-start;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   
-  .event-card-wrapper {
-    width: 300px;
-    height: 350px;
+  .modal-content {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-height: none;
   }
-  
-  .event-card {
-    padding: 1.5rem;
-  }
-  
-  .event-card-name {
-    font-size: 1.5rem;
-  }
-  
-  .event-card-icon {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .event-icon-image {
-    width: 35px;
-    height: 35px;
-  }
-  
-  .carousel-nav {
-    width: 48px;
-    height: 48px;
-  }
-  
-  .carousel-nav.prev {
-    left: 1rem;
-  }
-  
-  .carousel-nav.next {
-    right: 1rem;
-  }
-} 
+}
