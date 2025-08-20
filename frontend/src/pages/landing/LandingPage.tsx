@@ -20,7 +20,7 @@ const LandingPage: React.FC = () => {
         <Competition />
         <Event />
         <PastEvent />
-        <Sponsors />
+        {/* <Sponsors /> */}
       </main>
       <Footer />
     </>
