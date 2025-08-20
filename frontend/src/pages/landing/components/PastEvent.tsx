@@ -1,53 +1,57 @@
+// import tambahan
 import React, { useState, useEffect } from 'react'
-import { pastEventData } from '../data/past-event-data'
 import './PastEvent.css'
+import './Event.css' // reuse styling modal
+import { pastEventData } from '../data/past-event-data'
 
-interface PastEvent {
+type PastEvent = {
   id: number
   title: string
   subtitle: string
   image: string
-  description: string
+  // tambahkan/aktifkan ini di datanya:
+  documentationImage?: string[]
 }
 
-const PastEvent: React.FC = () => {
+export default function PastEvent() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % pastEventData.length)
-  }
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState<PastEvent | null>(null)
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + pastEventData.length) % pastEventData.length)
-  }
+  const nextSlide = () => setCurrentSlide((p) => (p + 1) % pastEventData.length)
+  const prevSlide = () => setCurrentSlide((p) => (p - 1 + pastEventData.length) % pastEventData.length)
+  const goToSlide = (i: number) => setCurrentSlide(i)
 
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-  }
-
-  // Auto-play functionality
   useEffect(() => {
     if (!isAutoPlaying) return
+    const t = setInterval(nextSlide, 5000)
+    return () => clearInterval(t)
+  }, [isAutoPlaying, currentSlide])
 
-    const interval = setInterval(() => {
-      nextSlide()
-    }, 5000) // Change slide every 5 seconds
-
-    return () => clearInterval(interval)
-  }, [currentSlide, isAutoPlaying])
-
-  const handleMouseEnter = () => {
-    setIsAutoPlaying(false)
+  const handleOpenModal = (ev: PastEvent) => {
+    setSelectedEvent(ev)
+    setIsModalOpen(true)
+    document.body.style.overflow = 'hidden'
+  }
+  const closeModal = () => {
+    setIsModalOpen(false)
+    setSelectedEvent(null)
+    document.body.style.overflow = 'unset'
   }
 
-  const handleMouseLeave = () => {
-    setIsAutoPlaying(true)
-  }
+  useEffect(() => {
+    const onEsc = (e: KeyboardEvent) => { if (e.key === 'Escape') closeModal() }
+    window.addEventListener('keydown', onEsc)
+    return () => {
+      window.removeEventListener('keydown', onEsc)
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
 
   return (
     <section className="past-event" id="past-event">
-      {/* Background decorative line */}
       <div className="background-lines">
         <div className="green-line line-5">
           <img 
@@ -68,42 +72,34 @@ const PastEvent: React.FC = () => {
             exceptional experiences. We can't wait to share what's coming next!
           </p>
         </div>
-        
-        <div 
+
+        <div
           className="past-event-carousel"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={() => setIsAutoPlaying(false)}
+          onMouseLeave={() => setIsAutoPlaying(true)}
         >
           <button className="carousel-nav prev" onClick={prevSlide}>
-            <img 
-              src="/assets/arrow-left-carousel.svg" 
-              alt="Previous" 
-              className="nav-arrow"
-            />
+            <img src="/assets/arrow-left-carousel.svg" alt="Previous" className="nav-arrow" />
           </button>
-          
+
           <div className="carousel-container">
             <div className="carousel-slide-wrapper">
               {pastEventData.map((event, index) => (
                 <div
                   key={event.id}
                   className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
-                  style={{
-                    transform: `translateX(${(index - currentSlide) * 100}%)`,
-                  }}
+                  style={{ transform: `translateX(${(index - currentSlide) * 100}%)` }}
+                  onClick={() => handleOpenModal(event)}
                 >
                   <div className="slide-image">
-                    <img 
-                      src={event.image} 
+                    <img
+                      src={event.image}
                       alt={event.title}
-                      onError={(e) => {
-                        console.log('Image failed to load:', event.image);
-                        e.currentTarget.src = 'https://via.placeholder.com/1200x500/4a90e2/ffffff?text=' + event.title;
-                      }}
-                      onLoad={() => console.log('Image loaded:', event.image)}
+                      onError={(e) => { e.currentTarget.src = `https://via.placeholder.com/1200x500?text=${encodeURIComponent(event.title)}` }}
                     />
                     <div className="slide-overlay">
                       <div className="slide-content">
+                        {/* tidak tampilkan judul/subtitle di modal; boleh tetap di slide */}
                         <h3 className="slide-title">{event.title}</h3>
                         <p className="slide-subtitle">{event.subtitle}</p>
                       </div>
@@ -113,28 +109,52 @@ const PastEvent: React.FC = () => {
               ))}
             </div>
           </div>
-          
+
           <button className="carousel-nav next" onClick={nextSlide}>
-            <img 
-              src="/assets/arrow-right-carousel.svg" 
-              alt="Next" 
-              className="nav-arrow"
-            />
+            <img src="/assets/arrow-right-carousel.svg" alt="Next" className="nav-arrow" />
           </button>
-          
+
           <div className="carousel-dots">
-            {pastEventData.map((_, index) => (
+            {pastEventData.map((_, i) => (
               <button
-                key={index}
-                className={`dot ${index === currentSlide ? 'active' : ''}`}
-                onClick={() => goToSlide(index)}
+                key={i}
+                className={`dot ${i === currentSlide ? 'active' : ''}`}
+                onClick={() => goToSlide(i)}
+                aria-label={`Go to slide ${i + 1}`}
               />
             ))}
           </div>
         </div>
       </div>
+
+      {/* MODAL: gambar saja */}
+      {isModalOpen && selectedEvent && (
+        <div className="modal-overlay" onClick={closeModal} role="dialog" aria-modal="true">
+          <div className="modal-content images-only" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeModal} aria-label="Close">
+              <svg className="close-icon" viewBox="0 0 24 24" fill="none">
+                <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </button>
+
+            <div className="modal-header">
+              <h3 className="modal-header-title">{selectedEvent.title}</h3>
+              {/* opsional: tampilkan kategori/subtitle jika mau */}
+              {selectedEvent.subtitle && (
+                <p className="modal-header-subtitle">{selectedEvent.subtitle}</p>
+              )}
+            </div>
+
+            <div className="modal-images-grid">
+              {(selectedEvent.documentationImage ?? [selectedEvent.image]).map((img, i) => (
+                <div key={i} className="grid-item">
+                  <img className="modal-image" src={img} alt={`doc-${i + 1}`} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
-
-export default PastEvent
