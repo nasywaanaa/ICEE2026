@@ -138,11 +138,11 @@ export default function PastEvent() {
             </button>
 
             <div className="modal-header">
-              <h3 className="modal-header-title">{selectedEvent.title}</h3>
+              <h3 className="modal-header-title">{selectedEvent.subtitle}</h3>
               {/* opsional: tampilkan kategori/subtitle jika mau */}
-              {selectedEvent.subtitle && (
-                <p className="modal-header-subtitle">{selectedEvent.subtitle}</p>
-              )}
+              {/* {selectedEvent.subtitle && (
+                <p className="modal-header-subtitle">ICEE {selectedEvent.title}</p>
+              )} */}
             </div>
 
             <div className="modal-images-grid">

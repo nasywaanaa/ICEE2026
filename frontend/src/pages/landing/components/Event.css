@@ -365,6 +365,18 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  display: inline-block; /* supaya ::after ikut lebar teks */
+  position: relative;
+}
+
+.modal-title-blue::after {
+  content: "";
+  display: block;
+  width: 80px; /* bisa diganti 100% kalau mau sepanjang teks */
+  height: 2px;
+  background: linear-gradient(to right, #1B65FA, #00D46B);
+  margin: 0.5rem auto 0 auto; /* jarak dari teks & center */
+  border-radius: 2px;
 }
 
 .modal-description {
@@ -659,6 +671,16 @@
   .modal-title {
     font-size: 26px;
     line-height: 1.2;
+  }
+
+  .modal-title-blue::after{
+    content: "";
+    display: block;
+    width: 80px; /* panjang garis (atur sesuai selera) */
+    height: 2px; 
+    background: linear-gradient(to right, #1B65FA, #00D46B);
+    margin: 0.5rem auto 0 auto; /* auto left-right supaya ke tengah */
+    border-radius: 2px;
   }
   
   .modal-title-blue {
