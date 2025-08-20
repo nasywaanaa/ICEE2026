@@ -114,8 +114,8 @@ const RequiredDocuments: React.FC<RequiredDocumentsProps> = ({ data, onChange })
         <FileUploadCard
           title="Proof of Twibbon and Poster"
           field="twibbonProof"
-          accept=".zip"
-          supportedFormats="Only support zip files"
+          accept=".pdf"
+          supportedFormats="Only support pdf files"
         />
         
         <FileUploadCard

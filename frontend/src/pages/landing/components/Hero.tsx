@@ -52,12 +52,12 @@ const Hero: React.FC = () => {
           <div className="hero-text">
             <h1 className="hero-title">
               <span className="quote-mark">"</span>
-              Integrating Strategies for Long-Term Infrastructure Resilience
+                Smart Structure Smarter Future: Forging the Next Era of Infrastructure Through Digital Transformation
               <span className="quote-mark">"</span>
             </h1>
             <div className="hero-description">
               <p>
-              Step into 2026 and uncover the advancement of civil engineering through our thrilling competitions listed below! Prepare yourselves to be inspired by game-changing solutions, creative breakthroughs, and unforgettable experiences. Let’s dive into the next chapter of innovation! <span className="theme-highlight">"Integrating Strategies for Long-Term Infrastructure Resilience"</span> to address major challenges in modern infrastructure development. Climate change and frequent natural disasters underscore the need for infrastructure that is not only durable but also adaptable to extreme conditions. Rapid population growth urbanization further emphasize the importance of reliable and sustainable infrastructure.
+                Step into 2026 and discover the future of civil engineering through innovation and digital transformation! Be inspired by smarter solutions, creative breakthroughs, and impactful experiences. ICEE 2026 carries the theme <span className="theme-highlight">“Smart Structure Smarter Future”</span> to highlight the urgency of building infrastructure that is not only sustainable and resilient, but also digitally intelligent. With BIM, AI, and IoT, the next generation of infrastructure will be more adaptive, efficient, and future-ready.
               </p>
             </div>
             <div className="hero-actions">

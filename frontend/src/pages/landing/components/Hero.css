@@ -45,6 +45,11 @@
   margin-bottom: 3rem;
 }
 
+.hero-description p {
+  margin-bottom: 1.5rem; /* kasih jarak antar paragraf */
+  line-height: 1.7;      /* biar lebih enak dibaca */
+}
+
 .theme-highlight {
   color: #1B65FA;
   font-weight: 600;
