@@ -39,23 +39,10 @@ export const eventData = [
     ],
   },
   {
-    id: 4,
-    name: "Conference",
-    description:
-      "Ready to explore the pivotal discussions and groundbreaking strategies in the realm of transportation?\nICEE National Student Conference 2025 is the most prestigious event of the year that spotlighting innovative approaches to build resilient and adaptive transportation system by redefining infrastructure and mobility, utilizing the role of advanced technologies in ensuring the sustainability and efficiency of transportation networks.\nWith various perspective, discover how innovative technologies and strategic insights are shaping the future of urban mobility and disaster preparedness. Join us in exploring the forefront of transportation resilience to pave the way for safer and more adaptable transportation infrastructures.",
-    image: "/assets/conference.svg",
-    documentationImage: [
-      "/assets/event/itec/ITEC.svg",
-      "/assets/event/itec/DSCF3025.svg",
-      "/assets/event/itec/DSCF2905.svg",
-      "/assets/event/itec/DSCF2901.svg",
-    ],
-  },
-  {
     id: 5,
     name: "ICEETalks",
     description:
-      "By gathering an esteemed panel of subject-matter experts and influential industry leaders, the ICEE Seminar ITB 2026 serves as a platform for exchanging forward-looking perspectives on the future of infrastructure. Through a curated program of in-depth presentations and dynamic, solutions-driven discussions, participants will engage with emerging trends, address complex challenges, and refine both their technical proficiency and strategic acumen in the civil engineering arena. Beyond the formal proceedings, the seminar cultivates a collaborative environment that encourages knowledge exchange, fosters lasting professional relationships, and contributes to the long-term advancement of the industry.",
+      "ICEETalks is an exclusive and engaging talkshow designed to explore and discuss the transformation of civil engineering in the digital era. This program will be presented in a podcast format and broadcasted through ICEE ITB 2026’s social media channels. It features leading experts and professionals who share their insights and knowledge on digitalization, cutting-edge technologies, and innovative solutions shaping the future of civil engineering. ICEETalks aims to provide valuable perspectives, inspire forward-thinking approaches, and foster a deeper understanding of how digital transformation impacts the industry, society, and the environment.",
     image: "/assets/conference.svg",
     documentationImage: [
       "/assets/event/cetc/DSCF5610.svg",

@@ -29,12 +29,7 @@ const About: React.FC = () => {
               What is <span className="icee-gradient">ICEE?</span>
             </h2>
             <p className="section-description">
-              The ITB Civil Engineering Expo (ICEE) is an annual event organized by the Civil Engineering 
-              Student Association (HMS) of ITB. It serves as a platform for collaboration, innovation, and 
-              creativity for students, helping them to develop themselves through various activities integrated 
-              with the civil engineering issues addressed. Presented as a <span className="highlight-link">national competition</span> and even an 
-              international student <span className="highlight-link">conference</span>, ICEE focuses on <span className="highlight-link">learning, innovating</span>, and <span className="highlight-link">contributing</span>. It is a 
-              platform for civil engineering activists and a solution to address future challenges.
+              The ITB Civil Engineering Expo (ICEE) is an annual event organized by the <span className="highlight-link">Civil Engineering Student Association (HMS)</span> of ITB. It acts as a platform for collaboration, creativity, and innovation, encouraging students to grow through various activities related to current civil engineering challenges. ICEE features <span className="highlight-link">national competitions and international student conferences</span>, with a strong emphasis on learning, innovating, and making meaningful contributions. It serves as a gathering place for civil engineering enthusiasts to engage and offer solutions to future challenges.
             </p>
           </div>
 
@@ -43,12 +38,7 @@ const About: React.FC = () => {
               Our <span className="vision-gradient">Vision?</span>
             </h2>
             <p className="section-description">
-              The ITB Civil Engineering Expo (ICEE) is an annual event organized by the Civil Engineering Student 
-              Association (HMS) of ITB. It serves as a platform for collaboration, innovation, and creativity for students, 
-              helping them to develop themselves through various activities integrated with the civil engineering issues 
-              addressed. Presented as a <span className="highlight-link">national competition</span> and even an international student <span className="highlight-link">conference</span>, ICEE focuses 
-              on <span className="highlight-link">learning, innovating</span>, and <span className="highlight-link">contributing</span>. It is a platform for civil engineering activists and a solution to 
-              address future challenges.
+              Actualizing ICEE 2026 as an excellent <span className="highlight-link">platform for exploration</span> to utilize the roles and potential of its members as part of HMS ITB, and encouraging awareness among all participants involved to make an <span className="highlight-link">impact on society</span> through innovation and creativity.
             </p>
           </div>
         </div>

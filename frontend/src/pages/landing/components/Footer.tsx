@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
               alt="ICEE 2025"
               className="footer-logo-image"
             />
-            <p className="footer-copy">© ITB Civil Engineering Expo 2025. All rights reserved.</p>
+            <p className="footer-copy">© ITB Civil Engineering Expo 2026. All rights reserved.</p>
           </div>
 
           <div className="footer-right">
