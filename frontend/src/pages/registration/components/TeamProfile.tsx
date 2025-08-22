@@ -36,132 +36,19 @@ interface ValidationErrors {
 const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation }) => {
   const [errors, setErrors] = useState<ValidationErrors>({})
   const [showErrors, setShowErrors] = useState(false)
-  const [isCheckingTeamName, setIsCheckingTeamName] = useState(false)
 
-  // Check team name availability
-  const checkTeamNameAvailability = async (teamName: string): Promise<boolean> => {
-    if (!teamName?.trim()) return false
-    
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-    const maxRetries = isMobile ? 2 : 1 // Mobile gets more retries
-    
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        setIsCheckingTeamName(true)
-        const API_BASE = 'http://localhost:5002'
-        const endpoint = `${API_BASE}/api/registrations/check-team-name?teamName=${encodeURIComponent(teamName)}`
-        
-        console.log(`🔍 Checking team name availability (attempt ${attempt}/${maxRetries}):`, {
-          teamName,
-          endpoint,
-          userAgent: navigator.userAgent,
-          isMobile
-        })
-        
-        // Add timeout for mobile devices
-        const controller = new AbortController()
-        const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
-        
-        const response = await fetch(endpoint, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache'
-          },
-          signal: controller.signal
-        })
-        
-        clearTimeout(timeoutId)
-        
-        console.log(`📡 Response status (attempt ${attempt}):`, response.status)
-        console.log(`📡 Response headers (attempt ${attempt}):`, Object.fromEntries(response.headers.entries()))
-        
-        if (!response.ok) {
-          console.error(`❌ Team name check failed (attempt ${attempt}):`, response.status, response.statusText)
-          
-          // If this is the last attempt and it's mobile, allow the name
-          if (attempt === maxRetries && isMobile) {
-            console.log('📱 Mobile device detected, allowing team name after all retries failed')
-            return true
-          }
-          
-          // Continue to next attempt if not the last one
-          if (attempt < maxRetries) {
-            console.log(`🔄 Retrying... (${attempt + 1}/${maxRetries})`)
-            await new Promise(resolve => setTimeout(resolve, 1000)) // Wait 1 second before retry
-            continue
-          }
-          
-          return false
-        }
-        
-        const result = await response.json()
-        console.log(`📋 API response (attempt ${attempt}):`, result)
-        
-        const isAvailable = result.available === true
-        console.log(`✅ Team name availability result (attempt ${attempt}):`, { teamName, isAvailable })
-        
-        return isAvailable
-        
-      } catch (error) {
-        console.error(`❌ Error checking team name (attempt ${attempt}):`, error)
-        console.error(`❌ Error details (attempt ${attempt}):`, {
-          message: error instanceof Error ? error.message : 'Unknown error',
-          stack: error instanceof Error ? error.stack : undefined
-        })
-        
-        // If this is the last attempt and it's mobile, allow the name
-        if (attempt === maxRetries && isMobile) {
-          console.log('📱 Mobile device detected, allowing team name after all retries failed')
-          return true
-        }
-        
-        // Continue to next attempt if not the last one
-        if (attempt < maxRetries) {
-          console.log(`🔄 Retrying... (${attempt + 1}/${maxRetries})`)
-          await new Promise(resolve => setTimeout(resolve, 1000)) // Wait 1 second before retry
-          continue
-        }
-        
-        return false
-      } finally {
-        if (attempt === maxRetries) {
-          setIsCheckingTeamName(false)
-        }
-      }
-    }
-    
-    return false
-  }
-
-  const updateTeamInfo = async (field: string, value: string) => {
+  const updateTeamInfo = (field: string, value: string) => {
     onChange({
       ...data,
       [field]: value
     })
     
-    // For team name, handle validation and error display
-    if (field === 'teamName') {
-      // Clear error only if user completely changed the team name
-      if (value !== data.teamName) {
-        setErrors(prev => ({
-          ...prev,
-          teamName: undefined
-        }))
-        
-        // Check team name availability when team name changes
-        if (value?.trim()) {
-          const isAvailable = await checkTeamNameAvailability(value)
-          if (!isAvailable) {
-            setErrors(prev => ({
-              ...prev,
-              teamName: '*This team name is already taken. Please choose a different name.'
-            }))
-            setShowErrors(true) // Ensure errors are visible
-          }
-        }
-      }
+    // Clear error when user starts typing
+    if (field === 'teamName' && errors.teamName) {
+      setErrors(prev => ({
+        ...prev,
+        teamName: undefined
+      }))
     }
   }
 
@@ -217,23 +104,16 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
     return undefined
   }, [])
 
-  const validateForm = React.useCallback(async () => {
+  const validateForm = React.useCallback(() => {
     const newErrors: ValidationErrors = {
       members: {}
     }
     let hasErrors = false
 
-    // Validate team name
+    // Validate team name (only check if it's filled, no duplicate checking)
     if (!data.teamName?.trim()) {
       newErrors.teamName = '*This field is required'
       hasErrors = true
-    } else {
-      // Check if team name is available
-      const isAvailable = await checkTeamNameAvailability(data.teamName)
-      if (!isAvailable) {
-        newErrors.teamName = '*This team name is already taken. Please choose a different name.'
-        hasErrors = true
-      }
     }
 
     // Validate all members
@@ -267,8 +147,6 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
       }
     })
 
-
-
     setErrors(newErrors)
     setShowErrors(true)
     return !hasErrors
@@ -279,11 +157,11 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
     const newErrors = { ...errors }
     
     if (field === 'teamName') {
-      // For team name, only validate if empty, don't clear existing availability errors
       if (!value?.trim()) {
         newErrors.teamName = '*This field is required'
+      } else {
+        newErrors.teamName = undefined
       }
-      // Don't clear team name availability errors here - they should persist
     } else if (memberIndex !== undefined) {
       if (!newErrors.members) newErrors.members = {}
       if (!newErrors.members[memberIndex]) newErrors.members[memberIndex] = {}
@@ -315,54 +193,23 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
 
   // Check form validity and notify parent (without showing errors)
   React.useEffect(() => {
-    const checkValidity = async () => {
-      // Check basic form validation first
-      const basicValidation = Boolean(
-        data.teamName?.trim() && 
-        data.members.every(member => 
-          member.name?.trim() && 
-          member.institution?.trim() &&
-          validateEmail(member.email) === undefined &&
-          validatePhone(member.phone) === undefined
-        )
+    const isValid = Boolean(
+      data.teamName?.trim() && 
+      data.members.every(member => 
+        member.name?.trim() && 
+        member.institution?.trim() &&
+        validateEmail(member.email) === undefined &&
+        validatePhone(member.phone) === undefined
       )
-
-      if (!basicValidation) {
-        onValidation?.(false)
-        return
-      }
-
-      // If basic validation passes, check team name availability
-      if (data.teamName?.trim()) {
-        const isAvailable = await checkTeamNameAvailability(data.teamName)
-        const isValid = isAvailable
-        onValidation?.(isValid)
-        
-        // Debug: Log validation details
-        console.log('Validation check:', {
-          teamName: data.teamName?.trim(),
-          teamNameAvailable: isAvailable,
-          members: data.members.map((member, index) => ({
-            index,
-            name: member.name?.trim(),
-            institution: member.institution?.trim(),
-            email: member.email,
-            emailValid: validateEmail(member.email) === undefined,
-            phone: member.phone,
-            phoneValid: validatePhone(member.phone) === undefined
-          })),
-          isValid
-        })
-      }
-    }
-
-    checkValidity()
+    )
+    
+    onValidation?.(isValid)
   }, [data, onValidation, validateEmail, validatePhone])
 
   // Expose validation function to parent
   React.useEffect(() => {
-    (window as any).validateTeamProfile = async () => {
-      const isValid = await validateForm()
+    (window as any).validateTeamProfile = () => {
+      const isValid = validateForm()
       return isValid
     }
   }, [validateForm])
@@ -371,8 +218,6 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
     <div className="team-profile-content">
       <h2 className="team-profile-title">Info Team</h2>
       
-
-
       {/* Team Name Section */}
       <div className="team-name-section">
         <label className="field-label">Team Name</label>
@@ -386,12 +231,6 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
             placeholder="Your Team Name"
             className={`team-input ${showErrors && errors.teamName ? 'error' : ''}`}
           />
-          {isCheckingTeamName && (
-            <div className="checking-indicator">
-              <div className="spinner"></div>
-              <span>Checking availability...</span>
-            </div>
-          )}
         </div>
         {showErrors && errors.teamName && (
           <span className="error-message">{errors.teamName}</span>
