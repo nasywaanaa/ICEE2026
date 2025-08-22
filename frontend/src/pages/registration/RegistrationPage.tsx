@@ -62,17 +62,12 @@ const RegistrationPage: React.FC = () => {
     { id: 3, title: 'Required Document', subtitle: 'Please complete all required document' }
   ]
 
-  const handleNext = async () => {
+  const handleNext = () => {
     if (currentStep === 2) {
       // Always trigger validation for team profile form
       if ((window as any).validateTeamProfile) {
-        try {
-          const isValid = await (window as any).validateTeamProfile()
-          if (!isValid) {
-            return
-          }
-        } catch (error) {
-          console.error('Validation error:', error)
+        const isValid = (window as any).validateTeamProfile()
+        if (!isValid) {
           return
         }
       }
