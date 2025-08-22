@@ -36,23 +36,59 @@ interface ValidationErrors {
 const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation }) => {
   const [errors, setErrors] = useState<ValidationErrors>({})
   const [showErrors, setShowErrors] = useState(false)
+  const [isCheckingTeamName, setIsCheckingTeamName] = useState(false)
 
+  // Check team name availability
+  const checkTeamNameAvailability = async (teamName: string): Promise<boolean> => {
+    if (!teamName?.trim()) return false
+    
+    try {
+      setIsCheckingTeamName(true)
+      const API_BASE = 'http://localhost:5002'
+      const response = await fetch(`${API_BASE}/api/registrations/check-team-name?teamName=${encodeURIComponent(teamName)}`)
+      
+      if (!response.ok) {
+        console.error('Team name check failed:', response.status)
+        return false
+      }
+      
+      const result = await response.json()
+      return result.available === true
+    } catch (error) {
+      console.error('Error checking team name:', error)
+      return false
+    } finally {
+      setIsCheckingTeamName(false)
+    }
+  }
 
-
-
-
-  const updateTeamInfo = (field: string, value: string) => {
+  const updateTeamInfo = async (field: string, value: string) => {
     onChange({
       ...data,
       [field]: value
     })
     
-    // Clear error when user starts typing (immediate feedback)
-    if (field === 'teamName' && errors.teamName) {
-      setErrors(prev => ({
-        ...prev,
-        teamName: undefined
-      }))
+    // For team name, handle validation and error display
+    if (field === 'teamName') {
+      // Clear error only if user completely changed the team name
+      if (value !== data.teamName) {
+        setErrors(prev => ({
+          ...prev,
+          teamName: undefined
+        }))
+        
+        // Check team name availability when team name changes
+        if (value?.trim()) {
+          const isAvailable = await checkTeamNameAvailability(value)
+          if (!isAvailable) {
+            setErrors(prev => ({
+              ...prev,
+              teamName: '*This team name is already taken. Please choose a different name.'
+            }))
+            setShowErrors(true) // Ensure errors are visible
+          }
+        }
+      }
     }
   }
 
@@ -108,7 +144,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
     return undefined
   }, [])
 
-  const validateForm = React.useCallback(() => {
+  const validateForm = React.useCallback(async () => {
     const newErrors: ValidationErrors = {
       members: {}
     }
@@ -118,6 +154,13 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
     if (!data.teamName?.trim()) {
       newErrors.teamName = '*This field is required'
       hasErrors = true
+    } else {
+      // Check if team name is available
+      const isAvailable = await checkTeamNameAvailability(data.teamName)
+      if (!isAvailable) {
+        newErrors.teamName = '*This team name is already taken. Please choose a different name.'
+        hasErrors = true
+      }
     }
 
     // Validate all members
@@ -163,11 +206,11 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
     const newErrors = { ...errors }
     
     if (field === 'teamName') {
+      // For team name, only validate if empty, don't clear existing availability errors
       if (!value?.trim()) {
         newErrors.teamName = '*This field is required'
-      } else {
-        newErrors.teamName = undefined
       }
+      // Don't clear team name availability errors here - they should persist
     } else if (memberIndex !== undefined) {
       if (!newErrors.members) newErrors.members = {}
       if (!newErrors.members[memberIndex]) newErrors.members[memberIndex] = {}
@@ -199,38 +242,54 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
 
   // Check form validity and notify parent (without showing errors)
   React.useEffect(() => {
-    const isValid = Boolean(
-      data.teamName?.trim() && 
-      data.members.every(member => 
-        member.name?.trim() && 
-        member.institution?.trim() &&
-        validateEmail(member.email) === undefined &&
-        validatePhone(member.phone) === undefined
+    const checkValidity = async () => {
+      // Check basic form validation first
+      const basicValidation = Boolean(
+        data.teamName?.trim() && 
+        data.members.every(member => 
+          member.name?.trim() && 
+          member.institution?.trim() &&
+          validateEmail(member.email) === undefined &&
+          validatePhone(member.phone) === undefined
+        )
       )
-    )
-    
-    // Debug: Log validation details
-    console.log('Validation check:', {
-      teamName: data.teamName?.trim(),
-      members: data.members.map((member, index) => ({
-        index,
-        name: member.name?.trim(),
-        institution: member.institution?.trim(),
-        email: member.email,
-        emailValid: validateEmail(member.email) === undefined,
-        phone: member.phone,
-        phoneValid: validatePhone(member.phone) === undefined
-      })),
-      isValid
-    })
-    
-    onValidation?.(isValid)
+
+      if (!basicValidation) {
+        onValidation?.(false)
+        return
+      }
+
+      // If basic validation passes, check team name availability
+      if (data.teamName?.trim()) {
+        const isAvailable = await checkTeamNameAvailability(data.teamName)
+        const isValid = isAvailable
+        onValidation?.(isValid)
+        
+        // Debug: Log validation details
+        console.log('Validation check:', {
+          teamName: data.teamName?.trim(),
+          teamNameAvailable: isAvailable,
+          members: data.members.map((member, index) => ({
+            index,
+            name: member.name?.trim(),
+            institution: member.institution?.trim(),
+            email: member.email,
+            emailValid: validateEmail(member.email) === undefined,
+            phone: member.phone,
+            phoneValid: validatePhone(member.phone) === undefined
+          })),
+          isValid
+        })
+      }
+    }
+
+    checkValidity()
   }, [data, onValidation, validateEmail, validatePhone])
 
   // Expose validation function to parent
   React.useEffect(() => {
-    (window as any).validateTeamProfile = () => {
-      const isValid = validateForm()
+    (window as any).validateTeamProfile = async () => {
+      const isValid = await validateForm()
       return isValid
     }
   }, [validateForm])
@@ -245,7 +304,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
       <div className="team-name-section">
         <label className="field-label">Team Name</label>
         <div className="input-with-icon">
-                          <img src="/assets/registration/info-team/team.svg" alt="Team" className="input-icon" />
+          <img src="/assets/registration/info-team/team.svg" alt="Team" className="input-icon" />
           <input
             type="text"
             value={data.teamName}
@@ -254,6 +313,12 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
             placeholder="Your Team Name"
             className={`team-input ${showErrors && errors.teamName ? 'error' : ''}`}
           />
+          {isCheckingTeamName && (
+            <div className="checking-indicator">
+              <div className="spinner"></div>
+              <span>Checking availability...</span>
+            </div>
+          )}
         </div>
         {showErrors && errors.teamName && (
           <span className="error-message">{errors.teamName}</span>

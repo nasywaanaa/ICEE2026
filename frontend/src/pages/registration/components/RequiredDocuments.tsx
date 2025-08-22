@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './RequiredDocuments.css'
 
 interface DocumentsData {
@@ -15,7 +15,31 @@ interface RequiredDocumentsProps {
 }
 
 const RequiredDocuments: React.FC<RequiredDocumentsProps> = ({ data, onChange }) => {
+  const MAX_FILE_SIZE = 1 * 1024 * 1024 // 1MB in bytes
+  const [fileErrors, setFileErrors] = useState<Record<keyof DocumentsData, string>>({
+    studentCard: '',
+    enrollmentProof: '',
+    postProof: '',
+    storyProof: '',
+    paymentProof: ''
+  })
+
   const handleFileUpload = (field: keyof DocumentsData, file: File | null) => {
+    if (file && file.size > MAX_FILE_SIZE) {
+      const errorMessage = `File size must be less than 1MB. Current file size: ${(file.size / (1024 * 1024)).toFixed(2)} MB`
+      setFileErrors(prev => ({
+        ...prev,
+        [field]: errorMessage
+      }))
+      return
+    }
+    
+    // Clear error when valid file is uploaded
+    setFileErrors(prev => ({
+      ...prev,
+      [field]: ''
+    }))
+    
     onChange({
       ...data,
       [field]: file
@@ -29,6 +53,7 @@ const RequiredDocuments: React.FC<RequiredDocumentsProps> = ({ data, onChange })
     supportedFormats: string
   }> = ({ title, field, accept, supportedFormats }) => {
     const file = data[field]
+    const error = fileErrors[field]
     
     return (
       <div className="file-upload-card">
@@ -75,7 +100,6 @@ const RequiredDocuments: React.FC<RequiredDocumentsProps> = ({ data, onChange })
                     <polyline points="14,2 14,8 20,8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <polyline points="10,9 9,9 8,9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
                 <div className="upload-text">
@@ -89,6 +113,18 @@ const RequiredDocuments: React.FC<RequiredDocumentsProps> = ({ data, onChange })
         </div>
         
         <p className="file-format">{supportedFormats}</p>
+        <p className="file-size-limit">Maximum file size: 1MB</p>
+        
+        {error && (
+          <div className="file-error-message">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+              <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" strokeWidth="2"/>
+              <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+            {error}
+          </div>
+        )}
       </div>
     )
   }

@@ -15,9 +15,30 @@ const competitionOptions = {
   'ITEC': 'Download ToR Innovative Transportation Engineering Competition'
 };
 
+const competitionFiles = {
+  'CETC': '/tor/cetc/[CETC] ToR Peserta 2026.pdf',
+  'IBDC': '/tor/ibdc/[IBDC] ToR Peserta 2026.pdf',
+  'GECC': '/tor/gecc/[GECC] ToR Peserta 2026.pdf',
+  'ITEC': '/tor/itec/[ITEC] ToR Peserta 2026.pdf'
+};
+
 const TermsOfReference: React.FC<TermsOfReferenceProps> = ({ isAccepted, onAccept, selectedCompetition, onCompetitionChange }) => {
   const handleCompetitionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onCompetitionChange(e.target.value);
+  };
+
+  const handleDownload = () => {
+    if (selectedCompetition && competitionFiles[selectedCompetition as keyof typeof competitionFiles]) {
+      const fileUrl = competitionFiles[selectedCompetition as keyof typeof competitionFiles];
+      
+      // Create a temporary anchor element to trigger download
+      const link = document.createElement('a');
+      link.href = fileUrl;
+      link.download = `${selectedCompetition}_ToR_2026.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
 
   return (
@@ -44,7 +65,7 @@ const TermsOfReference: React.FC<TermsOfReferenceProps> = ({ isAccepted, onAccep
       {selectedCompetition && (
         <div className="tor-file-section">
  
-          <button className="tor-download-btn">
+          <button className="tor-download-btn" onClick={handleDownload}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <path
                 d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"

@@ -36,6 +36,7 @@ const RegistrationPage: React.FC = () => {
   const [areDocumentsValid, setAreDocumentsValid] = useState(false)
   const [showSubmitModal, setShowSubmitModal] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Handle URL parameters for competition selection
   useEffect(() => {
@@ -61,12 +62,17 @@ const RegistrationPage: React.FC = () => {
     { id: 3, title: 'Required Document', subtitle: 'Please complete all required document' }
   ]
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep === 2) {
       // Always trigger validation for team profile form
       if ((window as any).validateTeamProfile) {
-        const isValid = (window as any).validateTeamProfile()
-        if (!isValid) {
+        try {
+          const isValid = await (window as any).validateTeamProfile()
+          if (!isValid) {
+            return
+          }
+        } catch (error) {
+          console.error('Validation error:', error)
           return
         }
       }
@@ -82,6 +88,7 @@ const RegistrationPage: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
+      setIsSubmitting(true)
       const fd = new FormData()
       fd.append('selectedCompetition', formData.selectedCompetition)
       fd.append('termsAccepted', String(formData.termsAccepted))
@@ -111,6 +118,8 @@ const RegistrationPage: React.FC = () => {
     } catch (err) {
       console.error('Submit error:', err)
       alert('Submission failed. Please try again.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -226,14 +235,23 @@ const RegistrationPage: React.FC = () => {
               <button 
                 className="modal-button cancel-button"
                 onClick={handleCancelSubmit}
+                disabled={isSubmitting}
               >
                 Cancel
               </button>
               <button 
                 className="modal-button submit-button"
                 onClick={handleSubmit}
+                disabled={isSubmitting}
               >
-                Submit
+                {isSubmitting ? (
+                  <>
+                    <div className="loading-spinner"></div>
+                    Submitting...
+                  </>
+                ) : (
+                  'Submit'
+                )}
               </button>
             </div>
           </div>
