@@ -39,8 +39,8 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
   const [isCheckingTeamName, setIsCheckingTeamName] = useState(false)
 
   // Check team name availability
-  const checkTeamNameAvailability = async (teamName: string): Promise<boolean> => {
-    if (!teamName?.trim()) return false
+  const checkTeamNameAvailability = async (teamName: string): Promise<{ available: boolean; error?: string }> => {
+    if (!teamName?.trim()) return { available: false, error: 'Team name is required' }
     
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     const maxRetries = isMobile ? 2 : 1 // Mobile gets more retries
@@ -80,12 +80,6 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
         if (!response.ok) {
           console.error(`❌ Team name check failed (attempt ${attempt}):`, response.status, response.statusText)
           
-          // If this is the last attempt and it's mobile, allow the name
-          if (attempt === maxRetries && isMobile) {
-            console.log('📱 Mobile device detected, allowing team name after all retries failed')
-            return true
-          }
-          
           // Continue to next attempt if not the last one
           if (attempt < maxRetries) {
             console.log(`🔄 Retrying... (${attempt + 1}/${maxRetries})`)
@@ -93,7 +87,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
             continue
           }
           
-          return false
+          return { available: false, error: `API error: ${response.status} ${response.statusText}` }
         }
         
         const result = await response.json()
@@ -102,7 +96,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
         const isAvailable = result.available === true
         console.log(`✅ Team name availability result (attempt ${attempt}):`, { teamName, isAvailable })
         
-        return isAvailable
+        return { available: isAvailable }
         
       } catch (error) {
         console.error(`❌ Error checking team name (attempt ${attempt}):`, error)
@@ -111,12 +105,6 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           stack: error instanceof Error ? error.stack : undefined
         })
         
-        // If this is the last attempt and it's mobile, allow the name
-        if (attempt === maxRetries && isMobile) {
-          console.log('📱 Mobile device detected, allowing team name after all retries failed')
-          return true
-        }
-        
         // Continue to next attempt if not the last one
         if (attempt < maxRetries) {
           console.log(`🔄 Retrying... (${attempt + 1}/${maxRetries})`)
@@ -124,7 +112,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
           continue
         }
         
-        return false
+        return { available: false, error: 'Network error occurred' }
       } finally {
         if (attempt === maxRetries) {
           setIsCheckingTeamName(false)
@@ -132,7 +120,7 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
       }
     }
     
-    return false
+    return { available: false, error: 'All attempts failed' }
   }
 
   const updateTeamInfo = async (field: string, value: string) => {
@@ -152,11 +140,14 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
         
         // Check team name availability when team name changes
         if (value?.trim()) {
-          const isAvailable = await checkTeamNameAvailability(value)
-          if (!isAvailable) {
+          const result = await checkTeamNameAvailability(value)
+          if (!result.available) {
+            const errorMessage = result.error 
+              ? `*Unable to check team name availability: ${result.error}` 
+              : '*This team name is already taken. Please choose a different name.'
             setErrors(prev => ({
               ...prev,
-              teamName: '*This team name is already taken. Please choose a different name.'
+              teamName: errorMessage
             }))
             setShowErrors(true) // Ensure errors are visible
           }
@@ -229,9 +220,12 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
       hasErrors = true
     } else {
       // Check if team name is available
-      const isAvailable = await checkTeamNameAvailability(data.teamName)
-      if (!isAvailable) {
-        newErrors.teamName = '*This team name is already taken. Please choose a different name.'
+      const result = await checkTeamNameAvailability(data.teamName)
+      if (!result.available) {
+        const errorMessage = result.error 
+          ? `*Unable to check team name availability: ${result.error}` 
+          : '*This team name is already taken. Please choose a different name.'
+        newErrors.teamName = errorMessage
         hasErrors = true
       }
     }
@@ -334,14 +328,15 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
 
       // If basic validation passes, check team name availability
       if (data.teamName?.trim()) {
-        const isAvailable = await checkTeamNameAvailability(data.teamName)
-        const isValid = isAvailable
+        const result = await checkTeamNameAvailability(data.teamName)
+        const isValid = result.available
         onValidation?.(isValid)
         
         // Debug: Log validation details
         console.log('Validation check:', {
           teamName: data.teamName?.trim(),
-          teamNameAvailable: isAvailable,
+          teamNameAvailable: result.available,
+          teamNameError: result.error,
           members: data.members.map((member, index) => ({
             index,
             name: member.name?.trim(),
