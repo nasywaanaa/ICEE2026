@@ -42,24 +42,97 @@ const TeamProfile: React.FC<TeamProfileProps> = ({ data, onChange, onValidation 
   const checkTeamNameAvailability = async (teamName: string): Promise<boolean> => {
     if (!teamName?.trim()) return false
     
-    try {
-      setIsCheckingTeamName(true)
-      const API_BASE = 'http://localhost:5002'
-      const response = await fetch(`${API_BASE}/api/registrations/check-team-name?teamName=${encodeURIComponent(teamName)}`)
-      
-      if (!response.ok) {
-        console.error('Team name check failed:', response.status)
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    const maxRetries = isMobile ? 2 : 1 // Mobile gets more retries
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        setIsCheckingTeamName(true)
+        const API_BASE = 'http://localhost:5002'
+        const endpoint = `${API_BASE}/api/registrations/check-team-name?teamName=${encodeURIComponent(teamName)}`
+        
+        console.log(`🔍 Checking team name availability (attempt ${attempt}/${maxRetries}):`, {
+          teamName,
+          endpoint,
+          userAgent: navigator.userAgent,
+          isMobile
+        })
+        
+        // Add timeout for mobile devices
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+        
+        const response = await fetch(endpoint, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          },
+          signal: controller.signal
+        })
+        
+        clearTimeout(timeoutId)
+        
+        console.log(`📡 Response status (attempt ${attempt}):`, response.status)
+        console.log(`📡 Response headers (attempt ${attempt}):`, Object.fromEntries(response.headers.entries()))
+        
+        if (!response.ok) {
+          console.error(`❌ Team name check failed (attempt ${attempt}):`, response.status, response.statusText)
+          
+          // If this is the last attempt and it's mobile, allow the name
+          if (attempt === maxRetries && isMobile) {
+            console.log('📱 Mobile device detected, allowing team name after all retries failed')
+            return true
+          }
+          
+          // Continue to next attempt if not the last one
+          if (attempt < maxRetries) {
+            console.log(`🔄 Retrying... (${attempt + 1}/${maxRetries})`)
+            await new Promise(resolve => setTimeout(resolve, 1000)) // Wait 1 second before retry
+            continue
+          }
+          
+          return false
+        }
+        
+        const result = await response.json()
+        console.log(`📋 API response (attempt ${attempt}):`, result)
+        
+        const isAvailable = result.available === true
+        console.log(`✅ Team name availability result (attempt ${attempt}):`, { teamName, isAvailable })
+        
+        return isAvailable
+        
+      } catch (error) {
+        console.error(`❌ Error checking team name (attempt ${attempt}):`, error)
+        console.error(`❌ Error details (attempt ${attempt}):`, {
+          message: error instanceof Error ? error.message : 'Unknown error',
+          stack: error instanceof Error ? error.stack : undefined
+        })
+        
+        // If this is the last attempt and it's mobile, allow the name
+        if (attempt === maxRetries && isMobile) {
+          console.log('📱 Mobile device detected, allowing team name after all retries failed')
+          return true
+        }
+        
+        // Continue to next attempt if not the last one
+        if (attempt < maxRetries) {
+          console.log(`🔄 Retrying... (${attempt + 1}/${maxRetries})`)
+          await new Promise(resolve => setTimeout(resolve, 1000)) // Wait 1 second before retry
+          continue
+        }
+        
         return false
+      } finally {
+        if (attempt === maxRetries) {
+          setIsCheckingTeamName(false)
+        }
       }
-      
-      const result = await response.json()
-      return result.available === true
-    } catch (error) {
-      console.error('Error checking team name:', error)
-      return false
-    } finally {
-      setIsCheckingTeamName(false)
     }
+    
+    return false
   }
 
   const updateTeamInfo = async (field: string, value: string) => {
