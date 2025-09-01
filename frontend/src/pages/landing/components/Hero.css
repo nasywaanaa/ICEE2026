@@ -116,10 +116,13 @@
   }
   
   /* Make both buttons same width on mobile */
-  .cta-button.primary,
-  .cta-button.secondary {
+  .hero-actions .cta-button {
     width: 100%;
-    min-width: 200px;
+  }
+  
+  /* Ensure the dropdown container also takes full width */
+  .hero-actions > div {
+    width: 100%;
   }
 }
 
@@ -148,13 +151,6 @@
   .cta-button {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
-  }
-  
-  /* Ensure buttons maintain same width on smaller screens */
-  .cta-button.primary,
-  .cta-button.secondary {
-    width: 100%;
-    min-width: 180px;
   }
 }
 

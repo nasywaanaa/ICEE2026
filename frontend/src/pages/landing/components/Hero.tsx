@@ -8,8 +8,6 @@ const Hero: React.FC = () => {
   // teks berulang untuk mengisi pita
   // const REPEAT = ('ICEE 2026     ').repeat(12);
   const [showRegisterOptions, setShowRegisterOptions] = React.useState(false);
-  const [dropdownPosition, setDropdownPosition] = React.useState({ top: 0, left: 0 });
-  const buttonRef = React.useRef<HTMLButtonElement>(null);
 
   const handleLearnMore = () => {
     // Scroll to About section
@@ -21,13 +19,6 @@ const Hero: React.FC = () => {
 
   const handleRegisterNow = () => {
     // Toggle dropdown for HMS / Non-HMS choice
-    if (!showRegisterOptions && buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setDropdownPosition({
-        top: rect.bottom + window.scrollY + 10,
-        left: rect.left + rect.width / 2
-      });
-    }
     setShowRegisterOptions(prev => !prev);
   };
 
@@ -36,23 +27,6 @@ const Hero: React.FC = () => {
     if (type === 'HMS') navigate('/connecth-hms');
     else navigate('/connecth');
   };
-
-  // Close dropdown when clicking outside
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
-        setShowRegisterOptions(false);
-      }
-    };
-
-    if (showRegisterOptions) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showRegisterOptions]);
 
   return (
     <section className="hero" id="home">
@@ -96,20 +70,9 @@ const Hero: React.FC = () => {
             <div className="hero-actions">
               <button className="cta-button primary" onClick={handleLearnMore}>Learn More</button>
               <div style={{ position: 'relative', display: 'inline-block' }}>
-                <button ref={buttonRef} className="cta-button secondary" onClick={handleRegisterNow}>Register Connect-H Now ▾</button>
+                <button className="cta-button secondary" onClick={handleRegisterNow}>Register Connect-H Now ▾</button>
                 {showRegisterOptions && (
-                  <div style={{ 
-                    position: 'absolute', 
-                    top: '110%', 
-                    left: '50%', 
-                    transform: 'translateX(-50%)', 
-                    background: '#fff', 
-                    borderRadius: 12, 
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.12)', 
-                    minWidth: 180, 
-                    zIndex: 9999,
-                    whiteSpace: 'nowrap'
-                  }}>
+                  <div style={{ position: 'absolute', top: '110%', right: 0, background: '#fff', borderRadius: 12, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', minWidth: 180, zIndex: 20 }}>
                     <button onClick={() => handleChoose('HMS')} style={{ width: '100%', textAlign: 'left', padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'Gabarito, sans-serif', color: '#2d3748', fontSize: '14px', fontWeight: '600' }}>HMS</button>
                     <div style={{ height: 1, background: '#edf2f7' }}></div>
                     <button onClick={() => handleChoose('NON_HMS')} style={{ width: '100%', textAlign: 'left', padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'Gabarito, sans-serif', color: '#2d3748', fontSize: '14px', fontWeight: '600' }}>Non-HMS</button>
