@@ -60,6 +60,7 @@
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  padding-bottom: 70px;
 }
 
 .cta-button {
@@ -113,6 +114,13 @@
   .cta-button {
     text-align: center;
   }
+  
+  /* Make both buttons same width on mobile */
+  .cta-button.primary,
+  .cta-button.secondary {
+    width: 100%;
+    min-width: 200px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -140,6 +148,13 @@
   .cta-button {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
+  }
+  
+  /* Ensure buttons maintain same width on smaller screens */
+  .cta-button.primary,
+  .cta-button.secondary {
+    width: 100%;
+    min-width: 180px;
   }
 }
 
