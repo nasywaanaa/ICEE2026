@@ -4,6 +4,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const registrationRoutes = require('./routes/registrations');
+const connecthRoutes = require('./routes/connecth');
 const googleAuthRoutes = require('./routes/googleAuth');
 
 const app = express();
@@ -20,6 +21,7 @@ app.get('/api/health', (req, res) => {
 
 // Routes
 app.use('/api/registrations', registrationRoutes);
+app.use('/api/connecth', connecthRoutes);
 app.use('/api/google', googleAuthRoutes);
 
 // Error handler fallback

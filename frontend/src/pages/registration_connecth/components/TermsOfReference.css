@@ -1,0 +1,218 @@
+/* Layout base - no nested cards */
+.tor-content {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  --blue: #2b74ff;
+  --green: #02b875;
+  --text: #222;
+  --muted: #9aa0a6;
+}
+
+.tor-heading {
+  text-align: center;
+  margin: 0 0 2rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* Dropdown */
+.tor-dropdown {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.tor-dropdown select {
+  font-family: 'Gabarito', sans-serif;
+  width: 100%;
+  max-width: 600px;
+  appearance: none;
+  border: 2px solid #4A90E2;
+  outline: none;
+  border-radius: 12px;
+  background: #fff;
+  padding: 16px 20px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  text-align: center;
+}
+
+.tor-dropdown select:focus {
+  border-color: var(--blue);
+}
+
+/* Title */
+.tor-title {
+  font-family: 'Bakbak One', cursive;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--text);
+  line-height: 1.4;
+  margin: 0 0 2rem 0;
+}
+
+/* File section */
+.tor-file-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.tor-file-badge {
+  background: #101010;
+  color: #fff;
+  border-radius: 16px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  width: 100%;
+  max-width: 600px;
+  justify-content: center;
+}
+
+.tor-file-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tor-file-text {
+  font-family: 'Gabarito', sans-serif;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tor-download-btn {
+  font-family: 'Gabarito', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  border: 0;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--blue), var(--green));
+  box-shadow: 0 8px 25px rgba(43, 116, 255, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  width: 100%;
+  max-width: 600px;
+  justify-content: center;
+}
+
+.tor-download-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(43, 116, 255, 0.45);
+}
+
+/* Checkbox */
+.tor-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 2rem auto;
+  max-width: 600px;
+  width: 100%;
+  color: #3a3a3a;
+  line-height: 1.5;
+  cursor: pointer;
+  padding: 0 20px;
+}
+
+.tor-checkbox input {
+  display: none;
+}
+
+.tor-checkbox-box {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d0d0d0;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  background: #fff;
+  margin-top: 2px;
+}
+
+.tor-checkbox input:checked + .tor-checkbox-box {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--blue), var(--green));
+}
+
+.tor-checkbox input:checked + .tor-checkbox-box::after {
+  font-family: 'Gabarito', sans-serif;
+  content: "✓";
+  color: #fff;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.tor-checkbox-text {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 14px;
+  flex: 1;
+}
+
+/* Actions removed - handled by main RegistrationPage */
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tor-content {
+    padding: 1.5rem 1rem;
+    max-width: 100%;
+  }
+  
+  .tor-heading {
+    font-size: 1.25rem;
+  }
+  
+  .tor-title {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tor-dropdown select {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+  
+  .tor-file-badge {
+    padding: 14px 20px;
+    max-width: 100%;
+  }
+  
+  .tor-file-text {
+    white-space: normal;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .tor-download-btn {
+    padding: 14px 24px;
+    font-size: 14px;
+    max-width: 100%;
+  }
+  
+  .tor-checkbox {
+    margin: 1.5rem auto;
+    padding: 0 10px;
+    max-width: 100%;
+  }
+  
+  .tor-checkbox-text {
+    font-size: 13px;
+  }
+}

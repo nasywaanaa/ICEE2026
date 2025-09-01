@@ -6,7 +6,8 @@ const Hero: React.FC = () => {
   const navigate = useNavigate();
   
   // teks berulang untuk mengisi pita
-  const REPEAT = ('ICEE 2026     ').repeat(12);
+  // const REPEAT = ('ICEE 2026     ').repeat(12);
+  const [showRegisterOptions, setShowRegisterOptions] = React.useState(false);
 
   const handleLearnMore = () => {
     // Scroll to About section
@@ -17,8 +18,14 @@ const Hero: React.FC = () => {
   };
 
   const handleRegisterNow = () => {
-    // Navigate to registration page
-    navigate('/registration');
+    // Toggle dropdown for HMS / Non-HMS choice
+    setShowRegisterOptions(prev => !prev);
+  };
+
+  const handleChoose = (type: 'HMS' | 'NON_HMS') => {
+    setShowRegisterOptions(false);
+    if (type === 'HMS') navigate('/connecth-hms');
+    else navigate('/connecth');
   };
 
   return (
@@ -62,7 +69,16 @@ const Hero: React.FC = () => {
             </div>
             <div className="hero-actions">
               <button className="cta-button primary" onClick={handleLearnMore}>Learn More</button>
-              <button className="cta-button secondary" onClick={handleRegisterNow}>Register Now</button>
+              <div style={{ position: 'relative', display: 'inline-block' }}>
+                <button className="cta-button secondary" onClick={handleRegisterNow}>Register Now ▾</button>
+                {showRegisterOptions && (
+                  <div style={{ position: 'absolute', top: '110%', right: 0, background: '#fff', borderRadius: 12, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', minWidth: 180, zIndex: 20 }}>
+                    <button onClick={() => handleChoose('HMS')} style={{ width: '100%', textAlign: 'left', padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'Gabarito, sans-serif', color: '#2d3748', fontSize: '14px', fontWeight: '600' }}>HMS</button>
+                    <div style={{ height: 1, background: '#edf2f7' }}></div>
+                    <button onClick={() => handleChoose('NON_HMS')} style={{ width: '100%', textAlign: 'left', padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'Gabarito, sans-serif', color: '#2d3748', fontSize: '14px', fontWeight: '600' }}>Non-HMS</button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

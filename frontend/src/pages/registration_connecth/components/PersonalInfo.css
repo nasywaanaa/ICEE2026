@@ -1,0 +1,214 @@
+/* Personal Info Styles */
+.personal-info-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Gabarito', sans-serif;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.personal-info-title {
+  font-family: 'Bakbak One', cursive;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2d3748;
+  margin: 0 0 1.5rem 0;
+  text-align: left;
+}
+
+/* Form Grid */
+.personal-info-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #a0aec0;
+  z-index: 2;
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+}
+
+.personal-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: 'Gabarito', sans-serif;
+  color: #4a5568;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  min-height: 56px;
+}
+
+.personal-input:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.personal-input::placeholder {
+  color: #a0aec0;
+}
+
+.personal-input.error {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: block;
+  font-family: 'Gabarito', sans-serif;
+}
+
+/* Commitment Section */
+.commitment-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f7fafc;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.commitment-checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: #4299e1;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.commitment-checkbox.error {
+  accent-color: #e53e3e;
+}
+
+.commitment-label {
+  font-size: 0.95rem;
+  color: #4a5568;
+  line-height: 1.6;
+  cursor: pointer;
+  font-family: 'Gabarito', sans-serif;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .personal-info-content {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 16px;
+  }
+  
+  .personal-info-title {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .personal-info-form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .personal-input {
+    padding: 0.875rem 0.75rem 0.875rem 2.75rem;
+    font-size: 0.95rem;
+    min-height: 52px;
+  }
+  
+  .input-icon {
+    left: 0.875rem;
+    width: 18px;
+    height: 18px;
+  }
+
+  .commitment-section {
+    padding: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .commitment-label {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .personal-info-content {
+    padding: 0.75rem;
+    margin: 0.5rem;
+    border-radius: 12px;
+  }
+  
+  .personal-info-title {
+    font-size: 1.25rem;
+  }
+  
+  .field-label {
+    font-size: 0.9rem;
+  }
+  
+  .personal-input {
+    padding: 0.75rem 0.5rem 0.75rem 2.5rem;
+    font-size: 0.9rem;
+    min-height: 48px;
+  }
+  
+  .input-icon {
+    left: 0.75rem;
+    width: 16px;
+    height: 16px;
+  }
+
+  .checkbox-container {
+    gap: 0.75rem;
+  }
+
+  .commitment-checkbox {
+    width: 18px;
+    height: 18px;
+  }
+
+  .commitment-label {
+    font-size: 0.85rem;
+  }
+}
