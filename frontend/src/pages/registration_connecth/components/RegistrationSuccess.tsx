@@ -24,6 +24,11 @@ const RegistrationSuccess: React.FC = () => {
             <p>Thank you for completing your registration for the</p>
             <p>competition. We're grateful for your participation</p>
             <p>and wish you the best of luck!</p>
+            <br />
+
+            <p>For further information, updates, and announcements,<br />
+              please join our official WhatsApp group via the following link.<br />
+              <a href="https://chat.whatsapp.com/KY6UxVSb6AV9X5ECDFOSG2?mode=ems_copy_c" target="_blank" rel="noopener noreferrer">Group WA Connect-H ICEE ITB 2026</a></p>
           </div>
           
           <Link to="/" className="back-home-btn">
