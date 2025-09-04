@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { eventData } from "../data/event-data";
 import "./Event.css";
 
@@ -10,10 +11,32 @@ interface EventItem {
   documentationImage: string[];
 }
 
+// Render helper to bold specific keywords inside the event description text
+const renderDescriptionWithBold = (text: string): React.ReactNode => {
+  const keywords = ["workshop", "Hilti", "anchor technology"]; // case-insensitive
+  // Build a capturing regex so matched keywords remain in the result array
+  const escaped = keywords.map((k) => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const pattern = new RegExp(`(${escaped.join("|")})`, "gi");
+  const parts = text.split(pattern);
+
+  return parts.map((part, index) => {
+    // Odd indices are the captured keywords when using split with a capturing group
+    if (index % 2 === 1) {
+      return (
+        <strong key={index}>
+          {part}
+        </strong>
+      );
+    }
+    return <React.Fragment key={index}>{part}</React.Fragment>;
+  });
+};
+
 const Events: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
+  const navigate = useNavigate();
 
   const handleLearnMoreModal = (event: EventItem, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -43,6 +66,11 @@ const Events: React.FC = () => {
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev - 1 + eventData.length) % eventData.length);
+  };
+
+  const handleRegister = (type: 'HMS' | 'NON_HMS') => {
+    if (type === 'HMS') navigate('/connecth-hms');
+    else navigate('/connecth');
   };
 
   const getCardPosition = (index: number) => {
@@ -169,10 +197,26 @@ const Events: React.FC = () => {
                 </h3>
 
                 <p className="modal-description">
-                  {selectedEvent.description}
+                  {renderDescriptionWithBold(selectedEvent.description)}
                 </p>
 
                 <div className="modal-actions">
+                  {selectedEvent.name === 'Connect-H' && (
+                    <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                      <button 
+                        className="modal-register-button"
+                        onClick={() => handleRegister('HMS')}
+                      >
+                        <span>Register as HMS</span>
+                      </button>
+                      <button 
+                        className="modal-register-button"
+                        onClick={() => handleRegister('NON_HMS')}
+                      >
+                        <span>Register as Non-HMS</span>
+                      </button>
+                    </div>
+                  )}
                   {/* <button 
                     className="circle-button" 
                     onClick={closeModal} 

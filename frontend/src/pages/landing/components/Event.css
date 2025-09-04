@@ -399,6 +399,61 @@
   margin-top: 24px;
 }
 
+/* Register button style similar to the provided gradient button */
+.modal-register-button {
+  background: linear-gradient(135deg, #1B65FA 0%, #00D46B 100%);
+  border: none;
+  border-radius: 1000px;
+  padding: 12px 24px;
+  font-family: 'Gabarito', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.modal-register-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.2);
+  filter: brightness(1.03);
+}
+
+.modal-register-menu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  min-width: 180px;
+  z-index: 30;
+  padding: 6px 0;
+}
+
+.modal-register-menu-item {
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'Gabarito', sans-serif;
+  color: #2d3748;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.modal-register-menu-item:hover {
+  background: #f7fafc;
+}
+
+.modal-register-menu-sep {
+  height: 1px;
+  background: #edf2f7;
+}
+
 .modal-button {
   border: none;
   cursor: pointer;

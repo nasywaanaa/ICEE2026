@@ -66,6 +66,7 @@ const Hero: React.FC = () => {
               <p>
                 Step into 2026 and discover the future of civil engineering through innovation and digital transformation! Be inspired by smarter solutions, creative breakthroughs, and impactful experiences. ICEE 2026 carries the theme <span className="theme-highlight">“Smart Structure Smarter Future”</span> to highlight the urgency of building infrastructure that is not only sustainable and resilient, but also digitally intelligent. With BIM, AI, and IoT, the next generation of infrastructure will be more adaptive, efficient, and future-ready.
               </p>
+              <p>Current Event: <span className="theme-highlight">Connect-H</span></p>
             </div>
             <div className="hero-actions">
               <button className="cta-button primary" onClick={handleLearnMore}>Learn More</button>
