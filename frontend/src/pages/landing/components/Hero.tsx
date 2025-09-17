@@ -66,11 +66,11 @@ const Hero: React.FC = () => {
               <p>
                 Step into 2026 and discover the future of civil engineering through innovation and digital transformation! Be inspired by smarter solutions, creative breakthroughs, and impactful experiences. ICEE 2026 carries the theme <span className="theme-highlight">“Smart Structure Smarter Future”</span> to highlight the urgency of building infrastructure that is not only sustainable and resilient, but also digitally intelligent. With BIM, AI, and IoT, the next generation of infrastructure will be more adaptive, efficient, and future-ready.
               </p>
-              <p>Current Event: <span className="theme-highlight">Connect-H</span></p>
+              <p>Current Event: <span className="theme-highlight">Connect-H (Registration Closed)</span></p>
             </div>
             <div className="hero-actions">
               <button className="cta-button primary" onClick={handleLearnMore}>Learn More</button>
-              <div style={{ position: 'relative', display: 'inline-block' }}>
+              {/* <div style={{ position: 'relative', display: 'inline-block' }}>
                 <button className="cta-button secondary" onClick={handleRegisterNow}>Register Connect-H Now ▾</button>
                 {showRegisterOptions && (
                   <div style={{ position: 'absolute', top: '110%', right: 0, background: '#fff', borderRadius: 12, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', minWidth: 180, zIndex: 20 }}>
@@ -79,7 +79,7 @@ const Hero: React.FC = () => {
                     <button onClick={() => handleChoose('NON_HMS')} style={{ width: '100%', textAlign: 'left', padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'Gabarito, sans-serif', color: '#2d3748', fontSize: '14px', fontWeight: '600' }}>Non-HMS</button>
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

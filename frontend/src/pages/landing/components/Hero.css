@@ -46,8 +46,8 @@
 }
 
 .hero-description p {
-  margin-bottom: 1.5rem; /* kasih jarak antar paragraf */
-  line-height: 1.7;      /* biar lebih enak dibaca */
+  margin-bottom: 1.5rem;
+  line-height: 1.7;     
 }
 
 .theme-highlight {

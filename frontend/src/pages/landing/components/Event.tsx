@@ -201,7 +201,7 @@ const Events: React.FC = () => {
                 </p>
 
                 <div className="modal-actions">
-                  {selectedEvent.name === 'Connect-H' && (
+                  {/* {selectedEvent.name === 'Connect-H' && (
                     <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                       <button 
                         className="modal-register-button"
@@ -216,7 +216,7 @@ const Events: React.FC = () => {
                         <span>Register as Non-HMS</span>
                       </button>
                     </div>
-                  )}
+                  )} */}
                   {/* <button 
                     className="circle-button" 
                     onClick={closeModal} 
