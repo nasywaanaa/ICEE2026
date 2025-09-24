@@ -142,7 +142,7 @@ const RequiredDocuments: React.FC<RequiredDocumentsProps> = ({ data, onChange })
         />
         
         <FileUploadCard
-          title="Proof of Enrollment"
+          title="Proof of Active College Statement Letter (Surat Pernyataan Aktif Kuliah)"
           field="enrollmentProof"
           accept=".pdf"
           supportedFormats="Only support pdf files"
