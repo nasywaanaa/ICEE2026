@@ -105,7 +105,16 @@ const RequiredDocuments: React.FC<RequiredDocumentsProps> = ({ data, onChange })
                 <div className="upload-text">
                   <span className="upload-main">Drag your file to start uploading</span>
                   <span className="upload-divider">OR</span>
-                  <button type="button" className="browse-btn">Browse files</button>
+                  <button 
+                    type="button" 
+                    className="browse-btn"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      document.getElementById(field)?.click()
+                    }}
+                  >
+                    Browse files
+                  </button>
                 </div>
               </div>
             )}
