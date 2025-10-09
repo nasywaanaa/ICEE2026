@@ -16,10 +16,10 @@ const competitionOptions = {
 };
 
 const competitionFiles = {
-  'CETC': '/tor/cetc/[CETC] ToR Peserta 2026.pdf',
-  'IBDC': '/tor/ibdc/[IBDC] ToR Peserta 2026.pdf',
-  'GECC': '/tor/gecc/[GECC] ToR Peserta 2026.pdf',
-  'ITEC': '/tor/itec/[ITEC] ToR Peserta 2026.pdf'
+  'CETC': '/tor/cetc/[CETC] TOR Peserta 2026(1).pdf',
+  'IBDC': '/tor/ibdc/[IBDC] TOR Peserta 2026(1).pdf',
+  'GECC': '/tor/gecc/[GECC] TOR Peserta 2026(1).pdf',
+  'ITEC': '/tor/itec/[ITEC] TOR Peserta 2026(1).pdf'
 };
 
 const TermsOfReference: React.FC<TermsOfReferenceProps> = ({ isAccepted, onAccept, selectedCompetition, onCompetitionChange }) => {
