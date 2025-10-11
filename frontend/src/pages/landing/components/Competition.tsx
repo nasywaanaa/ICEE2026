@@ -53,8 +53,8 @@ const Competition: React.FC = () => {
   ];
 
   const handleRegister = (competitionId: string) => {
-    // Navigate to registration page with the selected competition
-    navigate(`/registration?competition=${competitionId}`);
+    // Show registration closed message
+    alert('Thank you for your enthusiasm! We are sorry to inform you that our registrations are already closed. We appreciate your interest in ICEE 2026!');
   };
 
   const nextSlide = () => {

@@ -82,12 +82,12 @@ const Header: React.FC = () => {
           >
             Event
           </a>
-          <Link 
-            to="/registration" 
-            className="nav-link registration-btn"
+          <button 
+            className="nav-link registration-btn closed"
+            onClick={() => alert('Thank you for your enthusiasm! We are sorry to inform you that our registrations are already closed. We appreciate your interest in ICEE 2026!')}
           >
-            Registration →
-          </Link>
+            Registration Closed
+          </button>
         </nav>
       </div>
     </header>
