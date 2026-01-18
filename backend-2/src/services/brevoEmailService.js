@@ -24,98 +24,208 @@ async function sendSeminarRegistrationEmail(toEmail, toName, uniqueId, jenisPese
       : (jenisPeserta === 'Mahasiswa TPB ITB' ? 'Mahasiswa TPB ITB' : 'Anggota HMS ITB');
     
     const htmlContent = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="UTF-8">
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
-          body {
+            body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             color: #333;
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-          }
-          .header {
-            background-color: #0066cc;
-            color: white;
-            padding: 20px;
+            background: #ffffff;
+            }
+            .header {
+            background: #219abe;
+            color: #fff;
+            padding: 22px 20px;
             text-align: center;
-            border-radius: 5px 5px 0 0;
-          }
-          .content {
-            background-color: #f9f9f9;
-            padding: 30px;
-            border-radius: 0 0 5px 5px;
-          }
-          .unique-id {
-            background-color: #fff;
-            border: 2px solid #0066cc;
-            border-radius: 5px;
-            padding: 20px;
-            text-align: center;
-            margin: 20px 0;
-          }
-          .unique-id-label {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-          }
-          .unique-id-value {
-            font-size: 32px;
-            font-weight: bold;
-            color: #0066cc;
-            letter-spacing: 2px;
-          }
-          .info-section {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #fff;
-            border-left: 4px solid #0066cc;
-          }
-          .footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
+            border-radius: 10px 10px 0 0;
+            }
+            .header h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.2px;
+            }
+            .content {
+            background: #f6f8fb;
+            padding: 26px;
+            border-radius: 0 0 10px 10px;
+            border: 1px solid #e6ebf2;
+            border-top: none;
+            }
+            .badge {
+            display: inline-block;
+            background: #e8f1ff;
+            color: #219abe;
+            font-weight: 700;
+            border-radius: 999px;
+            padding: 6px 12px;
             font-size: 12px;
-            color: #666;
+            margin-top: 10px;
+            }
+            .card {
+            background: #fff;
+            border: 1px solid #e6ebf2;
+            border-radius: 10px;
+            padding: 16px;
+            margin: 16px 0;
+            }
+            .unique-id {
+            background-color: #fff;
+            border: 2px solid #219abe;
+            border-radius: 10px;
+            padding: 18px;
             text-align: center;
-          }
+            margin: 18px 0;
+            }
+            .unique-id-label {
+            font-size: 13px;
+            color: #667085;
+            margin-bottom: 8px;
+            }
+            .unique-id-value {
+            font-size: 34px;
+            font-weight: 800;
+            color: #219abe;
+            letter-spacing: 2px;
+            }
+            .section-title {
+            font-size: 14px;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            color: #219abe;
+            }
+            .row {
+            margin: 6px 0;
+            }
+            .row strong {
+            color: #111827;
+            }
+            .btn {
+            display: inline-block;
+            background: #25D366;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-align: center;
+            }
+            .btn-blue {
+            display: inline-block;
+            background: #219abe;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-align: center;
+            margin-right: 10px;
+            }
+            .note {
+            font-size: 13px;
+            color: #475467;
+            margin-top: 8px;
+            }
+            .divider {
+            height: 1px;
+            background: #e6ebf2;
+            margin: 18px 0;
+            }
+            .footer {
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid #e6ebf2;
+            font-size: 12px;
+            color: #667085;
+            text-align: center;
+            }
+            a {
+            color: #219abe;
+            }
         </style>
-      </head>
-      <body>
+        </head>
+
+        <body>
         <div class="header">
-          <h1>Konfirmasi Pendaftaran Seminar ICEE 2026</h1>
+            <h1>Konfirmasi Pendaftaran Grand Seminar ICEE 2026</h1>
+            <div class="badge">Pendaftaran Berhasil</div>
         </div>
+
         <div class="content">
-          <p>Halo <strong>${toName}</strong>,</p>
-          
-          <p>Terima kasih telah mendaftar untuk Seminar ICEE 2026!</p>
-          
-          <div class="unique-id">
-            <div class="unique-id-label">Kode Pendaftaran Anda:</div>
+            <p>Halo <strong>${toName}</strong>,</p>
+
+            <p>
+            Terima kasih telah mendaftar untuk <strong>Seminar ICEE 2026</strong>.
+            Berikut adalah detail pendaftaran dan informasi acara Anda.
+            </p>
+
+            <div class="unique-id">
+            <div class="unique-id-label">Kode Pendaftaran</div>
             <div class="unique-id-value">${uniqueId}</div>
-          </div>
-          
-          <div class="info-section">
-            <p><strong>Jenis Peserta:</strong> ${participantType}</p>
-            <p><strong>Kode Pendaftaran:</strong> ${uniqueId}</p>
-          </div>
-          
-          <p>Mohon simpan kode pendaftaran ini dengan baik, karena kode ini akan digunakan untuk verifikasi kehadiran Anda pada hari acara.</p>
-          
-          <p>Jika Anda memiliki pertanyaan atau membutuhkan bantuan, jangan ragu untuk menghubungi kami.</p>
-          
-          <p>Salam hangat,<br>
-          <strong>Panitia ICEE 2026</strong></p>
+            </div>
+
+            <div class="card">
+            <p class="section-title">Identitas Peserta</p>
+            <div class="row"><strong>Nama:</strong> ${toName}</div>
+            <div class="row"><strong>Jenis Peserta:</strong> ${participantType}</div>
+            </div>
+
+            <div class="card">
+            <p class="section-title">Informasi Waktu & Tempat</p>
+            <div class="row"><strong>Lokasi:</strong> Aula Barat, Kampus Ganesha ITB</div>
+            <div class="row"><strong>Open Gate:</strong> 09.00 WIB</div>
+            <div class="row">
+                <strong>Link lokasi:</strong>
+                <a href="https://www.google.com/maps?sca_esv=c889e3cf512c13a4&sxsrf=ANbL-n50xBaBcCJD_4DEAKy9Zn2UQHbb6Q:1768757613937&kgmid=/g/1q6hz9yn3&shem=bdsle,ptotple,shrtsdl&shndl=30&kgs=b9085abae97e1f90&um=1&ie=UTF-8&fb=1&gl=id&sa=X&geocode=KUfw0qtQ5mguMVOxR8qPH6qG&daddr=Jl.+Ganesa+No.10,+Lb.+Siliwangi,+Kecamatan+Coblong,+Kota+Bandung,+Jawa+Barat+40132" target="_blank" rel="noopener">Klik untuk membuka peta</a>
+            </div>
+
+            <div class="divider"></div>
+
+            <a class="btn-blue" href="https://www.google.com/maps?sca_esv=c889e3cf512c13a4&sxsrf=ANbL-n50xBaBcCJD_4DEAKy9Zn2UQHbb6Q:1768757613937&kgmid=/g/1q6hz9yn3&shem=bdsle,ptotple,shrtsdl&shndl=30&kgs=b9085abae97e1f90&um=1&ie=UTF-8&fb=1&gl=id&sa=X&geocode=KUfw0qtQ5mguMVOxR8qPH6qG&daddr=Jl.+Ganesa+No.10,+Lb.+Siliwangi,+Kecamatan+Coblong,+Kota+Bandung,+Jawa+Barat+40132" target="_blank" rel="noopener">
+                Buka Lokasi
+            </a>
+            <a class="btn" href="https://chat.whatsapp.com/FU0uA4CejYjGI2TA7t4CcF" target="_blank" rel="noopener">
+                Join Grup WhatsApp
+            </a>
+
+            <p class="note">
+                Mohon hadir tepat waktu untuk kelancaran registrasi dan penataan tempat duduk.
+            </p>
+            </div>
+
+            <div class="card">
+            <p class="section-title">Arahan Grup WhatsApp</p>
+            <p class="note" style="margin: 0;">
+                Untuk update informasi teknis (rundown, pengumuman, dan kebutuhan hari-H), peserta
+                <strong>diarahkan untuk bergabung</strong> ke grup WhatsApp melalui link berikut:
+            </p>
+            <p style="margin: 10px 0 0 0;">
+                🔗 <a href="https://chat.whatsapp.com/FU0uA4CejYjGI2TA7t4CcF" target="_blank" rel="noopener">
+                https://chat.whatsapp.com/FU0uA4CejYjGI2TA7t4CcF
+                </a>
+            </p>
+            </div>
+
+            <p class="note">
+            Mohon simpan <strong>kode pendaftaran</strong> ini dengan baik karena akan digunakan untuk verifikasi kehadiran.
+            Jika Anda memiliki pertanyaan, silakan hubungi panitia melalui kanal informasi resmi.
+            </p>
+
+            <p>Salam hangat,<br /><strong>Panitia ICEE 2026</strong></p>
+
+            <div class="footer">
+            <p>Email ini dikirim secara otomatis. Mohon tidak membalas email ini.</p>
+            <p>&copy; 2026 ICEE. All rights reserved.</p>
+            </div>
         </div>
-        <div class="footer">
-          <p>Email ini dikirim secara otomatis. Mohon tidak membalas email ini.</p>
-          <p>&copy; 2026 ICEE. All rights reserved.</p>
-        </div>
-      </body>
-      </html>
+        </body>
+        </html>
     `;
 
     const response = await axios.post(

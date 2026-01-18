@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './GroupParticipants.css'
 
 interface ParticipantData {
@@ -20,13 +20,13 @@ interface GroupParticipantsProps {
   onValidation?: (isValid: boolean) => void
 }
 
+interface ParticipantErrors {
+  [key: string]: string | undefined
+}
+
 interface ValidationErrors {
-  peserta2?: {
-    [key: string]: string | undefined
-  }
-  peserta3?: {
-    [key: string]: string | undefined
-  }
+  peserta2?: ParticipantErrors
+  peserta3?: ParticipantErrors
 }
 
 const GroupParticipants: React.FC<GroupParticipantsProps> = ({ peserta2, peserta3, paketPendaftaran, onChange, onValidation }) => {
@@ -80,11 +80,12 @@ const GroupParticipants: React.FC<GroupParticipantsProps> = ({ peserta2, peserta
     }
 
     // Clear error when user starts typing
-    if (errors[`peserta${participantNum}`]?.[field]) {
+    const errorKey = participantNum === 2 ? 'peserta2' : 'peserta3'
+    if (errors[errorKey]?.[field]) {
       setErrors(prev => ({
         ...prev,
-        [`peserta${participantNum}`]: {
-          ...prev[`peserta${participantNum}`],
+        [errorKey]: {
+          ...prev[errorKey],
           [field]: undefined
         }
       }))
@@ -93,53 +94,60 @@ const GroupParticipants: React.FC<GroupParticipantsProps> = ({ peserta2, peserta
 
   const validateSingleField = (participantNum: 2 | 3, field: keyof ParticipantData, value: string) => {
     const newErrors = { ...errors }
-    if (!newErrors[`peserta${participantNum}`]) {
-      newErrors[`peserta${participantNum}`] = {}
+    const errorKey = participantNum === 2 ? 'peserta2' : 'peserta3'
+    if (!newErrors[errorKey]) {
+      newErrors[errorKey] = {}
     }
 
     const participant = participantNum === 2 ? peserta2 : peserta3
 
     if (field === 'namaLengkap') {
       if (!value?.trim()) {
-        newErrors[`peserta${participantNum}`]![field] = '*Field ini wajib diisi'
+        newErrors[errorKey]![field] = '*Field ini wajib diisi'
       } else {
-        newErrors[`peserta${participantNum}`]![field] = undefined
+        newErrors[errorKey]![field] = undefined
       }
     } else if (field === 'email') {
       const emailError = validateEmail(value)
-      newErrors[`peserta${participantNum}`]![field] = emailError
+      newErrors[errorKey]![field] = emailError
     } else if (field === 'nomorWhatsApp') {
       const phoneError = validatePhone(value)
-      newErrors[`peserta${participantNum}`]![field] = phoneError
+      newErrors[errorKey]![field] = phoneError
     } else if (field === 'jenisPeserta') {
       if (!value) {
-        newErrors[`peserta${participantNum}`]![field] = '*Field ini wajib diisi'
+        newErrors[errorKey]![field] = '*Field ini wajib diisi'
       } else {
-        newErrors[`peserta${participantNum}`]![field] = undefined
+        newErrors[errorKey]![field] = undefined
       }
     } else if (field === 'pekerjaan') {
       if (!value?.trim()) {
-        newErrors[`peserta${participantNum}`]![field] = '*Field ini wajib diisi'
+        newErrors[errorKey]![field] = '*Field ini wajib diisi'
       } else {
-        newErrors[`peserta${participantNum}`]![field] = undefined
+        newErrors[errorKey]![field] = undefined
       }
     } else if (field === 'institusi') {
       if (!value?.trim()) {
-        newErrors[`peserta${participantNum}`]![field] = '*Field ini wajib diisi'
+        newErrors[errorKey]![field] = '*Field ini wajib diisi'
       } else {
-        newErrors[`peserta${participantNum}`]![field] = undefined
+        newErrors[errorKey]![field] = undefined
       }
     } else if (field === 'nomorIndukMahasiswa') {
-      if ((participant?.jenisPeserta === 'Mahasiswa TPB ITB' || participant?.jenisPeserta === 'Anggota HMS ITB') && !value?.trim()) {
-        newErrors[`peserta${participantNum}`]![field] = '*Field ini wajib diisi'
+      if (participant?.jenisPeserta === 'Mahasiswa TPB ITB' || participant?.jenisPeserta === 'Anggota HMS ITB') {
+        if (!value?.trim()) {
+          newErrors[errorKey]![field] = '*Field ini wajib diisi'
+        } else if (/[^0-9]/.test(value.trim())) {
+          newErrors[errorKey]![field] = '*Masukkan NIM yang hanya berisi angka'
+        } else {
+          newErrors[errorKey]![field] = undefined
+        }
       } else {
-        newErrors[`peserta${participantNum}`]![field] = undefined
+        newErrors[errorKey]![field] = undefined
       }
     } else if (field === 'alamat') {
       if (!value?.trim()) {
-        newErrors[`peserta${participantNum}`]![field] = '*Field ini wajib diisi'
+        newErrors[errorKey]![field] = '*Field ini wajib diisi'
       } else {
-        newErrors[`peserta${participantNum}`]![field] = undefined
+        newErrors[errorKey]![field] = undefined
       }
     }
 
@@ -156,6 +164,13 @@ const GroupParticipants: React.FC<GroupParticipantsProps> = ({ peserta2, peserta
 
     const validateParticipant = (p: ParticipantData | null): boolean => {
       if (!p) return false
+      
+      // Check NIM validation: must be numbers only if jenisPeserta is TPB or HMS
+      const isNIMValid = p.jenisPeserta === 'Umum' || 
+        (p.jenisPeserta !== 'Umum' && 
+         p.nomorIndukMahasiswa?.trim() && 
+         /^\d+$/.test(p.nomorIndukMahasiswa.trim()))
+      
       return Boolean(
         p.namaLengkap?.trim() &&
         p.email?.trim() &&
@@ -166,7 +181,7 @@ const GroupParticipants: React.FC<GroupParticipantsProps> = ({ peserta2, peserta
         p.pekerjaan?.trim() &&
         p.institusi?.trim() &&
         p.alamat?.trim() &&
-        ((p.jenisPeserta === 'Umum') || (p.jenisPeserta !== 'Umum' && p.nomorIndukMahasiswa?.trim()))
+        isNIMValid
       )
     }
 
@@ -181,44 +196,50 @@ const GroupParticipants: React.FC<GroupParticipantsProps> = ({ peserta2, peserta
     (window as any).validateGroupParticipants = () => {
       if (!isGroup) return true
 
-      const validateParticipant = (p: ParticipantData | null, num: number): boolean => {
+      const validateParticipant = (p: ParticipantData | null, num: 2 | 3): boolean => {
         if (!p) return false
         const newErrors: ValidationErrors = {}
-        newErrors[`peserta${num}`] = {}
+        const errorKey = num === 2 ? 'peserta2' : 'peserta3'
+        newErrors[errorKey] = {}
         let hasErrors = false
 
         if (!p.namaLengkap?.trim()) {
-          newErrors[`peserta${num}`]!.namaLengkap = '*Field ini wajib diisi'
+          newErrors[errorKey]!.namaLengkap = '*Field ini wajib diisi'
           hasErrors = true
         }
         const emailError = validateEmail(p.email)
         if (emailError) {
-          newErrors[`peserta${num}`]!.email = emailError
+          newErrors[errorKey]!.email = emailError
           hasErrors = true
         }
         const phoneError = validatePhone(p.nomorWhatsApp)
         if (phoneError) {
-          newErrors[`peserta${num}`]!.nomorWhatsApp = phoneError
+          newErrors[errorKey]!.nomorWhatsApp = phoneError
           hasErrors = true
         }
         if (!p.jenisPeserta) {
-          newErrors[`peserta${num}`]!.jenisPeserta = '*Field ini wajib diisi'
+          newErrors[errorKey]!.jenisPeserta = '*Field ini wajib diisi'
           hasErrors = true
         }
         if (!p.pekerjaan?.trim()) {
-          newErrors[`peserta${num}`]!.pekerjaan = '*Field ini wajib diisi'
+          newErrors[errorKey]!.pekerjaan = '*Field ini wajib diisi'
           hasErrors = true
         }
         if (!p.institusi?.trim()) {
-          newErrors[`peserta${num}`]!.institusi = '*Field ini wajib diisi'
+          newErrors[errorKey]!.institusi = '*Field ini wajib diisi'
           hasErrors = true
         }
-        if ((p.jenisPeserta === 'Mahasiswa TPB ITB' || p.jenisPeserta === 'Anggota HMS ITB') && !p.nomorIndukMahasiswa?.trim()) {
-          newErrors[`peserta${num}`]!.nomorIndukMahasiswa = '*Field ini wajib diisi'
-          hasErrors = true
+        if (p.jenisPeserta === 'Mahasiswa TPB ITB' || p.jenisPeserta === 'Anggota HMS ITB') {
+          if (!p.nomorIndukMahasiswa?.trim()) {
+            newErrors[errorKey]!.nomorIndukMahasiswa = '*Field ini wajib diisi'
+            hasErrors = true
+          } else if (/[^0-9]/.test(p.nomorIndukMahasiswa.trim())) {
+            newErrors[errorKey]!.nomorIndukMahasiswa = '*Masukkan NIM yang hanya berisi angka'
+            hasErrors = true
+          }
         }
         if (!p.alamat?.trim()) {
-          newErrors[`peserta${num}`]!.alamat = '*Field ini wajib diisi'
+          newErrors[errorKey]!.alamat = '*Field ini wajib diisi'
           hasErrors = true
         }
 
@@ -241,7 +262,8 @@ const GroupParticipants: React.FC<GroupParticipantsProps> = ({ peserta2, peserta
     const p = participant || {
       namaLengkap: '', email: '', nomorWhatsApp: '', jenisPeserta: '', pekerjaan: '', institusi: '', nomorIndukMahasiswa: '', alamat: ''
     }
-    const participantErrors = errors[`peserta${participantNum}`] || {}
+    const errorKey = participantNum === 2 ? 'peserta2' : 'peserta3'
+    const participantErrors = errors[errorKey] || {}
 
     return (
       <div className="participant-section">
@@ -308,9 +330,50 @@ const GroupParticipants: React.FC<GroupParticipantsProps> = ({ peserta2, peserta
               <select
                 value={p.jenisPeserta}
                 onChange={(e) => {
-                  updateParticipant(participantNum, 'jenisPeserta', e.target.value)
-                  if (e.target.value === 'Umum') {
-                    updateParticipant(participantNum, 'nomorIndukMahasiswa', '')
+                  const newJenisPeserta = e.target.value
+                  
+                  // Update jenisPeserta and clear NIM if switching to Umum
+                  const currentPeserta2 = peserta2 || {
+                    namaLengkap: '', email: '', nomorWhatsApp: '', jenisPeserta: '', pekerjaan: '', institusi: '', nomorIndukMahasiswa: '', alamat: ''
+                  }
+                  const currentPeserta3 = peserta3 || {
+                    namaLengkap: '', email: '', nomorWhatsApp: '', jenisPeserta: '', pekerjaan: '', institusi: '', nomorIndukMahasiswa: '', alamat: ''
+                  }
+
+                  if (participantNum === 2) {
+                    onChange({
+                      ...currentPeserta2,
+                      jenisPeserta: newJenisPeserta,
+                      nomorIndukMahasiswa: newJenisPeserta === 'Umum' ? '' : currentPeserta2.nomorIndukMahasiswa
+                    }, currentPeserta3)
+                  } else {
+                    onChange(currentPeserta2, {
+                      ...currentPeserta3,
+                      jenisPeserta: newJenisPeserta,
+                      nomorIndukMahasiswa: newJenisPeserta === 'Umum' ? '' : currentPeserta3.nomorIndukMahasiswa
+                    })
+                  }
+
+                  // Clear errors when user changes selection
+                  const errorKey = participantNum === 2 ? 'peserta2' : 'peserta3'
+                  if (errors[errorKey]?.jenisPeserta) {
+                    setErrors(prev => ({
+                      ...prev,
+                      [errorKey]: {
+                        ...prev[errorKey],
+                        jenisPeserta: undefined
+                      }
+                    }))
+                  }
+                  // Clear NIM error if switching to Umum
+                  if (newJenisPeserta === 'Umum' && errors[errorKey]?.nomorIndukMahasiswa) {
+                    setErrors(prev => ({
+                      ...prev,
+                      [errorKey]: {
+                        ...prev[errorKey],
+                        nomorIndukMahasiswa: undefined
+                      }
+                    }))
                   }
                 }}
                 onBlur={(e) => validateSingleField(participantNum, 'jenisPeserta', e.target.value)}
@@ -371,8 +434,35 @@ const GroupParticipants: React.FC<GroupParticipantsProps> = ({ peserta2, peserta
                 <input
                   type="text"
                   value={p.nomorIndukMahasiswa}
-                  onChange={(e) => updateParticipant(participantNum, 'nomorIndukMahasiswa', e.target.value)}
-                  onBlur={(e) => validateSingleField(participantNum, 'nomorIndukMahasiswa', e.target.value)}
+                  onChange={(e) => {
+                    const inputValue = e.target.value;
+                    const errorKey = participantNum === 2 ? 'peserta2' : 'peserta3';
+
+                    // Validasi: kalau ada selain angka → error
+                    if (/[^0-9]/.test(inputValue)) {
+                      setErrors(prev => ({
+                        ...prev,
+                        [errorKey]: {
+                          ...prev[errorKey],
+                          nomorIndukMahasiswa: '*Masukkan NIM yang hanya berisi angka',
+                        }
+                      }));
+                    } else {
+                      setErrors(prev => ({
+                        ...prev,
+                        [errorKey]: {
+                          ...prev[errorKey],
+                          nomorIndukMahasiswa: undefined,
+                        }
+                      }));
+                    }
+
+                    // SIMPAN APA ADANYA (jangan difilter)
+                    updateParticipant(participantNum, 'nomorIndukMahasiswa', inputValue);
+                  }}
+                  onBlur={() =>
+                    validateSingleField(participantNum, 'nomorIndukMahasiswa', p.nomorIndukMahasiswa)
+                  }
                   placeholder={`Nomor Induk Mahasiswa Peserta ${participantNum}`}
                   className={`form-input ${showErrors && participantErrors.nomorIndukMahasiswa ? 'error' : ''}`}
                 />

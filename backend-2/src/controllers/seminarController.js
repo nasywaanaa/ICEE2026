@@ -104,38 +104,94 @@ exports.createSeminarRegistrationWithFiles = async (req, res) => {
       paymentProofLink = uploaded.webViewLink;
     }
 
-    // Generate unique ID based on jenisPeserta
-    const jenisPeserta = payload.pengisiForm.jenisPeserta || '';
-    const uniqueId = await seminarSheetsService.generateUniqueId(jenisPeserta);
+    // Generate unique IDs for all participants
+    const jenisPesertaPengisi = payload.pengisiForm.jenisPeserta || '';
+    const uniqueIdPengisi = await seminarSheetsService.generateUniqueId(jenisPesertaPengisi);
+    
+    // Generate unique IDs for peserta2 and peserta3 if they exist
+    let uniqueIdPeserta2 = null;
+    let uniqueIdPeserta3 = null;
+    
+    if (payload.peserta2) {
+      const jenisPeserta2 = payload.peserta2.jenisPeserta || '';
+      uniqueIdPeserta2 = await seminarSheetsService.generateUniqueId(jenisPeserta2);
+    }
+    
+    if (payload.peserta3) {
+      const jenisPeserta3 = payload.peserta3.jenisPeserta || '';
+      uniqueIdPeserta3 = await seminarSheetsService.generateUniqueId(jenisPeserta3);
+    }
     
     const dataToStore = {
       ...payload,
       paymentProofLink,
-      uniqueId,
+      uniqueId: uniqueIdPengisi,
+      uniqueIdPeserta2,
+      uniqueIdPeserta3,
     };
     
     // Save to Google Sheets
     await seminarSheetsService.addSeminarRegistration(dataToStore);
     
-    // Send confirmation email via Brevo
-    try {
-      const emailResult = await sendSeminarRegistrationEmail(
+    // Send confirmation emails via Brevo to all participants
+    const emailPromises = [];
+    
+    // Email to pengisi form
+    emailPromises.push(
+      sendSeminarRegistrationEmail(
         payload.pengisiForm.email,
         payload.pengisiForm.namaLengkap,
-        uniqueId,
-        jenisPeserta
+        uniqueIdPengisi,
+        jenisPesertaPengisi
+      ).catch(err => {
+        console.error('[Email Error] Failed to send email to pengisi form:', err);
+        return { success: false, error: err.message };
+      })
+    );
+    
+    // Email to peserta2 if exists
+    if (payload.peserta2 && uniqueIdPeserta2) {
+      emailPromises.push(
+        sendSeminarRegistrationEmail(
+          payload.peserta2.email,
+          payload.peserta2.namaLengkap,
+          uniqueIdPeserta2,
+          payload.peserta2.jenisPeserta || ''
+        ).catch(err => {
+          console.error('[Email Error] Failed to send email to peserta2:', err);
+          return { success: false, error: err.message };
+        })
       );
-      console.log('[Email Sent]', emailResult);
-    } catch (emailError) {
-      // Log email error but don't fail the registration
-      console.error('[Email Error] Failed to send email:', emailError);
-      // Continue with success response even if email fails
     }
+    
+    // Email to peserta3 if exists
+    if (payload.peserta3 && uniqueIdPeserta3) {
+      emailPromises.push(
+        sendSeminarRegistrationEmail(
+          payload.peserta3.email,
+          payload.peserta3.namaLengkap,
+          uniqueIdPeserta3,
+          payload.peserta3.jenisPeserta || ''
+        ).catch(err => {
+          console.error('[Email Error] Failed to send email to peserta3:', err);
+          return { success: false, error: err.message };
+        })
+      );
+    }
+    
+    // Send all emails in parallel (don't wait, just log results)
+    Promise.all(emailPromises).then(results => {
+      console.log('[Email Results]', results);
+    }).catch(err => {
+      console.error('[Email Error] Unexpected error:', err);
+    });
     
     return res.status(201).json({ 
       success: true, 
       message: 'Seminar registration with files submitted successfully',
-      uniqueId: uniqueId
+      uniqueId: uniqueIdPengisi,
+      uniqueIdPeserta2,
+      uniqueIdPeserta3
     });
   } catch (error) {
     console.error('[createSeminarRegistrationWithFiles]', error);

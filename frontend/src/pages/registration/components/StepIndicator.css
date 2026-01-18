@@ -9,16 +9,21 @@
   align-items: start;
 }
 
-/* rail abu-abu tipis sepanjang header */
-.si__rail {
+/* line segments between steps using pseudo-element */
+.si__item.has-line::after {
+  content: '';
   position: absolute;
-  left: calc(16.66% + 30px);
-  right: calc(16.66% + 30px);
   top: 30px;                 /* sejajar tengah circle */
+  left: calc(50% + 30px);    /* start from right edge of circle */
+  width: calc(100% + 48px - 60px); /* span to next column (column gap + column width - circle width) */
   height: 6px;
-  background: #b9b9b9;
+  background: #b9b9b9;       /* default gray */
   border-radius: 999px;
   z-index: 0;
+}
+
+.si__item.line-completed::after {
+  background: #2f5bff;       /* blue when step is completed/active */
 }
 
 /* tiap item step */

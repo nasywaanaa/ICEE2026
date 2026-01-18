@@ -62,8 +62,8 @@ const Payment: React.FC<PaymentProps> = ({ paketPendaftaran, pengisiForm, pesert
     if (pengisiForm.jenisPeserta === 'Mahasiswa TPB ITB' || pengisiForm.jenisPeserta === 'Anggota HMS ITB') {
       return 'HMS & TPB'
     }
-    // For Umum, default to Reguler Ticket (Early Bird can be added later with date logic)
-    return 'Reguler Ticket'
+    // For Umum, default to Early Bird
+    return 'Early Bird'
   }
 
   // Calculate total price

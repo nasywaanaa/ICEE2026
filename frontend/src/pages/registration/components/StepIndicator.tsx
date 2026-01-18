@@ -18,15 +18,20 @@ const ICONS: Record<number, string> = {
 const StepIndicator: React.FC<Props> = ({ steps, currentStep, completedSteps = [] }) => {
   return (
     <div className="si">
-      {/* garis penghubung */}
-      <div className="si__rail" aria-hidden />
-
       {steps.map((s, idx) => {
         const active = s.id === currentStep;
-        const completed = completedSteps.includes(s.id);
+        // A step is completed if it's explicitly in completedSteps OR if it's a previous step (id < currentStep)
+        const completed = completedSteps.includes(s.id) || s.id < currentStep;
+        // Check if there's a next step
+        const hasNextStep = idx < steps.length - 1;
+        // Line should be blue if currentStep has reached or passed the next step
+        const shouldColorLine = hasNextStep && currentStep >= steps[idx + 1].id;
 
-                 return (
-           <div key={s.id} className="si__item">
+          return (
+           <div 
+             key={s.id} 
+             className={`si__item ${hasNextStep ? "has-line" : ""} ${shouldColorLine && hasNextStep ? "line-completed" : ""}`}
+           >
              {/* circle + icon */}
              <div className={`si__circle ${active ? "is-active" : ""} ${completed ? "is-completed" : ""}`}>
                <img src={ICONS[s.id]} alt={s.title} />

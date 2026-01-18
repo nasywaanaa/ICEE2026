@@ -109,7 +109,7 @@ const SeminarRegistrationPage: React.FC = () => {
     }
 
     // Determine pricing category
-    let pricingCategory: 'Early Bird' | 'Reguler Ticket' | 'HMS & TPB' = 'Reguler Ticket'
+    let pricingCategory: 'Early Bird' | 'Reguler Ticket' | 'HMS & TPB' = 'Early Bird'
     if (formData.pengisiForm.jenisPeserta === 'Mahasiswa TPB ITB' || formData.pengisiForm.jenisPeserta === 'Anggota HMS ITB') {
       pricingCategory = 'HMS & TPB'
     }

@@ -21,16 +21,23 @@ async function generateUniqueId(jenisPeserta) {
     let maxNumber = 0;
     const startIndex = rows.length > 0 && rows[0][0] === 'Timestamp' ? 1 : 0;
     
+    // Check all unique ID columns: uniqueId (index 1), uniqueIdPeserta2 (index 2), uniqueIdPeserta3 (index 3)
+    const uniqueIdColumns = [1, 2, 3];
+    
     for (let i = startIndex; i < rows.length; i++) {
       const row = rows[i];
-      // uniqueId should be in column B (index 1) based on our structure
-      if (row && row[1]) {
-        const existingId = row[1].toString().trim();
-        if (existingId.startsWith(prefix + '-')) {
-          const numberStr = existingId.substring(prefix.length + 1);
-          const number = parseInt(numberStr) || 0;
-          if (number > maxNumber) {
-            maxNumber = number;
+      if (!row) continue;
+      
+      // Check all unique ID columns
+      for (const colIndex of uniqueIdColumns) {
+        if (row[colIndex]) {
+          const existingId = row[colIndex].toString().trim();
+          if (existingId.startsWith(prefix + '-')) {
+            const numberStr = existingId.substring(prefix.length + 1);
+            const number = parseInt(numberStr) || 0;
+            if (number > maxNumber) {
+              maxNumber = number;
+            }
           }
         }
       }
@@ -60,12 +67,16 @@ async function addSeminarRegistration(registrationData) {
     potongan,
     paymentProofLink,
     status,
-    uniqueId, // Unique ID should be passed in registrationData
+    uniqueId, // Unique ID for pengisi form
+    uniqueIdPeserta2, // Unique ID for peserta2
+    uniqueIdPeserta3, // Unique ID for peserta3
   } = registrationData;
 
   const rowData = [
     new Date().toISOString(),
-    uniqueId || '', // Add unique ID column
+    uniqueId || '', // Unique ID for pengisi form
+    uniqueIdPeserta2 || '', // Unique ID for peserta2
+    uniqueIdPeserta3 || '', // Unique ID for peserta3
     paketPendaftaran,
     // Data Pengisi Form
     pengisiForm.namaLengkap || '',
@@ -123,6 +134,8 @@ async function getAllSeminarRegistrations() {
     const [
       timestamp,
       uniqueId,
+      uniqueIdPeserta2,
+      uniqueIdPeserta3,
       paketPendaftaran,
       pengisiNama, pengisiEmail, pengisiWhatsApp, pengisiJenisPeserta, pengisiPekerjaan, pengisiInstitusi, pengisiNIM, pengisiAlamat,
       peserta2Nama, peserta2Email, peserta2WhatsApp, peserta2JenisPeserta, peserta2Pekerjaan, peserta2Institusi, peserta2NIM, peserta2Alamat,
@@ -134,6 +147,8 @@ async function getAllSeminarRegistrations() {
       id: index + 1,
       timestamp,
       uniqueId: uniqueId || '',
+      uniqueIdPeserta2: uniqueIdPeserta2 || '',
+      uniqueIdPeserta3: uniqueIdPeserta3 || '',
       paketPendaftaran,
       pengisiForm: {
         namaLengkap: pengisiNama || '',
