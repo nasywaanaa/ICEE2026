@@ -11,7 +11,7 @@ exports.createSeminarRegistration = async (req, res) => {
     
     // Generate unique ID based on jenisPeserta
     const jenisPeserta = registrationData.pengisiForm.jenisPeserta || '';
-    const uniqueId = await seminarSheetsService.generateUniqueId(jenisPeserta);
+    const uniqueId = await seminarSheetsService.generateUniqueId(jenisPeserta, []);
     
     const dataToStore = {
       ...registrationData,
@@ -105,8 +105,12 @@ exports.createSeminarRegistrationWithFiles = async (req, res) => {
     }
 
     // Generate unique IDs for all participants
+    // Track pending IDs to prevent duplicates within the same submission
+    const pendingIds = [];
+    
     const jenisPesertaPengisi = payload.pengisiForm.jenisPeserta || '';
-    const uniqueIdPengisi = await seminarSheetsService.generateUniqueId(jenisPesertaPengisi);
+    const uniqueIdPengisi = await seminarSheetsService.generateUniqueId(jenisPesertaPengisi, pendingIds);
+    pendingIds.push(uniqueIdPengisi);
     
     // Generate unique IDs for peserta2 and peserta3 if they exist
     let uniqueIdPeserta2 = null;
@@ -114,12 +118,14 @@ exports.createSeminarRegistrationWithFiles = async (req, res) => {
     
     if (payload.peserta2) {
       const jenisPeserta2 = payload.peserta2.jenisPeserta || '';
-      uniqueIdPeserta2 = await seminarSheetsService.generateUniqueId(jenisPeserta2);
+      uniqueIdPeserta2 = await seminarSheetsService.generateUniqueId(jenisPeserta2, pendingIds);
+      pendingIds.push(uniqueIdPeserta2);
     }
     
     if (payload.peserta3) {
       const jenisPeserta3 = payload.peserta3.jenisPeserta || '';
-      uniqueIdPeserta3 = await seminarSheetsService.generateUniqueId(jenisPeserta3);
+      uniqueIdPeserta3 = await seminarSheetsService.generateUniqueId(jenisPeserta3, pendingIds);
+      pendingIds.push(uniqueIdPeserta3);
     }
     
     const dataToStore = {

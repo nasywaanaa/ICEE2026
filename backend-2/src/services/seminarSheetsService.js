@@ -3,8 +3,10 @@ const { sheets } = require('../config/googleAuth');
 /**
  * Generate unique ID based on jenisPeserta
  * A-XXX for Umum, B-XXX for Mahasiswa TPB ITB or Anggota HMS ITB
+ * @param {string} jenisPeserta - Type of participant ('Umum' or other)
+ * @param {string[]} pendingIds - Array of IDs that will be written in this batch but haven't been written yet
  */
-async function generateUniqueId(jenisPeserta) {
+async function generateUniqueId(jenisPeserta, pendingIds = []) {
   try {
     // Read sheet directly to avoid circular dependency
     const response = await sheets.spreadsheets.values.get({
@@ -38,6 +40,20 @@ async function generateUniqueId(jenisPeserta) {
             if (number > maxNumber) {
               maxNumber = number;
             }
+          }
+        }
+      }
+    }
+    
+    // Also check pending IDs that will be written in this batch
+    for (const pendingId of pendingIds) {
+      if (pendingId && typeof pendingId === 'string') {
+        const trimmedId = pendingId.trim();
+        if (trimmedId.startsWith(prefix + '-')) {
+          const numberStr = trimmedId.substring(prefix.length + 1);
+          const number = parseInt(numberStr) || 0;
+          if (number > maxNumber) {
+            maxNumber = number;
           }
         }
       }
