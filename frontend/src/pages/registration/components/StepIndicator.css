@@ -58,6 +58,14 @@
   filter: none;
 }
 
+/* completed = biru (same as active) */
+.si__circle.is-completed {
+  background: #2f5bff; /* solid blue badge */
+}
+.si__circle.is-completed img {
+  filter: none;
+}
+
 /* teks di bawah icon */
 .si__text {
   font-family: 'Gabarito', sans-serif;
@@ -82,6 +90,10 @@
 /* teks active (biru seperti contoh) */
 .si__text.is-active .si__title { color: #2f5bff; }
 .si__text.is-active .si__subtitle { color: #6da0ff; }
+
+/* teks completed (biru seperti active) */
+.si__text.is-completed .si__title { color: #2f5bff; }
+.si__text.is-completed .si__subtitle { color: #6da0ff; }
 
 /* responsive */
 @media (max-width: 900px) {

@@ -6,6 +6,7 @@ type Step = { id: number; title: string; subtitle: string };
 interface Props {
   steps: Step[];
   currentStep: number;
+  completedSteps?: number[];
 }
 
 const ICONS: Record<number, string> = {
@@ -14,7 +15,7 @@ const ICONS: Record<number, string> = {
       3: "/assets/registration/document.svg",
 };
 
-const StepIndicator: React.FC<Props> = ({ steps, currentStep }) => {
+const StepIndicator: React.FC<Props> = ({ steps, currentStep, completedSteps = [] }) => {
   return (
     <div className="si">
       {/* garis penghubung */}
@@ -22,16 +23,17 @@ const StepIndicator: React.FC<Props> = ({ steps, currentStep }) => {
 
       {steps.map((s, idx) => {
         const active = s.id === currentStep;
+        const completed = completedSteps.includes(s.id);
 
                  return (
            <div key={s.id} className="si__item">
              {/* circle + icon */}
-             <div className={`si__circle ${active ? "is-active" : ""}`}>
+             <div className={`si__circle ${active ? "is-active" : ""} ${completed ? "is-completed" : ""}`}>
                <img src={ICONS[s.id]} alt={s.title} />
              </div>
 
              {/* text */}
-             <div className={`si__text ${active ? "is-active" : ""}`}>
+             <div className={`si__text ${active ? "is-active" : ""} ${completed ? "is-completed" : ""}`}>
                <div className="si__title">{s.title}</div>
                <div className="si__subtitle">{s.subtitle}</div>
              </div>

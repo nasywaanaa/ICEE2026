@@ -7,6 +7,7 @@ require('dotenv').config();
 const registrationRoutes = require('./routes/registrations');
 const connecthRoutes = require('./routes/connecth');
 const googleAuthRoutes = require('./routes/googleAuth');
+const seminarRoutes = require('./routes/seminar');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/registrations', registrationRoutes);
 app.use('/api/connecth', connecthRoutes);
 app.use('/api/google', googleAuthRoutes);
+app.use('/api/seminar', seminarRoutes);
 
 // Error handler fallback
 app.use((err, req, res, next) => {

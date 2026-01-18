@@ -97,7 +97,7 @@ cd backend && npm run dev
 
 ## 📡 API Endpoints
 
-### Registration
+### Competition Registration
 - `POST /api/registrations` - Submit registration
 - `GET /api/registrations` - Get all registrations
 - `GET /api/registrations/:id` - Get specific registration
@@ -105,6 +105,12 @@ cd backend && npm run dev
 - `GET /api/registrations/stats` - Get statistics
 - `GET /api/registrations/check-team-name` - Check team name
 - `POST /api/registrations/upload` - Upload documents
+- `POST /api/registrations/submit` - Submit registration with files (multipart)
+
+### Seminar Registration
+- `POST /api/seminar` - Submit seminar registration (JSON)
+- `POST /api/seminar/submit` - Submit seminar registration with payment proof (multipart)
+- `GET /api/seminar` - Get all seminar registrations
 
 ### System
 - `GET /api/health` - Health check
@@ -171,12 +177,20 @@ GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 GOOGLE_REDIRECT_URI=http://localhost:5000/api/auth/google/callback
 
-# Google Sheets Configuration
+# Google Sheets Configuration (Competition)
 GOOGLE_SHEETS_ID=your-google-sheets-id
 GOOGLE_SHEETS_RANGE=Registrations!A:Z
 
+# Google Sheets Configuration (Seminar)
+SEMINAR_SPREADSHEET_ID=your-seminar-sheets-id
+SEMINAR_SHEETS_RANGE=Seminar!A:Z
+
 # Google Drive Configuration
 GOOGLE_DRIVE_FOLDER_ID=your-google-drive-folder-id
+
+# Google Service Account (for Sheets/Drive API)
+GOOGLE_SERVICE_ACCOUNT_EMAIL=your-service-account@project-id.iam.gserviceaccount.com
+GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
 
 # Email Configuration
 EMAIL_HOST=smtp.gmail.com

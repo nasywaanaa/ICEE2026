@@ -1,0 +1,410 @@
+/* Payment Styles */
+.payment-content {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.25rem;
+  font-family: 'Gabarito', sans-serif;
+  background: transparent;
+}
+
+.payment-title {
+  font-family: 'Bakbak One', cursive;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2d3748;
+  margin: 0 0 2rem 0;
+  text-align: left;
+}
+
+/* Summary Section */
+.summary-section {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary-title {
+  font-family: 'Bakbak One', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 1rem 0;
+}
+
+.participants-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.participant-summary {
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.participant-number {
+  font-weight: 700;
+  color: #2d3748;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-family: 'Bakbak One', cursive;
+}
+
+.participant-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #4a5568;
+  min-width: 120px;
+}
+
+.detail-value {
+  color: #2d3748;
+}
+
+/* Price Section */
+.price-section {
+  background: #f0f7ff;
+  border: 2px solid #b3d9ff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.price-row:last-child {
+  margin-bottom: 0;
+}
+
+.price-label {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 1.1rem;
+}
+
+.price-value {
+  font-weight: 700;
+  color: #2d3748;
+  font-size: 1.25rem;
+  font-family: 'Bakbak One', cursive;
+}
+
+.discount-row {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #b3d9ff;
+}
+
+.discount-value {
+  color: #10b981;
+}
+
+/* Payment Info Section */
+.payment-info-section {
+  background: #fffbf0;
+  border: 2px solid #fbd38d;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.info-title {
+  font-family: 'Bakbak One', cursive;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 0.75rem 0;
+}
+
+.info-content {
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+.info-content p {
+  margin: 0.5rem 0;
+}
+
+/* Upload Section */
+.upload-section {
+  margin-bottom: 2rem;
+}
+
+.upload-title {
+  font-family: 'Bakbak One', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 1rem 0;
+}
+
+.file-upload-area {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-upload-label {
+  display: block;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-placeholder {
+  background: #f8fafc;
+  border: 2px dashed #cbd5e0;
+  border-radius: 12px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-upload-label:hover .file-placeholder {
+  border-color: #a0aec0;
+  background: #f1f5f9;
+}
+
+.upload-icon {
+  color: #718096;
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.file-upload-label:hover .upload-icon {
+  color: #4a5568;
+}
+
+.upload-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.upload-main {
+  font-weight: 500;
+  color: #4a5568;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.upload-divider {
+  color: #a0aec0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0.5rem 0;
+}
+
+.browse-btn {
+  background: linear-gradient(135deg, #1B65FA, #00D46B);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Gabarito', sans-serif;
+}
+
+.browse-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.file-format {
+  color: #718096;
+  font-size: 0.875rem;
+  margin: 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.file-size-limit {
+  color: #e53e3e;
+  font-size: 0.8rem;
+  margin: 0.5rem 0 0 0;
+  text-align: center;
+  font-weight: 600;
+  background: #fed7d7;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.file-error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin: 0.75rem 0 0 0;
+  padding: 0.75rem;
+  background: #fed7d7;
+  border: 1px solid #feb2b2;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.file-error-message svg {
+  color: #e53e3e;
+  flex-shrink: 0;
+}
+
+/* File Upload Success State */
+.file-uploaded {
+  background: #f0fdf4;
+  border: 2px solid #10b981;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.upload-success-icon {
+  color: #10b981;
+  margin-bottom: 0.5rem;
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.file-name {
+  font-weight: 600;
+  color: #065f46;
+  font-size: 1rem;
+  word-break: break-word;
+  max-width: 100%;
+  text-align: center;
+}
+
+.file-size {
+  color: #059669;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.upload-status {
+  color: #10b981;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.change-file-btn {
+  background: #ffffff;
+  color: #059669;
+  border: 2px solid #10b981;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Gabarito', sans-serif;
+}
+
+.change-file-btn:hover {
+  background: #10b981;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .payment-content {
+    padding: 0.25rem;
+    max-width: 100%;
+  }
+  
+  .payment-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .summary-section,
+  .price-section,
+  .payment-info-section {
+    padding: 1rem;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .detail-label {
+    min-width: auto;
+  }
+  
+  .file-placeholder {
+    padding: 2rem 1rem;
+    min-height: 160px;
+  }
+  
+  .file-uploaded {
+    padding: 1.5rem 1rem;
+    min-height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-content {
+    padding: 0.125rem;
+  }
+  
+  .payment-title {
+    font-size: 1.25rem;
+  }
+  
+  .file-placeholder {
+    padding: 1.5rem 0.75rem;
+    min-height: 140px;
+  }
+  
+  .file-uploaded {
+    padding: 1.25rem 0.75rem;
+    min-height: 140px;
+  }
+}

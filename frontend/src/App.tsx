@@ -3,6 +3,7 @@ import LandingPage from './pages/landing/LandingPage'
 import RegistrationPage from './pages/registration/RegistrationPage'
 import ConnecthRegistrationPage from './pages/registration_connecth/RegistrationPage'
 import ConnecthRegistrationPageHMS from './pages/registration_connecth/RegistrationPageHMS'
+import SeminarRegistrationPage from './pages/seminar_registration/SeminarRegistrationPage'
 import './App.css'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/connecth" element={<ConnecthRegistrationPage />} />
         <Route path="/connecth-hms" element={<ConnecthRegistrationPageHMS />} />
+        <Route path="/seminar/register" element={<SeminarRegistrationPage />} />
       </Routes>
     </Router>
   )

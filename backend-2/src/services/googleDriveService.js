@@ -32,6 +32,36 @@ async function ensureNestedFolders(competition, teamName) {
   return { drive, teamFolder };
 }
 
+// Special function for seminar payment proof uploads
+async function ensureSeminarPaymentFolders(paketPendaftaran) {
+  const rootId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+  if (!rootId) {
+    const err = new Error('GOOGLE_DRIVE_FOLDER_ID is not configured');
+    err.status = 500;
+    throw err;
+  }
+  const oauth2 = getOAuth2ClientWithTokens();
+  const drive = google.drive({ version: 'v3', auth: oauth2 });
+  
+  // Create folder structure: Payment Proof Seminar > [Paket Folder]
+  const paymentProofFolder = await ensureFolder(drive, 'Payment Proof Seminar', rootId);
+  
+  // Map paket pendaftaran to folder name
+  let paketFolderName;
+  if (paketPendaftaran === 'Individu') {
+    paketFolderName = 'Individu';
+  } else if (paketPendaftaran === '2 orang') {
+    paketFolderName = '2 Orang';
+  } else if (paketPendaftaran === '3 orang') {
+    paketFolderName = '3 Orang';
+  } else {
+    paketFolderName = 'Lainnya';
+  }
+  
+  const paketFolder = await ensureFolder(drive, paketFolderName, paymentProofFolder.id);
+  return { drive, paketFolder };
+}
+
 async function uploadBufferAsFile(fileObject, competition, teamName) {
   const { drive, teamFolder } = await ensureNestedFolders(competition, teamName);
   const media = {
@@ -46,6 +76,23 @@ async function uploadBufferAsFile(fileObject, competition, teamName) {
   return { ...res.data, folderId: teamFolder.id };
 }
 
-module.exports = { uploadBufferAsFile };
+async function uploadSeminarPaymentProof(fileObject, paketPendaftaran, participantName) {
+  const { drive, paketFolder } = await ensureSeminarPaymentFolders(paketPendaftaran);
+  const media = {
+    mimeType: fileObject.mimetype,
+    body: Readable.from(fileObject.buffer),
+  };
+  // Include participant name in filename for easier identification
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+  const fileName = `${participantName}_${timestamp}_${fileObject.originalname}`;
+  const res = await drive.files.create({
+    requestBody: { name: fileName, parents: [paketFolder.id] },
+    media,
+    fields: 'id, name, webViewLink, webContentLink',
+  });
+  return { ...res.data, folderId: paketFolder.id };
+}
+
+module.exports = { uploadBufferAsFile, uploadSeminarPaymentProof };
 
 
