@@ -1,47 +1,9 @@
 const axios = require('axios');
-const https = require('https');
 
 const BREVO_API_KEY = process.env.BREVO_API_KEY
 const BREVO_SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || 'noreply@icee2026.com'; // Update this with your verified Brevo sender email
 const BREVO_SENDER_NAME = process.env.BREVO_SENDER_NAME || 'ICEE 2026';
 const BREVO_API_URL = 'https://api.brevo.com/v3';
-
-// Validate environment variables
-if (!BREVO_API_KEY) {
-  console.error('[Brevo Email Service] ⚠️  WARNING: BREVO_API_KEY is not set! Emails will fail to send.');
-  console.error('[Brevo Email Service] Please set BREVO_API_KEY in your environment variables.');
-}
-
-if (!BREVO_SENDER_EMAIL || BREVO_SENDER_EMAIL === 'noreply@icee2026.com') {
-  console.warn('[Brevo Email Service] ⚠️  WARNING: BREVO_SENDER_EMAIL is using default value. Make sure it\'s verified in Brevo.');
-}
-
-/**
- * Retry helper for axios requests with timeout and exponential backoff
- * Handles network errors like TLS connection issues in serverless environments
- */
-async function retryAxiosRequest(requestFn, maxRetries = 3, baseDelay = 1000) {
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      return await requestFn();
-    } catch (error) {
-      const isNetworkError = error.code === 'ECONNRESET' || 
-                            error.code === 'ETIMEDOUT' ||
-                            error.code === 'ECONNREFUSED' ||
-                            error.message?.includes('socket disconnected') ||
-                            error.message?.includes('TLS connection') ||
-                            error.message?.includes('network socket');
-      
-      if (isNetworkError && attempt < maxRetries) {
-        const delay = baseDelay * Math.pow(2, attempt - 1);
-        console.warn(`[Brevo Email Service] Network error (attempt ${attempt}/${maxRetries}), retrying in ${delay}ms...`, error.message);
-        await new Promise(resolve => setTimeout(resolve, delay));
-        continue;
-      }
-      throw error;
-    }
-  }
-}
 
 /**
  * Send transactional email via Brevo
@@ -53,13 +15,6 @@ async function retryAxiosRequest(requestFn, maxRetries = 3, baseDelay = 1000) {
  * @returns {Promise<Object>} Brevo API response
  */
 async function sendSeminarRegistrationEmail(toEmail, toName, uniqueId, jenisPeserta) {
-  // Validate required environment variables
-  if (!BREVO_API_KEY) {
-    const error = new Error('BREVO_API_KEY is not configured. Cannot send email.');
-    console.error('[Brevo Email Service]', error.message);
-    throw error;
-  }
-
   try {
     const subject = 'Konfirmasi Pendaftaran Seminar ICEE 2026';
     
@@ -273,37 +228,28 @@ async function sendSeminarRegistrationEmail(toEmail, toName, uniqueId, jenisPese
         </html>
     `;
 
-    const response = await retryAxiosRequest(() => 
-      axios.post(
-        `${BREVO_API_URL}/smtp/email`,
-        {
-          sender: {
-            name: BREVO_SENDER_NAME,
-            email: BREVO_SENDER_EMAIL
-          },
-          to: [
-            {
-              email: toEmail,
-              name: toName
-            }
-          ],
-          subject: subject,
-          htmlContent: htmlContent
+    const response = await axios.post(
+      `${BREVO_API_URL}/smtp/email`,
+      {
+        sender: {
+          name: BREVO_SENDER_NAME,
+          email: BREVO_SENDER_EMAIL
         },
-        {
-          headers: {
-            'api-key': BREVO_API_KEY,
-            'Content-Type': 'application/json'
-          },
-          timeout: 30000, // 30 seconds timeout
-          httpsAgent: new https.Agent({
-            keepAlive: true,
-            keepAliveMsecs: 1000,
-            maxSockets: 1,
-            maxFreeSockets: 1
-          })
+        to: [
+          {
+            email: toEmail,
+            name: toName
+          }
+        ],
+        subject: subject,
+        htmlContent: htmlContent
+      },
+      {
+        headers: {
+          'api-key': BREVO_API_KEY,
+          'Content-Type': 'application/json'
         }
-      )
+      }
     );
 
     return {
@@ -312,29 +258,7 @@ async function sendSeminarRegistrationEmail(toEmail, toName, uniqueId, jenisPese
       uniqueId: uniqueId
     };
   } catch (error) {
-    const errorDetails = {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status,
-      statusText: error.response?.statusText,
-      apiKeySet: !!BREVO_API_KEY,
-      apiKeyLength: BREVO_API_KEY ? BREVO_API_KEY.length : 0,
-      senderEmail: BREVO_SENDER_EMAIL,
-    };
-    
-    console.error('[Brevo Email Service] Error sending email:', JSON.stringify(errorDetails, null, 2));
-    
-    // Provide more specific error messages
-    if (!BREVO_API_KEY) {
-      throw new Error('Email service not configured: BREVO_API_KEY is missing');
-    }
-    if (error.response?.status === 401) {
-      throw new Error('Email service authentication failed: Invalid BREVO_API_KEY');
-    }
-    if (error.response?.status === 403) {
-      throw new Error('Email service forbidden: Check BREVO_API_KEY permissions or sender email verification');
-    }
-    
+    console.error('[Brevo Email Service] Error sending email:', error.response?.data || error.message);
     throw new Error(`Failed to send email: ${error.response?.data?.message || error.message}`);
   }
 }
@@ -348,13 +272,6 @@ async function sendSeminarRegistrationEmail(toEmail, toName, uniqueId, jenisPese
  * @returns {Promise<Object>} Brevo API response
  */
 async function sendPaymentConfirmationEmail(toEmail, toName, uniqueId, qrCodeLink) {
-  // Validate required environment variables
-  if (!BREVO_API_KEY) {
-    const error = new Error('BREVO_API_KEY is not configured. Cannot send email.');
-    console.error('[Brevo Email Service]', error.message);
-    throw error;
-  }
-
   try {
     const subject = 'Konfirmasi Pembayaran - Seminar ICEE 2026';
     
@@ -582,37 +499,28 @@ async function sendPaymentConfirmationEmail(toEmail, toName, uniqueId, qrCodeLin
       </html>
     `;
 
-    const response = await retryAxiosRequest(() => 
-      axios.post(
-        `${BREVO_API_URL}/smtp/email`,
-        {
-          sender: {
-            name: BREVO_SENDER_NAME,
-            email: BREVO_SENDER_EMAIL
-          },
-          to: [
-            {
-              email: toEmail,
-              name: toName
-            }
-          ],
-          subject: subject,
-          htmlContent: htmlContent
+    const response = await axios.post(
+      `${BREVO_API_URL}/smtp/email`,
+      {
+        sender: {
+          name: BREVO_SENDER_NAME,
+          email: BREVO_SENDER_EMAIL
         },
-        {
-          headers: {
-            'api-key': BREVO_API_KEY,
-            'Content-Type': 'application/json'
-          },
-          timeout: 30000, // 30 seconds timeout
-          httpsAgent: new https.Agent({
-            keepAlive: true,
-            keepAliveMsecs: 1000,
-            maxSockets: 1,
-            maxFreeSockets: 1
-          })
+        to: [
+          {
+            email: toEmail,
+            name: toName
+          }
+        ],
+        subject: subject,
+        htmlContent: htmlContent
+      },
+      {
+        headers: {
+          'api-key': BREVO_API_KEY,
+          'Content-Type': 'application/json'
         }
-      )
+      }
     );
 
     return {
@@ -621,29 +529,7 @@ async function sendPaymentConfirmationEmail(toEmail, toName, uniqueId, qrCodeLin
       uniqueId: uniqueId
     };
   } catch (error) {
-    const errorDetails = {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status,
-      statusText: error.response?.statusText,
-      apiKeySet: !!BREVO_API_KEY,
-      apiKeyLength: BREVO_API_KEY ? BREVO_API_KEY.length : 0,
-      senderEmail: BREVO_SENDER_EMAIL,
-    };
-    
-    console.error('[Brevo Email Service] Error sending payment confirmation email:', JSON.stringify(errorDetails, null, 2));
-    
-    // Provide more specific error messages
-    if (!BREVO_API_KEY) {
-      throw new Error('Email service not configured: BREVO_API_KEY is missing');
-    }
-    if (error.response?.status === 401) {
-      throw new Error('Email service authentication failed: Invalid BREVO_API_KEY');
-    }
-    if (error.response?.status === 403) {
-      throw new Error('Email service forbidden: Check BREVO_API_KEY permissions or sender email verification');
-    }
-    
+    console.error('[Brevo Email Service] Error sending payment confirmation email:', error.response?.data || error.message);
     throw new Error(`Failed to send payment confirmation email: ${error.response?.data?.message || error.message}`);
   }
 }

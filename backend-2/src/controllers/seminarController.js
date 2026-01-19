@@ -11,7 +11,7 @@ exports.createSeminarRegistration = async (req, res) => {
     
     // Generate unique ID based on jenisPeserta
     const jenisPeserta = registrationData.pengisiForm.jenisPeserta || '';
-    const uniqueId = await seminarSheetsService.generateUniqueId(jenisPeserta, []);
+    const uniqueId = await seminarSheetsService.generateUniqueId(jenisPeserta);
     
     const dataToStore = {
       ...registrationData,
@@ -28,13 +28,9 @@ exports.createSeminarRegistration = async (req, res) => {
         uniqueId,
         jenisPeserta
       );
-      console.log(`[Email Sent] ✅ Successfully sent to ${registrationData.pengisiForm.email} (${uniqueId})`, emailResult);
+      console.log('[Email Sent]', emailResult);
     } catch (emailError) {
-      console.error(`[Email Error] ❌ Failed to send email to ${registrationData.pengisiForm.email}:`, {
-        message: emailError.message,
-        stack: emailError.stack,
-        uniqueId: uniqueId
-      });
+      console.error('[Email Error] Failed to send email:', emailError);
     }
     
     return res.status(201).json({ 
@@ -109,12 +105,8 @@ exports.createSeminarRegistrationWithFiles = async (req, res) => {
     }
 
     // Generate unique IDs for all participants
-    // Track pending IDs to prevent duplicates within the same submission
-    const pendingIds = [];
-    
     const jenisPesertaPengisi = payload.pengisiForm.jenisPeserta || '';
-    const uniqueIdPengisi = await seminarSheetsService.generateUniqueId(jenisPesertaPengisi, pendingIds);
-    pendingIds.push(uniqueIdPengisi);
+    const uniqueIdPengisi = await seminarSheetsService.generateUniqueId(jenisPesertaPengisi);
     
     // Generate unique IDs for peserta2 and peserta3 if they exist
     let uniqueIdPeserta2 = null;
@@ -122,14 +114,12 @@ exports.createSeminarRegistrationWithFiles = async (req, res) => {
     
     if (payload.peserta2) {
       const jenisPeserta2 = payload.peserta2.jenisPeserta || '';
-      uniqueIdPeserta2 = await seminarSheetsService.generateUniqueId(jenisPeserta2, pendingIds);
-      pendingIds.push(uniqueIdPeserta2);
+      uniqueIdPeserta2 = await seminarSheetsService.generateUniqueId(jenisPeserta2);
     }
     
     if (payload.peserta3) {
       const jenisPeserta3 = payload.peserta3.jenisPeserta || '';
-      uniqueIdPeserta3 = await seminarSheetsService.generateUniqueId(jenisPeserta3, pendingIds);
-      pendingIds.push(uniqueIdPeserta3);
+      uniqueIdPeserta3 = await seminarSheetsService.generateUniqueId(jenisPeserta3);
     }
     
     const dataToStore = {
@@ -153,16 +143,9 @@ exports.createSeminarRegistrationWithFiles = async (req, res) => {
         payload.pengisiForm.namaLengkap,
         uniqueIdPengisi,
         jenisPesertaPengisi
-      ).then(result => {
-        console.log(`[Email Sent] ✅ Successfully sent to ${payload.pengisiForm.email} (${uniqueIdPengisi})`);
-        return { success: true, email: payload.pengisiForm.email, uniqueId: uniqueIdPengisi };
-      }).catch(err => {
-        console.error(`[Email Error] ❌ Failed to send email to pengisi form (${payload.pengisiForm.email}):`, {
-          message: err.message,
-          stack: err.stack,
-          uniqueId: uniqueIdPengisi
-        });
-        return { success: false, error: err.message, email: payload.pengisiForm.email };
+      ).catch(err => {
+        console.error('[Email Error] Failed to send email to pengisi form:', err);
+        return { success: false, error: err.message };
       })
     );
     
@@ -174,16 +157,9 @@ exports.createSeminarRegistrationWithFiles = async (req, res) => {
           payload.peserta2.namaLengkap,
           uniqueIdPeserta2,
           payload.peserta2.jenisPeserta || ''
-        ).then(result => {
-          console.log(`[Email Sent] ✅ Successfully sent to ${payload.peserta2.email} (${uniqueIdPeserta2})`);
-          return { success: true, email: payload.peserta2.email, uniqueId: uniqueIdPeserta2 };
-        }).catch(err => {
-          console.error(`[Email Error] ❌ Failed to send email to peserta2 (${payload.peserta2.email}):`, {
-            message: err.message,
-            stack: err.stack,
-            uniqueId: uniqueIdPeserta2
-          });
-          return { success: false, error: err.message, email: payload.peserta2.email };
+        ).catch(err => {
+          console.error('[Email Error] Failed to send email to peserta2:', err);
+          return { success: false, error: err.message };
         })
       );
     }
@@ -196,28 +172,16 @@ exports.createSeminarRegistrationWithFiles = async (req, res) => {
           payload.peserta3.namaLengkap,
           uniqueIdPeserta3,
           payload.peserta3.jenisPeserta || ''
-        ).then(result => {
-          console.log(`[Email Sent] ✅ Successfully sent to ${payload.peserta3.email} (${uniqueIdPeserta3})`);
-          return { success: true, email: payload.peserta3.email, uniqueId: uniqueIdPeserta3 };
-        }).catch(err => {
-          console.error(`[Email Error] ❌ Failed to send email to peserta3 (${payload.peserta3.email}):`, {
-            message: err.message,
-            stack: err.stack,
-            uniqueId: uniqueIdPeserta3
-          });
-          return { success: false, error: err.message, email: payload.peserta3.email };
+        ).catch(err => {
+          console.error('[Email Error] Failed to send email to peserta3:', err);
+          return { success: false, error: err.message };
         })
       );
     }
     
     // Send all emails in parallel (don't wait, just log results)
     Promise.all(emailPromises).then(results => {
-      const successCount = results.filter(r => r.success).length;
-      const failCount = results.filter(r => !r.success).length;
-      console.log(`[Email Results] 📧 Sent: ${successCount}/${results.length} successful, ${failCount} failed`);
-      if (failCount > 0) {
-        console.error('[Email Results] Failed emails:', results.filter(r => !r.success));
-      }
+      console.log('[Email Results]', results);
     }).catch(err => {
       console.error('[Email Error] Unexpected error:', err);
     });
@@ -294,43 +258,6 @@ exports.sendPaymentConfirmation = async (req, res) => {
     return res.status(error.status || 500).json({ 
       success: false, 
       error: error.message || 'Failed to send payment confirmation email' 
-    });
-  }
-};
-
-/**
- * Health check endpoint for email service configuration
- * GET /api/seminar/email-health
- */
-exports.checkEmailHealth = async (req, res) => {
-  try {
-    const BREVO_API_KEY = process.env.BREVO_API_KEY;
-    const BREVO_SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || 'noreply@icee2026.com';
-    const BREVO_SENDER_NAME = process.env.BREVO_SENDER_NAME || 'ICEE 2026';
-
-    const health = {
-      emailService: 'Brevo',
-      configured: {
-        apiKey: !!BREVO_API_KEY,
-        apiKeyLength: BREVO_API_KEY ? BREVO_API_KEY.length : 0,
-        senderEmail: BREVO_SENDER_EMAIL,
-        senderName: BREVO_SENDER_NAME,
-      },
-      status: BREVO_API_KEY ? 'configured' : 'not_configured',
-      message: BREVO_API_KEY 
-        ? 'Email service is configured. Check logs for actual sending status.' 
-        : '⚠️ BREVO_API_KEY is not set. Emails will fail to send.',
-    };
-
-    return res.status(BREVO_API_KEY ? 200 : 503).json({
-      success: !!BREVO_API_KEY,
-      health,
-    });
-  } catch (error) {
-    console.error('[checkEmailHealth]', error);
-    return res.status(500).json({
-      success: false,
-      error: error.message || 'Failed to check email health',
     });
   }
 };
