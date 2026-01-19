@@ -242,7 +242,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, onChange, onValidatio
       </div>
 
       {/* Pricing Information */}
-      <div className="pricing-info-section">
+      {/* <div className="pricing-info-section">
         <h3 className="pricing-info-title">Informasi Harga Tiket</h3>
         <div className="pricing-grid">
           <div className="pricing-category">
@@ -270,7 +270,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, onChange, onValidatio
             </ul>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <h2 className="personal-info-title">Data Diri Pengisi Form</h2>
       
