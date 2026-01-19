@@ -179,12 +179,14 @@ exports.createSeminarRegistrationWithFiles = async (req, res) => {
       );
     }
     
-    // Send all emails in parallel (don't wait, just log results)
-    Promise.all(emailPromises).then(results => {
-      console.log('[Email Results]', results);
-    }).catch(err => {
+    // Send all emails in parallel (await to ensure they complete before response in serverless)
+    try {
+      const emailResults = await Promise.all(emailPromises);
+      console.log('[Email Results]', emailResults);
+    } catch (err) {
       console.error('[Email Error] Unexpected error:', err);
-    });
+      // Don't fail the request if emails fail, but log it
+    }
     
     return res.status(201).json({ 
       success: true, 
