@@ -144,7 +144,7 @@ test_case_3() {
         -F "paketPendaftaran=3 orang" \
         -F 'pengisiForm={
             "namaLengkap": "Test User Umum",
-            "email": "nasywaa.anggun@gmail.com",
+            "email": "studyawa2026@gmail.com",
             "nomorWhatsApp": "081234567893",
             "jenisPeserta": "Umum",
             "pekerjaan": "Professional",
@@ -155,7 +155,7 @@ test_case_3() {
         }' \
         -F 'peserta2={
             "namaLengkap": "Test User TPB",
-            "email": "syahrialalzaidan@gmail.com",
+            "email": "18222021@std.stei.itb.ac.id",
             "nomorWhatsApp": "081234567894",
             "jenisPeserta": "Mahasiswa TPB ITB",
             "pekerjaan": "Mahasiswa",
@@ -165,7 +165,7 @@ test_case_3() {
         }' \
         -F 'peserta3={
             "namaLengkap": "Test User HMS",
-            "email": "study.nasywaa@gmail.com",
+            "email": "nasywaa.nugas@gmail.com",
             "nomorWhatsApp": "081234567895",
             "jenisPeserta": "Anggota HMS ITB",
             "pekerjaan": "Mahasiswa",

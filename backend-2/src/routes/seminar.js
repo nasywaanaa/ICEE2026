@@ -57,4 +57,7 @@ router.get('/', controller.getAllSeminarRegistrations);
 // Send payment confirmation email (after payment verification by ICEE staff)
 router.post('/send-payment-confirmation', controller.sendPaymentConfirmation);
 
+// Health check endpoint for email service configuration
+router.get('/email-health', controller.checkEmailHealth);
+
 module.exports = router;
