@@ -1,4 +1,5 @@
 const axios = require('axios');
+const https = require('https');
 
 const BREVO_API_KEY = process.env.BREVO_API_KEY
 const BREVO_SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || 'noreply@icee2026.com'; // Update this with your verified Brevo sender email
@@ -13,6 +14,33 @@ if (!BREVO_API_KEY) {
 
 if (!BREVO_SENDER_EMAIL || BREVO_SENDER_EMAIL === 'noreply@icee2026.com') {
   console.warn('[Brevo Email Service] ⚠️  WARNING: BREVO_SENDER_EMAIL is using default value. Make sure it\'s verified in Brevo.');
+}
+
+/**
+ * Retry helper for axios requests with timeout and exponential backoff
+ * Handles network errors like TLS connection issues in serverless environments
+ */
+async function retryAxiosRequest(requestFn, maxRetries = 3, baseDelay = 1000) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await requestFn();
+    } catch (error) {
+      const isNetworkError = error.code === 'ECONNRESET' || 
+                            error.code === 'ETIMEDOUT' ||
+                            error.code === 'ECONNREFUSED' ||
+                            error.message?.includes('socket disconnected') ||
+                            error.message?.includes('TLS connection') ||
+                            error.message?.includes('network socket');
+      
+      if (isNetworkError && attempt < maxRetries) {
+        const delay = baseDelay * Math.pow(2, attempt - 1);
+        console.warn(`[Brevo Email Service] Network error (attempt ${attempt}/${maxRetries}), retrying in ${delay}ms...`, error.message);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      throw error;
+    }
+  }
 }
 
 /**
@@ -245,28 +273,37 @@ async function sendSeminarRegistrationEmail(toEmail, toName, uniqueId, jenisPese
         </html>
     `;
 
-    const response = await axios.post(
-      `${BREVO_API_URL}/smtp/email`,
-      {
-        sender: {
-          name: BREVO_SENDER_NAME,
-          email: BREVO_SENDER_EMAIL
+    const response = await retryAxiosRequest(() => 
+      axios.post(
+        `${BREVO_API_URL}/smtp/email`,
+        {
+          sender: {
+            name: BREVO_SENDER_NAME,
+            email: BREVO_SENDER_EMAIL
+          },
+          to: [
+            {
+              email: toEmail,
+              name: toName
+            }
+          ],
+          subject: subject,
+          htmlContent: htmlContent
         },
-        to: [
-          {
-            email: toEmail,
-            name: toName
-          }
-        ],
-        subject: subject,
-        htmlContent: htmlContent
-      },
-      {
-        headers: {
-          'api-key': BREVO_API_KEY,
-          'Content-Type': 'application/json'
+        {
+          headers: {
+            'api-key': BREVO_API_KEY,
+            'Content-Type': 'application/json'
+          },
+          timeout: 30000, // 30 seconds timeout
+          httpsAgent: new https.Agent({
+            keepAlive: true,
+            keepAliveMsecs: 1000,
+            maxSockets: 1,
+            maxFreeSockets: 1
+          })
         }
-      }
+      )
     );
 
     return {
@@ -545,28 +582,37 @@ async function sendPaymentConfirmationEmail(toEmail, toName, uniqueId, qrCodeLin
       </html>
     `;
 
-    const response = await axios.post(
-      `${BREVO_API_URL}/smtp/email`,
-      {
-        sender: {
-          name: BREVO_SENDER_NAME,
-          email: BREVO_SENDER_EMAIL
+    const response = await retryAxiosRequest(() => 
+      axios.post(
+        `${BREVO_API_URL}/smtp/email`,
+        {
+          sender: {
+            name: BREVO_SENDER_NAME,
+            email: BREVO_SENDER_EMAIL
+          },
+          to: [
+            {
+              email: toEmail,
+              name: toName
+            }
+          ],
+          subject: subject,
+          htmlContent: htmlContent
         },
-        to: [
-          {
-            email: toEmail,
-            name: toName
-          }
-        ],
-        subject: subject,
-        htmlContent: htmlContent
-      },
-      {
-        headers: {
-          'api-key': BREVO_API_KEY,
-          'Content-Type': 'application/json'
+        {
+          headers: {
+            'api-key': BREVO_API_KEY,
+            'Content-Type': 'application/json'
+          },
+          timeout: 30000, // 30 seconds timeout
+          httpsAgent: new https.Agent({
+            keepAlive: true,
+            keepAliveMsecs: 1000,
+            maxSockets: 1,
+            maxFreeSockets: 1
+          })
         }
-      }
+      )
     );
 
     return {
