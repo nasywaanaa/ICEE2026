@@ -245,22 +245,22 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, onChange, onValidatio
       <div className="pricing-info-section">
         <h3 className="pricing-info-title">Informasi Harga Tiket</h3>
         <div className="pricing-grid">
-          <div className="pricing-category">
+          {/* <div className="pricing-category">
             <strong className="pricing-category-title">Early Bird:</strong>
             <ul className="pricing-list">
               <li>Individu: Rp55.000</li>
               <li>Bundling 2 org: Rp100.000</li>
               <li>Bundling 3 org: Rp135.000</li>
             </ul>
-          </div>
-          {/* <div className="pricing-category">
+          </div> */}
+          <div className="pricing-category">
             <strong className="pricing-category-title">Reguler Ticket:</strong>
             <ul className="pricing-list">
               <li>Individu: Rp65.000</li>
               <li>Bundling 2 org: Rp120.000</li>
               <li>Bundling 3 org: Rp165.000</li>
             </ul>
-          </div> */}
+          </div>
           <div className="pricing-category">
             <strong className="pricing-category-title">HMS & TPB:</strong>
             <ul className="pricing-list">
