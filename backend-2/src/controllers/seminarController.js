@@ -78,6 +78,7 @@ exports.createSeminarRegistrationWithFiles = async (req, res) => {
         peserta3: maybeParsedPeserta3,
         totalHarga: req.body.totalHarga || '',
         potongan: req.body.potongan || '',
+        paymentMethod: req.body.paymentMethod || '',
         status: req.body.status || '',
       };
     } else if (req.body && req.body.payload) {

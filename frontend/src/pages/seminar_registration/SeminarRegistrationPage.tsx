@@ -34,7 +34,8 @@ const SeminarRegistrationPage: React.FC = () => {
     },
     peserta2: null as ParticipantData | null,
     peserta3: null as ParticipantData | null,
-    paymentProof: null as File | null
+    paymentProof: null as File | null,
+    paymentMethod: ''
   })
 
   const [isPersonalInfoValid, setIsPersonalInfoValid] = useState(false)
@@ -149,6 +150,11 @@ const SeminarRegistrationPage: React.FC = () => {
         fd.append('peserta3', JSON.stringify(formData.peserta3))
       }
 
+      // Add payment method
+      if (formData.paymentMethod) {
+        fd.append('paymentMethod', formData.paymentMethod)
+      }
+
       // Calculate status
       const status = isGroup ? 'KELOMPOK SELESAI' : 'INDIVIDU SELESAI'
       fd.append('status', status)
@@ -246,7 +252,9 @@ const SeminarRegistrationPage: React.FC = () => {
             peserta2={formData.peserta2}
             peserta3={formData.peserta3}
             paymentProof={formData.paymentProof}
+            paymentMethod={formData.paymentMethod}
             onChange={(paymentProof) => updateFormData('paymentProof', paymentProof)}
+            onPaymentMethodChange={(paymentMethod) => updateFormData('paymentMethod', paymentMethod)}
             onValidation={setIsPaymentValid}
           />
         )

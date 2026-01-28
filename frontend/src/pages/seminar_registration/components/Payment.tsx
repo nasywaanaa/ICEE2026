@@ -18,11 +18,13 @@ interface PaymentProps {
   peserta2: ParticipantData | null
   peserta3: ParticipantData | null
   paymentProof: File | null
+  paymentMethod: string
   onChange: (paymentProof: File | null) => void
+  onPaymentMethodChange: (paymentMethod: string) => void
   onValidation?: (isValid: boolean) => void
 }
 
-const Payment: React.FC<PaymentProps> = ({ paketPendaftaran, pengisiForm, peserta2, peserta3, paymentProof, onChange, onValidation }) => {
+const Payment: React.FC<PaymentProps> = ({ paketPendaftaran, pengisiForm, peserta2, peserta3, paymentProof, paymentMethod, onChange, onPaymentMethodChange, onValidation }) => {
   const MAX_FILE_SIZE = 500 * 1024 // 500KB in bytes
   const [fileError, setFileError] = useState('')
 
@@ -104,9 +106,23 @@ const Payment: React.FC<PaymentProps> = ({ paketPendaftaran, pengisiForm, pesert
   }
 
   const handleFileUpload = (file: File | null) => {
-    if (file && file.size > MAX_FILE_SIZE) {
+    if (!file) {
+      setFileError('')
+      onChange(null)
+      return
+    }
+    
+    if (file.size === 0) {
+      const errorMessage = 'File tidak valid atau kosong. Silakan pilih file lain.'
+      setFileError(errorMessage)
+      onChange(null)
+      return
+    }
+    
+    if (file.size > MAX_FILE_SIZE) {
       const errorMessage = `Ukuran file harus kurang dari 500KB. Ukuran file saat ini: ${(file.size / 1024).toFixed(2)} KB`
       setFileError(errorMessage)
+      onChange(null) // Clear the file if it's too large
       return
     }
     
@@ -123,9 +139,9 @@ const Payment: React.FC<PaymentProps> = ({ paketPendaftaran, pengisiForm, pesert
   }
 
   React.useEffect(() => {
-    const isValid = !!paymentProof && !fileError
+    const isValid = !!paymentProof && !fileError && !!paymentMethod && paymentProof.size > 0
     onValidation?.(isValid)
-  }, [paymentProof, fileError, onValidation])
+  }, [paymentProof, fileError, paymentMethod, onValidation])
 
   return (
     <div className="payment-content">
@@ -196,6 +212,23 @@ const Payment: React.FC<PaymentProps> = ({ paketPendaftaran, pengisiForm, pesert
         </div>
       </div>
 
+      {/* Pilih Pembayaran */}
+      <div className="payment-method-section">
+        <h3 className="payment-method-title">Pilih Pembayaran</h3>
+        <div className="payment-method-dropdown">
+          <select
+            id="paymentMethod"
+            value={paymentMethod}
+            onChange={(e) => onPaymentMethodChange(e.target.value)}
+            className="payment-method-select"
+          >
+            <option value="">-- Pilih Metode Pembayaran --</option>
+            <option value="Gopay">Gopay</option>
+            <option value="BCA">BCA</option>
+          </select>
+        </div>
+      </div>
+
       {/* Upload Bukti Pembayaran */}
       <div className="upload-section">
         <h3 className="upload-title">Upload Bukti Pembayaran</h3>
@@ -219,7 +252,13 @@ const Payment: React.FC<PaymentProps> = ({ paketPendaftaran, pengisiForm, pesert
                 </div>
                 <div className="file-info">
                   <span className="file-name">{paymentProof.name}</span>
-                  <span className="file-size">{(paymentProof.size / (1024 * 1024)).toFixed(2)} MB</span>
+                  <span className="file-size">
+                    {paymentProof.size > 0 
+                      ? paymentProof.size < 1024 * 1024
+                        ? `${(paymentProof.size / 1024).toFixed(2)} KB`
+                        : `${(paymentProof.size / (1024 * 1024)).toFixed(2)} MB`
+                      : '0 KB'}
+                  </span>
                   <span className="upload-status">✓ File berhasil diunggah</span>
                 </div>
                 <button 

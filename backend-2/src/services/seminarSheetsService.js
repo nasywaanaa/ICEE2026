@@ -81,6 +81,7 @@ async function addSeminarRegistration(registrationData) {
     peserta3,
     totalHarga,
     potongan,
+    paymentMethod,
     paymentProofLink,
     status,
     uniqueId, // Unique ID for pengisi form
@@ -124,6 +125,7 @@ async function addSeminarRegistration(registrationData) {
     // Payment info
     totalHarga || '',
     potongan || '',
+    paymentMethod || '',
     paymentProofLink || '',
     status || '',
   ];
@@ -156,7 +158,7 @@ async function getAllSeminarRegistrations() {
       pengisiNama, pengisiEmail, pengisiWhatsApp, pengisiJenisPeserta, pengisiPekerjaan, pengisiInstitusi, pengisiNIM, pengisiAlamat,
       peserta2Nama, peserta2Email, peserta2WhatsApp, peserta2JenisPeserta, peserta2Pekerjaan, peserta2Institusi, peserta2NIM, peserta2Alamat,
       peserta3Nama, peserta3Email, peserta3WhatsApp, peserta3JenisPeserta, peserta3Pekerjaan, peserta3Institusi, peserta3NIM, peserta3Alamat,
-      totalHarga, potongan, paymentProofLink, status,
+      totalHarga, potongan, paymentMethod, paymentProofLink, status,
     ] = row;
     
     return {
@@ -198,6 +200,7 @@ async function getAllSeminarRegistrations() {
       } : null,
       totalHarga,
       potongan,
+      paymentMethod,
       paymentProofLink,
       status,
     };
