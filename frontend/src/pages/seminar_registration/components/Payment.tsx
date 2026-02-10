@@ -65,7 +65,7 @@ const Payment: React.FC<PaymentProps> = ({ paketPendaftaran, pengisiForm, pesert
       return 'HMS & TPB'
     }
     // For Umum, default to Early Bird
-    return 'Early Bird'
+    return 'Reguler Ticket'
   }
 
   // Calculate total price
