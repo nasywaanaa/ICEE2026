@@ -82,9 +82,15 @@ const Header: React.FC = () => {
           >
             Event
           </a>
-          <Link 
+          <Link
             to="/seminar/register"
             className="nav-link registration-btn closed"
+            onClick={(e) => {
+              e.preventDefault(); // stop navigation
+              alert(
+                "Thank you for your enthusiasm! We are sorry to inform you that seminar registration is already closed."
+              );
+            }}
           >
             Seminar Registration
           </Link>
